@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/containerSetLocale"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginTop="0dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:background="@color/colorPrimary"
+    android:visibility="invisible"
+    android:layout_alignParentTop="true">
+
+    <AutoCompleteTextView
+        android:id="@+id/edtLoadLocale"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="textAutoComplete"
+        style="@style/TextInputPattern"
+        android:hint="@string/edt_change_local"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
+</LinearLayout>

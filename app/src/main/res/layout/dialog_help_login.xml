@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_transparent_grey"
+    tools:context=".DialogHelpLogin"
+    android:id="@+id/containerHelp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/container"
+        android:background="@drawable/rounded_style_white"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/txtTitleHelpLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_ajuda"
+            style="@style/TextTitlePattern"
+            android:textColor="@color/colorHint"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            />
+
+        <RelativeLayout
+            android:id="@+id/containerBtnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/txtTitleHelpLogin">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/containerRegisterImg">
+
+                <ImageButton
+                    android:id="@+id/btnRegister"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_person_add_green_48dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/containerRegisterImg"
+                android:layout_toEndOf="@+id/containerRegisterImg">
+
+                <TextView
+                    android:id="@+id/txtTitleRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_register_title"
+                    style="@style/TextHelpLogin"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:id="@+id/txtSubRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_register_sub"
+                    android:layout_below="@+id/txtTitleRegister"
+                    android:clickable="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/containerBtnRemember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/containerBtnRegister">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/containerRememberImg">
+
+                <ImageButton
+                    android:id="@+id/btnRemember"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_vpn_key_green_48dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/containerRememberImg"
+                android:layout_toEndOf="@+id/containerRememberImg">
+
+                <TextView
+                    android:id="@+id/txtTitleRemember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_remember_title"
+                    style="@style/TextHelpLogin"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:id="@+id/txtSubRemember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_remember_sub"
+                    android:layout_below="@+id/txtTitleRemember"
+                    android:clickable="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

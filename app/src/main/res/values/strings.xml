@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">SmartPromos</string>
+
+    <string name="app_id">790398977752690</string>
+    <string name="gmaps_id">AIzaSyAdwTFcIkFBA8rDcg-rvQzagKSBf2PmABE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Fim -->
+
+    <!-- Strings EditText -->
+    <string name="txt_ajuda">Precisa de ajuda?</string>
+
+    <string name="txt_recuperar_senha">Recuperar senha</string>
+    <string name="txt_escolher_licalizacao">Meu Local</string>
+    <string name="txt_cadastro">Seus Dados</string>
+
+    <string name="txt_register_title">Ainda não tem cadastro?</string>
+    <string name="txt_register_sub">Toque aqui para criar</string>
+
+    <string name="txt_remember_title">Esqueceu sua senha?</string>
+    <string name="txt_remember_sub">Toque aqui para recuperar</string>
+
+    <string name="txt_gender">Gênero</string>
+    <string name="txt_type_locale">Tipo da sua localização</string>
+
+    <!-- Fim -->
+
+    <!-- Strings EditText -->
+    <string name="edt_login">Digite seu e-mail</string>
+    <string name="edt_password">Digite sua senha</string>
+    <string name="edt_nome">Digite seu nome</string>
+    <string name="edt_sobrenome">Sigite seu sobrenome</string>
+    <string name="edt_email">Digite seu e-mail</string>
+    <string name="edt_cpf">Seu cpf, apenas números</string>
+    <string name="edt_data_nascimento">Data de nascimento dd/mm/aaaa</string>
+    <string name="edt_conf_password">Confirme sua senha</string>
+    <string name="edt_change_local">Digite o novo endereço</string>
+    <!-- Fim -->
+
+    <!-- Strings Btns -->
+    <string name="btn_login">Entrar</string>
+    <string name="btn_login_facebook">Entrar com o Facebook</string>
+    <string name="btn_register">Criar Cadastro</string>
+    <string name="btn_reset_pass">Recuperar Senha</string>
+    <string name="btn_conf_local">Confirmar</string>
+    <string name="btn_alt_local">Alterar</string>
+    <string name="btn_close">Fechar</string>
+    <!-- Fim -->
+</resources>
