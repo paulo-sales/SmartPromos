@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_profile"
+            android:title="@string/main_profile"
+            android:icon="@drawable/ic_person_white_24dp"
+            android:checked="true"/>
+
+        <item
+            android:id="@+id/nav_locale"
+            android:title="@string/main_locale"
+            android:icon="@drawable/ic_location_on_white_24dp"/>
+
+        <item
+            android:id="@+id/nav_sales_received"
+            android:title="@string/main_sales" />
+
+        <item
+            android:id="@+id/nav_sale_search"
+            android:title="@string/main_sales_search" />
+
+        <item
+            android:id="@+id/nav_my_coupons"
+            android:title="@string/main_my_coupons"
+            android:icon="@drawable/ic_shop_white_24dp"/>
+
+        <item
+            android:id="@+id/nav_coupons_canceled"
+            android:title="@string/main_coupons_canceled"
+            android:icon="@drawable/ic_shop_white_24dp"/>
+
+        <item
+            android:id="@+id/nav_sync"
+            android:title="@string/main_sync"
+            android:icon="@drawable/ic_sync_white_24dp"/>
+
+        <item
+            android:id="@+id/nav_tutorial"
+            android:title="@string/main_tutorial"
+            android:icon="@drawable/ic_help_outline_white_24dp"/>
+
+        <item
+            android:id="@+id/nav_config"
+            android:title="@string/action_settings"
+            android:icon="@drawable/ic_settings_white_24dp"/>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/main_logout"
+            android:icon="@drawable/ic_skip_previous_white_24dp"/>
+
+    </group>
+
+</menu>

@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import br.com.smartpromos.R;
+import br.com.smartpromos.ui.activity.DashBoardActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,7 +101,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
     }
 
@@ -178,7 +178,9 @@ public class LoginFragment extends Fragment {
         if(!login.equals("")){
 
             if(!password.equals("")){
-                showDialog("Sucesso ao acessar", "Estamos efetuando o seu login");
+
+                getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
+
             }else{
                 showDialog("Erro ao acessar", "Preencha a sua senha!");
             }

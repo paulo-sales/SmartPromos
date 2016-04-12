@@ -4,11 +4,14 @@
     <string name="app_id">790398977752690</string>
     <string name="gmaps_id">AIzaSyAdwTFcIkFBA8rDcg-rvQzagKSBf2PmABE</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Fim -->
 
-    <!-- Strings EditText -->
+    <!-- Strings Title -->
     <string name="txt_ajuda">Precisa de ajuda?</string>
 
     <string name="txt_recuperar_senha">Recuperar senha</string>
@@ -23,6 +26,16 @@
 
     <string name="txt_gender">Gênero</string>
     <string name="txt_type_locale">Tipo da sua localização</string>
+
+    <string name="txt_sales">Ofertas</string>
+    <string name="txt_coupons">Meus Cupons</string>
+    <string name="txt_profile">Meus Dados</string>
+    <string name="txt_locale">Minha Localização</string>
+    <string name="txt_search_sales">Buscar Ofertas</string>
+    <string name="txt_canceled_coupons">Cancelados</string>
+    <string name="txt_sync">Sincronizar</string>
+    <string name="txt_tutorial">Tutorial</string>
+    <string name="txt_settings">Configurações</string>
 
     <!-- Fim -->
 
@@ -46,5 +59,31 @@
     <string name="btn_conf_local">Confirmar</string>
     <string name="btn_alt_local">Alterar</string>
     <string name="btn_close">Fechar</string>
+
+    <string name="btn_received">Recebidas</string>
+    <string name="btn_requested">Solicitadas</string>
+    <string name="btn_discarded">Descartadas</string>
     <!-- Fim -->
+
+    <!-- Strings Menus -->
+
+    <string name="action_list_spending">Listar Gastos</string>
+    <string name="action_settings">Configurações</string>
+
+    <string name="main_profile">Meus dados</string>
+    <string name="main_locale">Minha localização</string>
+
+    <string name="main_sales">Ofertas recebidas</string>
+    <string name="main_sales_search">Buscar ofertas</string>
+
+    <string name="main_my_coupons">Meus cupons</string>
+    <string name="main_coupons_canceled">Cupons cancelados</string>
+
+    <string name="main_sync">Sincronizar notas</string>
+    <string name="main_tutorial">Tutorial</string>
+
+    <string name="main_logout">Sair</string>
+
+    <!-- Fim -->
+
 </resources>
