@@ -38,10 +38,9 @@
     <string name="txt_settings">Configurações</string>
 
     <string name="txt_no_sales_received">Não encontramos nenhuma nova oferta.</string>
-    <string name="txt_no_sales_requested">Vocês ainda não solicitou nenhuma oferta.</string>
+    <string name="txt_no_sales_requested">Você ainda não solicitou nenhuma oferta.</string>
     <string name="txt_no_sales_discarded">Não encontramos nenhum cupon com essa opção.</string>
     <string name="txt_no_coupons_found">Não encontramos nenhum cupon com essa opção.</string>
-
     <!-- Fim -->
 
     <!-- Strings EditText -->
@@ -68,10 +67,13 @@
     <string name="btn_received">Recebidas</string>
     <string name="btn_requested">Solicitadas</string>
     <string name="btn_discarded">Descartadas</string>
+
+    <string name="btn_sales">Ofertas</string>
+    <string name="btn_search">Buscar</string>
+    <string name="btn_my_coupons">Meus Cupons</string>
     <!-- Fim -->
 
     <!-- Strings Menus -->
-
     <string name="action_list_spending">Listar Gastos</string>
     <string name="action_settings">Configurações</string>
 
@@ -88,7 +90,6 @@
     <string name="main_tutorial">Tutorial</string>
 
     <string name="main_logout">Sair</string>
-
     <!-- Fim -->
 
 </resources>

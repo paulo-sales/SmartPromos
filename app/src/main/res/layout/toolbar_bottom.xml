@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerToolbarBottom"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:layout_gravity="bottom"
+    android:layout_alignParentBottom="true">
+
+    <RelativeLayout
+        android:id="@+id/containerHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true">
+
+            <RelativeLayout
+                android:id="@+id/containerSalesBtn"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="@drawable/border_top_green">
+
+                <Button
+                    android:id="@+id/icoBtnSales"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:enabled="false"
+                    android:background="@drawable/ico_ofertas"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/txtBtnSales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_sales"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/colorGreenBtn"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerSearchBtn"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/icoBtnSearch"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:enabled="true"
+                    android:background="@drawable/ico_search"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/txtBtnSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_search"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerCouponsBtn"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/icoBtnCoupons"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:enabled="true"
+                    android:background="@drawable/ico_coupons"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:id="@+id/txtBtnCoupons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_my_coupons"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorBlack"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/toolbar_upshadow"
+            android:layout_below="@+id/containerButtonsTop"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

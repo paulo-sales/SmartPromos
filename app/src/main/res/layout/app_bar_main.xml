@@ -1,54 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context=".ui.activity.ListaActivity">
+    android:id="@+id/containerToolbar"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_main"></include>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/containerHeader"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/AppToolBarContainer"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_height="62dp"
+            android:background="@color/colorPrimary">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:background="@color/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:id="@+id/HeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textSize="25sp"
+                />
+
+        </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/containerButtonsTop"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/toolbar">
+
+            <Button
+                android:id="@+id/btnActionOne"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_received"
+                android:background="@drawable/btn_green_navigate"
+                style="@style/TextBtnNavigatePattern"
+                android:enabled="false"/>
+
+            <Button
+                android:id="@+id/btnActionTwo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_requested"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/btn_green_navigate"
+                style="@style/TextBtnNavigatePattern"
+                android:textColor="@color/colorBlack"
+                android:enabled="true"/>
 
 
-                <TextView
-                    android:id="@+id/HeaderTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/colorWhite"
-                    android:textSize="25sp"
-                    />
+            <Button
+                android:id="@+id/btnActionTree"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_discarded"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/btn_green_navigate"
+                style="@style/TextBtnNavigatePattern"
+                android:textColor="@color/colorBlack"
+                android:enabled="true"/>
 
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.AppBarLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:background="@drawable/toolbar_dropshadow"
-            android:layout_below="@+id/AppToolBarContainer"/>
+            android:layout_below="@+id/containerButtonsTop"/>
 
-    </LinearLayout>
+        <include layout="@layout/toolbar_bottom"></include>
 
+    </RelativeLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

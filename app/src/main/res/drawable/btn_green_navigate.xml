@@ -7,14 +7,14 @@
             <solid android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
-    <item android:state_enabled="true">
+    <item android:state_enabled="false">
         <shape android:shape="rectangle" >
             <corners android:radius="0dp" />
             <height android:height="50dp" />
             <solid android:color="@color/colorPrimary" />
         </shape>
     </item>
-    <item android:state_enabled="false">
+    <item android:state_enabled="true">
         <shape android:shape="rectangle" >
             <corners android:radius="0dp" />
             <height android:height="50dp" />
