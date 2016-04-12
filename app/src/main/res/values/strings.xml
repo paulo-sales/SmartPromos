@@ -37,6 +37,11 @@
     <string name="txt_tutorial">Tutorial</string>
     <string name="txt_settings">Configurações</string>
 
+    <string name="txt_no_sales_received">Não encontramos nenhuma nova oferta.</string>
+    <string name="txt_no_sales_requested">Vocês ainda não solicitou nenhuma oferta.</string>
+    <string name="txt_no_sales_discarded">Não encontramos nenhum cupon com essa opção.</string>
+    <string name="txt_no_coupons_found">Não encontramos nenhum cupon com essa opção.</string>
+
     <!-- Fim -->
 
     <!-- Strings EditText -->
