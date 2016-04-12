@@ -38,9 +38,9 @@
     <string name="txt_settings">Configurações</string>
 
     <string name="txt_no_sales_received">Não encontramos nenhuma nova oferta.</string>
-    <string name="txt_no_sales_requested">Vocês ainda não solicitou nenhuma oferta.</string>
-    <string name="txt_no_sales_discarded">Não encontramos nenhum cupon com essa opção.</string>
-    <string name="txt_no_coupons_found">Não encontramos nenhum cupon com essa opção.</string>
+    <string name="txt_no_sales_requested">Você ainda não solicitou nenhuma oferta.</string>
+    <string name="txt_no_sales_discarded">Não encontramos nenhum cupom com essa opção.</string>
+    <string name="txt_no_coupons_found">Não encontramos nenhum cupom com essa opção.</string>
 
     <!-- Fim -->
 
@@ -48,9 +48,9 @@
     <string name="edt_login">Digite seu e-mail</string>
     <string name="edt_password">Digite sua senha</string>
     <string name="edt_nome">Digite seu nome</string>
-    <string name="edt_sobrenome">Sigite seu sobrenome</string>
+    <string name="edt_sobrenome">Digite seu sobrenome</string>
     <string name="edt_email">Digite seu e-mail</string>
-    <string name="edt_cpf">Seu cpf, apenas números</string>
+    <string name="edt_cpf">Em CPF, digite apenas números</string>
     <string name="edt_data_nascimento">Data de nascimento dd/mm/aaaa</string>
     <string name="edt_conf_password">Confirme sua senha</string>
     <string name="edt_change_local">Digite o novo endereço</string>
