@@ -8,6 +8,7 @@
     android:layout_gravity="bottom"
     android:layout_alignParentBottom="true">
 
+
     <RelativeLayout
         android:id="@+id/containerHeader"
         android:layout_width="match_parent"
