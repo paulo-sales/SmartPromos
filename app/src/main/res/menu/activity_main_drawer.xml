@@ -16,11 +16,13 @@
 
         <item
             android:id="@+id/nav_sales_received"
-            android:title="@string/main_sales" />
+            android:title="@string/main_sales"
+            android:icon="@drawable/ic_shop_two_white_24dp"/>
 
         <item
             android:id="@+id/nav_sale_search"
-            android:title="@string/main_sales_search" />
+            android:title="@string/main_sales_search"
+            android:icon="@drawable/ic_shop_two_white_24dp"/>
 
         <item
             android:id="@+id/nav_my_coupons"

@@ -33,8 +33,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:enabled="false"
+                    android:onClick="changeToSales"
                     android:background="@drawable/ico_ofertas"
-                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
@@ -43,8 +43,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/btn_sales"
                     android:gravity="center"
-                    android:layout_alignParentBottom="true"
+                    android:onClick="changeToSales"
                     android:textColor="@color/colorGreenBtn"
+                    android:layout_below="@+id/icoBtnSales"
                     android:textSize="16sp"/>
 
             </RelativeLayout>
@@ -62,8 +63,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:enabled="true"
+                    android:onClick="changetToSearch"
                     android:background="@drawable/ico_search"
-                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
@@ -72,7 +73,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/btn_search"
                     android:gravity="center"
-                    android:layout_alignParentBottom="true"
+                    android:onClick="changetToSearch"
+                    android:layout_below="@+id/icoBtnSearch"
                     android:textSize="16sp"
                     android:textColor="@color/colorBlack"/>
 
@@ -91,8 +93,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:enabled="true"
+                    android:onClick="changeToCoupons"
                     android:background="@drawable/ico_coupons"
-                    android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
@@ -101,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/btn_my_coupons"
                     android:gravity="center"
-                    android:layout_alignParentBottom="true"
+                    android:onClick="changeToCoupons"
+                    android:layout_below="@+id/icoBtnCoupons"
                     android:textSize="16sp"
                     android:textColor="@color/colorBlack"/>
 

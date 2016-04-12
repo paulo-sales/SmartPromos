@@ -41,13 +41,17 @@
     <string name="txt_no_sales_requested">Você ainda não solicitou nenhuma oferta.</string>
     <string name="txt_no_sales_discarded">Não encontramos nenhum cupon com essa opção.</string>
     <string name="txt_no_coupons_found">Não encontramos nenhum cupon com essa opção.</string>
+
+    <string name="txt_sync_note">Digite seu cpf e senha do portal Nota Fiscal Paulista</string>
+    <string name="txt_sync_note_plus">* Seus dados não serão gravados em nosso sistema</string>
     <!-- Fim -->
 
     <!-- Strings EditText -->
     <string name="edt_login">Digite seu e-mail</string>
     <string name="edt_password">Digite sua senha</string>
     <string name="edt_nome">Digite seu nome</string>
-    <string name="edt_sobrenome">Sigite seu sobrenome</string>
+    <string name="edt_sobrenome">Digite seu sobrenome</string>
+    <string name="edt_telefone">Digite seu telefone</string>
     <string name="edt_email">Digite seu e-mail</string>
     <string name="edt_cpf">Seu cpf, apenas números</string>
     <string name="edt_data_nascimento">Data de nascimento dd/mm/aaaa</string>
@@ -59,6 +63,8 @@
     <string name="btn_login">Entrar</string>
     <string name="btn_login_facebook">Entrar com o Facebook</string>
     <string name="btn_register">Criar Cadastro</string>
+    <string name="btn_update">Atualizar Cadastro</string>
+    <string name="btn_update_locale">Atualizar Localização</string>
     <string name="btn_reset_pass">Recuperar Senha</string>
     <string name="btn_conf_local">Confirmar</string>
     <string name="btn_alt_local">Alterar</string>
@@ -71,6 +77,7 @@
     <string name="btn_sales">Ofertas</string>
     <string name="btn_search">Buscar</string>
     <string name="btn_my_coupons">Meus Cupons</string>
+    <string name="btn_sync">Sincronizar</string>
     <!-- Fim -->
 
     <!-- Strings Menus -->

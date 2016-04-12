@@ -1,0 +1,108 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.smartpromos.ui.fragment.SyncFragment">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="110dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_transparent_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/MarginPattern">
+
+                <RelativeLayout
+                    android:id="@+id/containerIntro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="10dp"
+                    android:padding="15dp"
+                    android:background="@drawable/rounded_style_white">
+
+                    <TextView
+                        android:id="@+id/txtInto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_sync_note"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/txtPlus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/txt_sync_note_plus"
+                        android:textColor="@color/colorHint"
+                        android:layout_below="@+id/txtInto"
+                        android:textSize="16sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="10dp"
+                    android:padding="15dp"
+                    android:layout_below="@+id/containerIntro"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_style_white">
+
+                    <EditText
+                        android:id="@+id/edtCpf"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/edtEmail"
+                        android:paddingLeft="10dp"
+                        android:inputType="number"
+                        android:hint="@string/edt_cpf"
+                        style="@style/TextInputPattern"
+                        android:background="@drawable/edt_border"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/edtPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/edtCpf"
+                        android:layout_marginTop="15dp"
+                        android:paddingLeft="10dp"
+                        android:inputType="textPassword"
+                        android:hint="@string/edt_password"
+                        style="@style/TextInputPattern"
+                        android:background="@drawable/edt_border"
+                        android:textSize="18sp"/>
+
+                    <Button
+                        android:id="@+id/btnRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/edtPass"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/btn_sync"
+                        style="@style/TextInputPattern"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:background="@drawable/rounded_btn_green_hover"/>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+</FrameLayout>
