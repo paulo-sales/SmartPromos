@@ -50,7 +50,7 @@ public class ClienteRequest {
     private MensagemRequest mensagem;
 
 
-    public ClienteRequest(int doc_id, String first_name, String last_name, int gender, int birthday, int birthday_month, int birthday_yaer, int sale_radius, int get_offers, int stay_logged_in, String email, String password, String phone, MensagemRequest mensagem) {
+    public ClienteRequest(int doc_id, String first_name, String last_name, int gender, int birthday, int birthday_month, int birthday_yaer, int sale_radius, int get_offers, int stay_logged_in, String email, String password, String phone) {
         this.doc_id = doc_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -64,7 +64,6 @@ public class ClienteRequest {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.mensagem = mensagem;
     }
 
     public MensagemRequest getMensagem() {
