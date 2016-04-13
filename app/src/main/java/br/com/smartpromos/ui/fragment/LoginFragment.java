@@ -194,7 +194,7 @@ public class LoginFragment extends Fragment {
                         if (clienteResponse.getMensagem().getId() == 3) {
 
                             Toast.makeText(getContext(), "Seu login foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
-
+                            SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
                             getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {

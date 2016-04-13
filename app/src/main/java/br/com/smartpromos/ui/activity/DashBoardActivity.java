@@ -20,6 +20,7 @@ import br.com.smartpromos.ui.fragment.SalesDiscardedFragment;
 import br.com.smartpromos.ui.fragment.SalesFragment;
 import br.com.smartpromos.ui.fragment.SalesRequestFragment;
 import br.com.smartpromos.ui.fragment.SyncFragment;
+import br.com.smartpromos.util.SmartSharedPreferences;
 
 public class DashBoardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -424,7 +425,7 @@ public class DashBoardActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_logout:
-
+                SmartSharedPreferences.logoutCliente(getApplicationContext());
                 startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
                 finish();
 

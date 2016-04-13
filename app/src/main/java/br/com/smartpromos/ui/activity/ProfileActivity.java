@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -28,6 +29,10 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
     private String[] gender = new String[]{"Gênero", "Masculino", "Feminino"};
 
     private Button edtDataNasc;
+
+    private EditText edtNome;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
