@@ -1,7 +1,14 @@
 package br.com.smartpromos.api.general;
 
+import br.com.smartpromos.api.general.response.ClienteResponse;
+import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.api.general.response.ListaCuponsResponse;
+import br.com.smartpromos.api.general.response.ListaCuponsSolicitacao;
+import br.com.smartpromos.api.general.response.MeusCuponsResponse;
+import br.com.smartpromos.api.general.response.PlaceResponse;
 import retrofit.Callback;
 import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -12,70 +19,85 @@ import retrofit.http.Path;
 public interface SmartRepo {
 
     ///prc/prc.php?ctl=mobile
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=insertCustmer")
+    void criarCadastro(@Field("cliente") String cliente,
+                       @Field("localizacao") String localizacao,
+                        Callback<ClienteResponse> clienteResponseCallback);
 
-    @GET("/prc/prc.php?ctl=mobile&acao=loginCustmerUser")
-    loginCliente(@Field("username") String user,
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=loginCustmerUser")
+    void loginCliente(@Field("username") String user,
                  @Field("password") String password,
-                 Callback<>);
+                 Callback<ClienteResponse> clienteResponseCallback);
 
-    @GET("/prc/prc.php?ctl=mobile&acao=getListaPlacesBySolicitadosClientes")
-    listaPlacesbyEmail(@Field("email") String email,
-                Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getListaPlacesBySolicitadosClientes")
+    void listaPlacesbyEmail(@Field("email") String email,
+                       Callback<ListaCuponsSolicitacao> listaCuponsSolicitacaoCallback);
 
-    @GET("/prc/prc.php?ctl=getCouponsByEmail")
-    cuponsByEmail(@Field("email") String email,
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getCouponsByEmail")
+    void cuponsByEmail(@Field("email") String email,
                   @Field("status") String status,
-                  Callback<>);
+                  Callback<ListaCuponsResponse> listaCuponsResponseCallback);
 
-    @GET("/prc/prc.php?ctl=getCupomByIdMobile")
-    cuponsByEmail(@Field("cupomId") String cupomId,
-                     Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getCupomByIdMobile")
+    void cuponsByEmail(@Field("cupomId") String cupomId,
+                  Callback<CupomResponse> cupomResponseCallback);
 
-    @GET("/prc/prc.php?ctl=setCupomStatus")
-    cupomStatus(@Field("myCupomId") String cupomId,
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=setCupomStatus")
+    void cupomStatus(@Field("myCupomId") String cupomId,
                 @Field("cpf") String cpf,
-                Callback<>);
+                Callback<CupomResponse> cupomResponseCallback);
 
-    @GET("descartarCuponsAceitos")
-    descartarCuponsAceitos(@Field("myCupomId"),
-                           @Field("cpf"),
-                           @Field("status"),
-                           Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=descartarCuponsAceitos")
+    void descartarCuponsAceitos(@Field("myCupomId") String myCupomId,
+                           @Field("cpf") String cpf,
+                           @Field("status") String status,
+                           Callback<CupomResponse> cupomResponseCallback);
 
-    @GET("utilizarCupon")
-    utilizarCupon(@Field("codigo"),
-                  @Field("cupom"),
-                  @Field("usuario"),
-                  Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=utilizarCupon")
+    void utilizarCupon(@Field("cupom") String cupom,
+                  Callback<CupomResponse> cupomResponseCallback);
 
-    @GET("sincronizar")
-    sincronizarNFP(@Field("cpf") String cpf,
-                   @Field("senha") String senha,
-                   Callback<>);
+    //@GET("/prc/prc.php?ctl=mobile&acao=sincronizar")
+    //sincronizarNFP(@Field("cpf") String cpf,
+    //               @Field("senha") String senha,
+    //               Callback<CupomResponse>);
 
-    @GET("getPlaceByPlaceId")
-    placeByPlaceId(@Field("place") String place,
-                   Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getPlaceByPlaceId")
+    void placeByPlaceId(@Field("place") String place,
+                   Callback<PlaceResponse> placeResponseCallback);
 
-    @GET("updateCustmer")
-    updateCustomer(@Field("cliente") String cliente,
-                   Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=updateCustmer")
+    void updateCustomer(@Field("cliente") String cliente,
+                   Callback<ClienteResponse> clienteResponseCallback);
 
-    @GET("updateCustmerSettings")
-    updateCustomerSettings(@Field("cliente") String cliente,
-                           Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=updateCustmerSettings")
+    void updateCustomerSettings(@Field("cliente") String cliente,
+                           Callback<ClienteResponse> clienteResponseCallback);
 
-    @GET("updateLocale")
-    updateLocale(@Field("locale") String locale,
-                 Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=updateLocale")
+    void updateLocale(@Field("locale") String locale,
+                 Callback<ClienteResponse> clienteResponseCallback);
 
-    @GET("resetPass")
-    resetPass(@Field("email") String email,
-              Callback<>);
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=resetPass")
+    void resetPass(@Field("email") String email,
+              Callback<ClienteResponse> clienteResponsecuCallback);
 
-    @GET("getLocalizacao")
-    getLocalizacao(@Field("customer") String customer
-                   Callback<>);
-
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getLocalizacao")
+    void getLocalizacao(@Field("customer") String customer,
+                   Callback<ClienteResponse> clienteResponseCallback);
 
 }
