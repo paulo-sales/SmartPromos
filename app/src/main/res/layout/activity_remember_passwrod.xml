@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.smartpromos.ui.fragment.RememberPasswrodActivity">
+    tools:context="br.com.smartpromos.ui.activity.RememberPasswrodActivity">
 
 
     <include layout="@layout/toolbar_app"></include>
@@ -14,22 +14,29 @@
         android:background="@drawable/bg_transparent_white"
         style="@style/MarginLogin">
 
-        <EditText
-            android:id="@+id/edtLogin"
+        <RelativeLayout
+            android:id="@+id/containerFields"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/edt_login"
-            style="@style/TextInputPattern"
-            android:background="@drawable/edt_border"
-            android:textSize="20sp"/>
+            android:layout_height="wrap_content"
+            style="@style/MarginPattern"
+            android:background="@drawable/rounded_style_white">
+
+            <EditText
+                android:id="@+id/edtLogin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:hint="@string/edt_login"
+                style="@style/TextInputPattern"
+                android:background="@drawable/edt_border"
+                android:textSize="20sp"/>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/edtLogin"
+            android:layout_below="@+id/containerFields"
             android:layout_marginTop="20dp"
             android:text="@string/btn_reset_pass"
             style="@style/TextInputPattern"

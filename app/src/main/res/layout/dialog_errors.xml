@@ -5,8 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/bg_transparent_grey"
-    tools:context=".DialogFragmentSuccess">
+    android:background="@drawable/bg_transparent_grey">
 
     <LinearLayout
         android:orientation="vertical"
@@ -64,7 +63,7 @@
                 android:textColor="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/rounded_btn_green"
+                android:background="@drawable/rounded_bottom_btn_green"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
