@@ -420,7 +420,7 @@ public class DashBoardActivity extends AppCompatActivity
 
             case R.id.nav_config:
 
-                HeaderTitle.setText(getResources().getString(R.string.txt_settings));
+                startActivity(new Intent(DashBoardActivity.this, SettingsActivity.class));
 
                 break;
 

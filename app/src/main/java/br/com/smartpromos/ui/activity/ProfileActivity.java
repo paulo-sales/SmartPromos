@@ -90,14 +90,15 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
 
         spinnerGender = (Spinner) findViewById(R.id.spinnerGender);
 
-
-
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         spinnerGender.setLayoutParams(lp1);
         spinnerGender.setAdapter(adapter1);
+
+        spinnerGender.getItemAtPosition(((clienteResponse.getGender() == 1) ? 0 : 1));
+
         spinnerGender.setAdapter(new GenderAdapter(this, gender));
 
 
@@ -132,7 +133,14 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         edtTelefone.setText(clienteResponse.getPhone());
         edtEmail.setText(clienteResponse.getEmail());
         edtDataNasc.setText(clienteResponse.getBirthday()+"/"+clienteResponse.getBirthday_month()+"/"+ clienteResponse.getBirthday_yaer());
-        spinnerGender.setSelection(((clienteResponse.getGender() == 1) ? 0 : 1));
+
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                atualizarCliente();
+            }
+        });
 
     }
 
@@ -156,7 +164,7 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         senha = edtPass.getText().toString();
         confSenha = edtConfPass.getText().toString();
         genero = spinnerGender.getSelectedItem().toString();
-        idgenero = spinnerGender.getId();
+        idgenero = ( !genero.equalsIgnoreCase("Gênero") && genero.equalsIgnoreCase("Masculino") ) ? 1 : 2;
         if(nome.equals("") || nome == null){
           return false;
         }
@@ -185,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
             return false;
         }
 
-        if(genero.equals("") || genero == null){
+        if(genero.equals("") || genero.equalsIgnoreCase("Gênero") || genero == null){
             return false;
         }
         return true;
@@ -197,12 +205,13 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         String confSenha = edtConfPass.getText().toString();
 
         if(senha.equals(confSenha)){
-        return true;
+            return true;
         }
-    return false;
+        return false;
     }
 
-    private void AtualizarCliente(){
+    private void atualizarCliente(){
+
         if(validarDados()){
             if(checarSenha()){
                 String[] data = dataNasc.split("/");
@@ -210,7 +219,9 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
                 int mes = Integer.parseInt(data[1]);
                 int ano = Integer.parseInt(data[2]);
                 ClienteRequest cliente = new ClienteRequest(clienteResponse.getDoc_id(), nome,  sobrenome,  idgenero,  dia,  mes, ano,clienteResponse.getSale_radius(), clienteResponse.getGet_offers(),clienteResponse.getStay_logged_in(), email, senha, telefone);
+
                 String clienteJs = new Gson().toJson(cliente,ClienteRequest.class);
+
                 Log.i("ClienteRequest",clienteJs);
             }else{
                 showDialog("Atualização de cadastro", "Campos de senha devem ser iguais!");

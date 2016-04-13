@@ -66,4 +66,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.google.android.gms:play-services:8.4.0'
+
+    compile 'com.appyvet:materialrangebar:1.3'
 }
