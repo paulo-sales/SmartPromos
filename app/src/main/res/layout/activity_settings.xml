@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.smartpromos.ui.activity.SettingsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/bg_transparent_white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/MarginPattern">
+
+            <RelativeLayout
+                android:id="@+id/containerFields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MarginPattern"
+                android:background="@color/colorWhite">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_conectado"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentLeft="true"
+                    style="@style/TextInputPattern"/>
+
+                <ToggleButton
+                    android:layout_width="66dp"
+                    android:layout_height="26dp"
+                    android:id="@+id/tgBtnConectado"
+                    android:background="@drawable/toggle_style"
+                    android:textOn=""
+                    android:textOff=""
+                    android:textSize="0dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerFields2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/containerFields"
+                android:background="@color/colorWhite">
+
+                <TextView
+                    android:id="@+id/txtRaio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_raio"
+                    style="@style/TextSettings"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MarginPattern"
+                    android:layout_below="@+id/txtRaio">
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerFields3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/containerFields2"
+                android:background="@color/colorWhite">
+
+                <TextView
+                    android:id="@+id/txtPrivacidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_privacidade"
+                    style="@style/TextSettings"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtPrivacidade">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        style="@style/MarginPattern"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edt_border">
+
+                        <TextView
+                            android:layout_width="190dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_receber_todas"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentLeft="true"
+                            style="@style/TextInputPattern"/>
+
+                        <ToggleButton
+                            android:layout_width="66dp"
+                            android:layout_height="26dp"
+                            android:id="@+id/tgBtnRecebeOfertaTodas"
+                            android:background="@drawable/toggle_style"
+                            android:textOn=""
+                            android:textOff=""
+                            android:textSize="0dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        style="@style/MarginPattern"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edt_border">
+
+                        <TextView
+                            android:layout_width="190dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_receber_solicitei"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentLeft="true"
+                            style="@style/TextInputPattern"/>
+
+                        <ToggleButton
+                            android:layout_width="66dp"
+                            android:layout_height="26dp"
+                            android:id="@+id/tgBtnRecebeOfertaSolicitadas"
+                            android:background="@drawable/toggle_style"
+                            android:textOn=""
+                            android:textOff=""
+                            android:textSize="0dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        style="@style/MarginPattern"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/edt_border">
+
+                        <TextView
+                            android:layout_width="190dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_receber_comprei"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentLeft="true"
+                            style="@style/TextInputPattern"/>
+
+                        <ToggleButton
+                            android:layout_width="66dp"
+                            android:layout_height="26dp"
+                            android:id="@+id/tgBtnRecebeOfertaComprei"
+                            android:background="@drawable/toggle_style"
+                            android:textOn=""
+                            android:textOff=""
+                            android:textSize="0dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/containerFields3"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_save"
+                style="@style/TextInputPattern"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_btn_green_hover"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/toolbar_app"></include>
+
+</RelativeLayout>

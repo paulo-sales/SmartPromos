@@ -44,6 +44,14 @@
 
     <string name="txt_sync_note">Digite seu cpf e senha do portal Nota Fiscal Paulista</string>
     <string name="txt_sync_note_plus">* Seus dados não serão gravados em nosso sistema</string>
+
+    <string name="txt_conectado">Manter Conectado</string>
+    <string name="txt_raio">Escolha o raio para suas buscas</string>
+    <string name="txt_privacidade">Privacidade para receber ofertas</string>
+
+    <string name="txt_receber_todas">Receber ofertas de todas as empresas</string>
+    <string name="txt_receber_solicitei">Apenas empresas que já solicitei e recebi ofertas</string>
+    <string name="txt_receber_comprei">Apenas empresas que já comprei</string>
     <!-- Fim -->
 
     <!-- Strings EditText -->
@@ -78,6 +86,8 @@
     <string name="btn_search">Buscar</string>
     <string name="btn_my_coupons">Meus Cupons</string>
     <string name="btn_sync">Sincronizar</string>
+    <string name="btn_save">Salvar</string>
+
     <!-- Fim -->
 
     <!-- Strings Menus -->

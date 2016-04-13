@@ -31,35 +31,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.RememberPasswrodActivity" />
-
         <activity
             android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".ui.activity.RegisterActivity"
+        <activity
+            android:name=".ui.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.DashBoardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LocaleCustomerActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.SettingsActivity"
             android:screenOrientation="portrait" ></activity>
-
-        <activity android:name=".ui.activity.DashBoardActivity"
-            android:screenOrientation="portrait" ></activity>
-
-        <activity android:name=".ui.activity.ProfileActivity"
-            android:screenOrientation="portrait" ></activity>
-
-        <activity android:name=".ui.activity.LocaleCustomerActivity"
-            android:screenOrientation="portrait" ></activity>
-
     </application>
 
 </manifest>

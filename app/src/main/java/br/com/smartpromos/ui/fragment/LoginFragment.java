@@ -37,6 +37,7 @@ import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
+import br.com.smartpromos.util.SmartSharedPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -186,16 +187,14 @@ public class LoginFragment extends Fragment {
 
             if(!password.equals("")){
 
-             //   getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
                 SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
                 smartRepo.loginCliente(login,password, new Callback<ClienteResponse>() {
                     @Override
                     public void success(ClienteResponse clienteResponse, Response response) {
                         if (clienteResponse.getMensagem().getId() == 3) {
 
-
-
                             Toast.makeText(getContext(), "Seu login foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
+
                             getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {
@@ -208,7 +207,7 @@ public class LoginFragment extends Fragment {
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        showDialog("Erro do servidor", "Nosso servidor esta off-line no momento.");
                     }
                 });
 

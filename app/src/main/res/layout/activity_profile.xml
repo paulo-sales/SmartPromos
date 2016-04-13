@@ -73,24 +73,11 @@
                         android:background="@drawable/edt_border"
                         android:textSize="18sp"/>
 
-                    <EditText
-                        android:id="@+id/edtCpf"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_below="@id/edtEmail"
-                        android:layout_marginTop="15dp"
-                        android:paddingLeft="10dp"
-                        android:inputType="number"
-                        android:hint="@string/edt_cpf"
-                        style="@style/TextInputPattern"
-                        android:background="@drawable/edt_border"
-                        android:textSize="18sp"/>
-
                     <Button
                         android:id="@+id/edtDataNasc"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@id/edtCpf"
+                        android:layout_below="@id/edtEmail"
                         android:layout_marginTop="15dp"
                         android:paddingLeft="10dp"
                         android:inputType="text"

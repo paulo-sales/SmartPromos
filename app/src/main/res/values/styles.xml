@@ -35,6 +35,19 @@
         <item name="android:fontFamily">Arial</item>
     </style>
 
+    <style name="TextSettings">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+        <item name="android:fontFamily">Arial</item>
+
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:background">@color/colorGreySettings</item>
+
+    </style>
+
     <style name="TextBtnPattern">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorWhite</item>
