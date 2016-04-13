@@ -33,14 +33,14 @@ android {
 
     productFlavors {
         Desenvolvimento {
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196/prc/prc.php?ctl=mobile\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
             applicationId "br.com.smartpromos"
             versionName '1.0-DEV'
             manifestPlaceholders = [applicationLabel: "SmartPromos-DEV"]
             signingConfig = signingConfigs.dev
         }
         Producao {
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196/prc/prc.php?ctl=mobile\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
             applicationId "br.com.smartpromos"
             versionName '1.0'
             manifestPlaceholders = [applicationLabel: "SmartPromos"]
