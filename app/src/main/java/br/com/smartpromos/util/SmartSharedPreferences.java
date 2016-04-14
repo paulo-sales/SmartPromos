@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import br.com.smartpromos.api.general.response.ClienteResponse;
+import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 
 /**
  * Created by Paulo on 13/04/2016.
@@ -17,6 +18,7 @@ public class SmartSharedPreferences {
     private static final String TAG = "gcm";
     public static final String PROPERTY_REG_ID = "registration_id";
     public static final String USER = "user";
+    public static final String LOCALE = "locale";
 
     // Preferências para salvar o registration id
     private static android.content.SharedPreferences getPreferences(Context context) {
@@ -49,6 +51,22 @@ public class SmartSharedPreferences {
         final android.content.SharedPreferences.Editor editor = prefs.edit();
         return editor.putString(USER, null).commit();
 
+    }
+
+    public static boolean gravarLocalizacao(Context context,  LocalizacaoResponse localizacaoResponse){
+        final android.content.SharedPreferences prefs = getPreferences(context);
+        final android.content.SharedPreferences.Editor editor = prefs.edit();
+
+        String persistence = new Gson().toJson(localizacaoResponse, LocalizacaoResponse.class);
+
+        return editor.putString(LOCALE, persistence).commit();
+    }
+
+    public static LocalizacaoResponse getLocalizacao(Context context) {
+        final android.content.SharedPreferences prefs = getPreferences(context);
+        String locale = prefs.getString(LOCALE, "");
+        LocalizacaoResponse localizacaoResponse = new Gson().fromJson(locale, LocalizacaoResponse.class);
+        return localizacaoResponse;
     }
 
 }

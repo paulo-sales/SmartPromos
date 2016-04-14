@@ -36,6 +36,7 @@ import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
+import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import retrofit.Callback;
@@ -53,6 +54,8 @@ public class LoginFragment extends Fragment {
     private TextView txtHelp;
     private EditText edtLogin, edtPass;
     private Button btnLogin;
+
+    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -122,15 +125,6 @@ public class LoginFragment extends Fragment {
         @Override
         public void onSuccess(LoginResult loginResult) {
 
-            /*
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-            System.out.println("Meu usuario" + profile.getName());
-            displayWelcomeMessage(profile);
-            */
-
-            // App code
-
             GraphRequest request = GraphRequest.newMeRequest(
                     loginResult.getAccessToken(),
                     new GraphRequest.GraphJSONObjectCallback() {
@@ -187,7 +181,7 @@ public class LoginFragment extends Fragment {
 
             if(!password.equals("")){
 
-                SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+
                 smartRepo.loginCliente(login,password, new Callback<ClienteResponse>() {
                     @Override
                     public void success(ClienteResponse clienteResponse, Response response) {
@@ -195,6 +189,9 @@ public class LoginFragment extends Fragment {
 
                             Toast.makeText(getContext(), "Seu login foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
                             SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
+
+                            getLocale(clienteResponse.getDoc_id());
+
                             getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {
@@ -218,6 +215,30 @@ public class LoginFragment extends Fragment {
         }else{
             showDialog("Erro ao acessar", "Preencha o seu e-mail!");
         }
+
+    }
+
+    public void getLocale(int doc_id){
+
+        smartRepo.getLocalizacao(doc_id, new Callback<LocalizacaoResponse>() {
+            @Override
+            public void success(LocalizacaoResponse localizacaoResponse, Response response) {
+
+                if (localizacaoResponse.getMensagem().getId() == 1) {
+
+                    Toast.makeText(getContext(), "Seu login foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                    SmartSharedPreferences.gravarLocalizacao(getContext(), localizacaoResponse);
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
 
     }
 
