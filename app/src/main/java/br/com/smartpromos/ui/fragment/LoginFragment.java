@@ -2,13 +2,10 @@ package br.com.smartpromos.ui.fragment;
 
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -39,6 +35,7 @@ import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
+import br.com.smartpromos.util.UIDialogsFragments;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -48,14 +45,15 @@ import retrofit.client.Response;
  */
 public class LoginFragment extends Fragment {
 
-    private ProgressDialog progressDialog;
     private CallbackManager mCallBackMananger;
 
     private TextView txtHelp;
     private EditText edtLogin, edtPass;
     private Button btnLogin;
 
-    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);;
+    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+
+    private UIDialogsFragments uiDialogs;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -74,6 +72,9 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        uiDialogs = new UIDialogsFragments();
+        uiDialogs.uiGetActivity(getActivity());
 
         LoginButton loginButton = (LoginButton) view.findViewById(R.id.loginFacebook);
         loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday, user_friends"));
@@ -196,7 +197,7 @@ public class LoginFragment extends Fragment {
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {
 
-                            showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());
+                            uiDialogs.showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());
                         }
 
 
@@ -204,16 +205,16 @@ public class LoginFragment extends Fragment {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        showDialog("Erro do servidor", "Nosso servidor esta off-line no momento.");
+                        uiDialogs.showDialog("Erro do servidor", "Nosso servidor esta off-line no momento.");
                     }
                 });
 
             }else{
-                showDialog("Erro ao acessar", "Preencha a sua senha!");
+                uiDialogs.showDialog("Erro ao acessar", "Preencha a sua senha!");
             }
 
         }else{
-            showDialog("Erro ao acessar", "Preencha o seu e-mail!");
+            uiDialogs.showDialog("Erro ao acessar", "Preencha o seu e-mail!");
         }
 
     }
@@ -243,37 +244,8 @@ public class LoginFragment extends Fragment {
     }
 
     public void showHelp(){
-        showHelpDialog();
+        uiDialogs.showHelpDialog();
     }
 
-    public void showHelpDialog() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        DialogHelpLogin newFragment = new DialogHelpLogin();
-
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-        transaction.add(android.R.id.content, newFragment)
-                .addToBackStack(null).commit();
-    }
-
-    public void showDialog(String title, String descDialog) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        bundle.putString("description", descDialog);
-
-        DialogUI newFragment = new DialogUI();
-        newFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-        transaction.add(android.R.id.content, newFragment)
-                .addToBackStack(null).commit();
-    }
 
 }

@@ -23,9 +23,7 @@ import java.util.Calendar;
 
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.GenderAdapter;
-import br.com.smartpromos.adapter.TypeLocaleAdapter;
 import br.com.smartpromos.api.general.request.ClienteRequest;
-import br.com.smartpromos.api.general.request.MensagemRequest;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.ui.fragment.DialogUI;
 import br.com.smartpromos.util.SmartSharedPreferences;
@@ -231,7 +229,9 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         }
 
     }
+
     public void showDialog(String title, String descDialog) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Bundle bundle = new Bundle();
@@ -248,4 +248,5 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         transaction.add(android.R.id.content, newFragment)
                 .addToBackStack(null).commit();
     }
+
 }

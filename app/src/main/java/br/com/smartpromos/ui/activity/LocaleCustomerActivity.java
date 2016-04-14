@@ -1,6 +1,5 @@
 package br.com.smartpromos.ui.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,14 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
-import java.util.Calendar;
 
 import br.com.smartpromos.R;
-import br.com.smartpromos.adapter.GenderAdapter;
 import br.com.smartpromos.adapter.TypeLocaleAdapter;
-import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 import br.com.smartpromos.api.general.request.MensagemRequest;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
@@ -52,6 +46,7 @@ public class LocaleCustomerActivity extends AppCompatActivity {
     String bairro;
     String cidade;
     String estado;
+    String tipoEndereco;
     LocalizacaoResponse localizacaoResponse;
 
 
@@ -95,8 +90,7 @@ public class LocaleCustomerActivity extends AppCompatActivity {
         });
 
 
-
-        edtCep.setText(localizacaoResponse.getZip_code()) ;
+        edtCep.setText(String.valueOf(localizacaoResponse.getZip_code()));
         edtEndereco.setText(localizacaoResponse.getAddress());
         edtNumero.setText(localizacaoResponse.getNumber_address());
         edtBairro.setText(localizacaoResponse.getNeighborwood());
@@ -110,8 +104,6 @@ public class LocaleCustomerActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override
@@ -121,12 +113,15 @@ public class LocaleCustomerActivity extends AppCompatActivity {
 
 
     private boolean validarDados(){
+
         cep = edtCep.getText().toString();
         endereco = edtEndereco.getText().toString();
         numero = edtNumero.getText().toString();
         bairro = edtBairro.getText().toString();
         cidade = edtCidade.getText().toString();
         estado = edtEstado.getText().toString();
+        tipoEndereco = spinnerLocale.getSelectedItem().toString();
+
 
         if(cep.equals("") || cep == null){
             return false;
@@ -152,6 +147,10 @@ public class LocaleCustomerActivity extends AppCompatActivity {
             return false;
         }
 
+        if(tipoEndereco.equals("") || tipoEndereco.equalsIgnoreCase("Tipo da sua localização") || tipoEndereco == null){
+            return false;
+        }
+
         return true;
     }
 
@@ -159,7 +158,7 @@ public class LocaleCustomerActivity extends AppCompatActivity {
 
         if(validarDados()){
 
-                LocalizacaoRequest localizacao = new LocalizacaoRequest(localizacaoResponse.getId_locale(), bairro, cidade, estado, Integer.parseInt(cep), localizacaoResponse.getCountry(),  endereco, numero,localizacaoResponse.getType(),localizacaoResponse.getAddresstype(),localizacaoResponse.getCustomer(), new MensagemRequest(0,"Atualizar endereço"));
+                LocalizacaoRequest localizacao = new LocalizacaoRequest(localizacaoResponse.getId_locale(), bairro, cidade, estado, Integer.parseInt(cep), localizacaoResponse.getCountry(),  endereco, numero,localizacaoResponse.getType(),tipoEndereco,localizacaoResponse.getCustomer(), new MensagemRequest(0,"Atualizar endereço"));
 
                 String localizacaoJs = new Gson().toJson(localizacao,LocalizacaoRequest.class);
 
@@ -171,6 +170,7 @@ public class LocaleCustomerActivity extends AppCompatActivity {
         }
 
     }
+
     public void showDialog(String title, String descDialog) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 

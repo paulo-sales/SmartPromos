@@ -15,11 +15,154 @@
             android:id="@+id/map_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="240dp">
+
 
         </RelativeLayout>
 
+
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_above="@+id/containerBtns"
+            android:layout_width="match_parent"
+            android:background="@drawable/btn_green"
+            style="@style/MarginPattern"
+            android:layout_height="200dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtCep"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:inputType="number"
+                    android:hint="@string/edt_cep"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/edtEndereco"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="text"
+                    android:hint="@string/edt_endereco"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtNumero"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:hint="@string/edt_numero"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/edtBairro"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="text"
+                    android:hint="@string/edt_bairro"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtCidade"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:inputType="text"
+                    android:hint="@string/edt_cidade"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/edtEstado"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="text"
+                    android:hint="@string/edt_estado"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/containerLocale"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/edtEstado"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edt_border">
+
+                <Spinner
+                    android:id="@+id/spinnerLocale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true">
+                </Spinner>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/containerBtns"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_alignParentBottom="true">

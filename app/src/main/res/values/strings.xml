@@ -65,6 +65,13 @@
     <string name="edt_data_nascimento">Data de nascimento dd/mm/aaaa</string>
     <string name="edt_conf_password">Confirme sua senha</string>
     <string name="edt_change_local">Digite o novo endereço</string>
+
+    <string name="edt_cep">Cep</string>
+    <string name="edt_endereco">Endereço</string>
+    <string name="edt_numero">Número</string>
+    <string name="edt_bairro">Bairro</string>
+    <string name="edt_cidade">Cidade</string>
+    <string name="edt_estado">Estado</string>
     <!-- Fim -->
 
     <!-- Strings Btns -->
