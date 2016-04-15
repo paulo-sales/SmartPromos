@@ -32,8 +32,8 @@
                     style="@style/TextInputPattern"/>
 
                 <ToggleButton
-                    android:layout_width="66dp"
-                    android:layout_height="26dp"
+                    android:layout_width="60dp"
+                    android:layout_height="34dp"
                     android:id="@+id/tgBtnConectado"
                     android:background="@drawable/toggle_style"
                     android:textOn=""
@@ -60,28 +60,69 @@
                     android:text="@string/txt_raio"
                     style="@style/TextSettings"/>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/containerMetrica"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/MarginPattern"
+                    android:paddingBottom="0dp"
                     android:layout_below="@+id/txtRaio">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/ic_directions_walk_black_24dp"
+                        />
 
                     <com.appyvet.rangebar.RangeBar
                         xmlns:custom="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/rangebar"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="10"
                         android:layout_height="72dp"
+                        android:layout_gravity="center_vertical"
                         custom:rangeBar="false"
                         custom:tickStart="5"
                         custom:tickEnd="25"
                         custom:tickInterval="1"
                         custom:barWeight="2dp"
-                        custom:temporaryPins="false"
                         custom:selectorSize="10dp"
                         custom:selectorColor="@color/colorGreySettings"
+                        custom:connectingLineColor="@color/colorPrimaryDark"
                         custom:connectingLineWeight="3dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"/>
+
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/ic_shopping_cart_black_24dp"
+                        />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/containerMetrica">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="10 km"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentLeft="true"
+                        style="@style/TextInputPattern"
+                        android:textSize="20sp"/>
 
                 </RelativeLayout>
 
@@ -123,8 +164,8 @@
                             style="@style/TextInputPattern"/>
 
                         <ToggleButton
-                            android:layout_width="66dp"
-                            android:layout_height="26dp"
+                            android:layout_width="60dp"
+                            android:layout_height="34dp"
                             android:id="@+id/tgBtnRecebeOfertaTodas"
                             android:background="@drawable/toggle_style"
                             android:textOn=""
@@ -151,8 +192,8 @@
                             style="@style/TextInputPattern"/>
 
                         <ToggleButton
-                            android:layout_width="66dp"
-                            android:layout_height="26dp"
+                            android:layout_width="60dp"
+                            android:layout_height="34dp"
                             android:id="@+id/tgBtnRecebeOfertaSolicitadas"
                             android:background="@drawable/toggle_style"
                             android:textOn=""
@@ -177,8 +218,8 @@
                             style="@style/TextInputPattern"/>
 
                         <ToggleButton
-                            android:layout_width="66dp"
-                            android:layout_height="26dp"
+                            android:layout_width="60dp"
+                            android:layout_height="34dp"
                             android:id="@+id/tgBtnRecebeOfertaComprei"
                             android:background="@drawable/toggle_style"
                             android:textOn=""

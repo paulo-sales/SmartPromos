@@ -4,15 +4,12 @@
     android:layout_height="match_parent"
     tools:context="br.com.smartpromos.ui.activity.RememberPasswrodActivity">
 
-
-    <include layout="@layout/toolbar_app"></include>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_transparent_white"
-        style="@style/MarginLogin">
+        android:layout_marginTop="60dp"
+        style="@style/MarginPattern">
 
         <RelativeLayout
             android:id="@+id/containerFields"
@@ -46,5 +43,6 @@
 
     </RelativeLayout>
 
+    <include layout="@layout/toolbar_app"></include>
 
 </FrameLayout>

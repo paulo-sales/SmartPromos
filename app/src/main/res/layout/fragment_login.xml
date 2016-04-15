@@ -1,93 +1,108 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
     tools:context="br.com.smartpromos.ui.fragment.LoginFragment">
 
-
-    <include layout="@layout/toolbar_app_login"></include>
-
-
     <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/MarginLogin"
-        android:background="@drawable/bg_transparent_white"
-        android:layout_gravity="bottom">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/edtLogin"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="textEmailAddress"
-            android:hint="@string/edt_login"
-            style="@style/TextInputPattern"
-            android:background="@drawable/edt_border"
-            android:textSize="20sp"/>
+            android:layout_height="8dp"
+            android:background="@drawable/toolbar_upshadow"
+            android:layout_above="@+id/containerFields"/>
 
-
-        <EditText
-            android:id="@+id/edtPass"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/edtLogin"
-            android:inputType="textPassword"
-            android:hint="@string/edt_password"
-            style="@style/TextInputPattern"
-            android:background="@drawable/edt_border"
-            android:textSize="20sp"/>
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/edtPass"
-            android:layout_marginTop="10dp"
-            android:text="@string/btn_login"
-            style="@style/TextInputPattern"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:background="@drawable/rounded_btn_green"/>
-
-        <RelativeLayout
-            android:id="@+id/containerBtn"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnLogin"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_btn_facebook">
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/loginFacebook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:paddingTop="9dp"
-                android:paddingBottom="10dp"
-                android:gravity="center_horizontal"
-                android:layout_centerInParent="true"
-                android:text="@string/btn_login_facebook"
-                android:background="@drawable/rounded_btn_facebook"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/txtHelp"
+        <LinearLayout
+            android:id="@+id/containerFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@+id/containerBtn"
-            android:clickable="true"
-            android:text="@string/txt_ajuda"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="@color/colorBlack"/>
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_transparent_white"
+            style="@style/MarginLogin">
+
+            <EditText
+                android:id="@+id/edtLogin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:hint="@string/edt_login"
+                style="@style/TextInputPattern"
+                android:background="@drawable/edt_border"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/edtPass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/edtLogin"
+                android:inputType="textPassword"
+                android:hint="@string/edt_password"
+                style="@style/TextInputPattern"
+                android:background="@drawable/edt_border"
+                android:textSize="20sp"/>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtPass"
+                android:layout_marginTop="15dp"
+                android:text="@string/btn_login"
+                style="@style/TextInputPattern"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_btn_green"/>
+
+            <RelativeLayout
+                android:id="@+id/containerBtn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/btnLogin"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_btn_facebook">
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/loginFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:paddingTop="9dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_horizontal"
+                    android:layout_centerInParent="true"
+                    android:text="@string/btn_login_facebook"
+                    android:background="@drawable/rounded_btn_facebook"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtHelp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:layout_below="@+id/containerBtn"
+                android:clickable="true"
+                android:text="@string/txt_ajuda"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textColor="@color/colorBlack"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
+
+    <include layout="@layout/toolbar_app_login"></include>
 
 </FrameLayout>

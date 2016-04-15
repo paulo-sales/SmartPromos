@@ -1,8 +1,10 @@
 package br.com.smartpromos.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,29 +14,39 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
 
+import com.google.gson.Gson;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.GenderAdapter;
-import br.com.smartpromos.adapter.TypeLocaleAdapter;
+import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
 
     private TextView txtTitle;
     private ImageButton imgToolbar;
     private Spinner spinnerGender;
-    private Spinner spinnerLocale;
     private String[] gender = new String[]{"Gênero", "Masculino", "Feminino"};
-    private String[] locale = new String[]{"Tipo da sua localização", "Residencial", "Trabalho", "Outros"};
 
     private Button edtDataNasc;
+
+    private LocalizacaoRequest localizacaoRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Intent i = getIntent();
+
+        if( i != null) {
+            String locale = i.getStringExtra("localizacao");
+            localizacaoRequest = new Gson().fromJson(locale, LocalizacaoRequest.class);
+            Log.i("Locale_json", locale);
+            Log.i("Check_locale", localizacaoRequest.getAddress());
+        }
 
         edtDataNasc = (Button) findViewById(R.id.edtDataNasc);
 
@@ -52,7 +64,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         });
 
         spinnerGender = (Spinner) findViewById(R.id.spinnerGender);
-        spinnerLocale = (Spinner) findViewById(R.id.spinnerLocale);
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -61,16 +72,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         spinnerGender.setLayoutParams(lp1);
         spinnerGender.setAdapter(adapter1);
         spinnerGender.setAdapter(new GenderAdapter(this, gender));
-
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_locale, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
-        spinnerLocale.setLayoutParams(lp);
-        spinnerLocale.setAdapter(adapter);
-        spinnerLocale.setAdapter(new TypeLocaleAdapter(this, locale));
 
         edtDataNasc.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,19 +15,26 @@
             android:id="@+id/map_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="240dp">
+            android:layout_marginBottom="290dp">
 
 
         </RelativeLayout>
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/toolbar_upshadow"
+            android:layout_above="@+id/containerFields"/>
+
         <LinearLayout
+            android:id="@+id/containerFields"
             android:orientation="vertical"
             android:layout_above="@+id/containerBtns"
             android:layout_width="match_parent"
-            android:background="@drawable/btn_green"
+            android:background="@color/colorGreenBtn"
             style="@style/MarginPattern"
-            android:layout_height="200dp">
+            android:layout_height="250dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -143,18 +150,14 @@
             <RelativeLayout
                 android:id="@+id/containerLocale"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/edtEstado"
-                android:gravity="center_vertical"
-                android:layout_marginTop="15dp"
+                android:layout_height="60dp"
                 android:background="@drawable/edt_border">
 
                 <Spinner
                     android:id="@+id/spinnerLocale"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true">
+                    android:layout_height="50dp"
+                    android:popupBackground="@color/colorGreenBtn">
                 </Spinner>
 
             </RelativeLayout>

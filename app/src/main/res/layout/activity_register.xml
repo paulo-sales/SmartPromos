@@ -106,30 +106,12 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/containerLocale"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/containerGender"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/edt_border">
-
-                    <Spinner
-                        android:id="@+id/spinnerLocale"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true">
-                    </Spinner>
-
-                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/edtPass"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_below="@id/containerLocale"
+                    android:layout_below="@id/containerGender"
                     android:layout_marginTop="15dp"
                     android:paddingLeft="10dp"
                     android:inputType="textPassword"

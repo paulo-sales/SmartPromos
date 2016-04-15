@@ -43,9 +43,10 @@ public class TypeLocaleAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
 
         TextView tv = new TextView(ctx);
+
         tv.setTextSize(18);
         tv.setText(lista[position]);
-        tv.setTextColor(Color.BLACK);
+        tv.setTextColor(Color.WHITE);
         tv.setPadding(20,20,20,20);
 
         return tv;

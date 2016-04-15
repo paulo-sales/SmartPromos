@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -23,30 +22,32 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.smartpromos.R;
+import br.com.smartpromos.adapter.TypeLocaleAdapter;
+import br.com.smartpromos.api.general.request.LocalizacaoRequest;
+import br.com.smartpromos.api.general.request.MensagemRequest;
 import br.com.smartpromos.task.GoogleGeocodingAPITask;
 import br.com.smartpromos.ui.activity.RegisterActivity;
-import br.com.smartpromos.util.GoogleGeocodingAPI;
+import br.com.smartpromos.util.UIDialogsFragments;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +60,8 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
     private Button btnAlterarLocal;
     private LinearLayout containerSetLocale;
     private AutoCompleteTextView edtLoadLocale;
+    private Spinner spinnerLocale;
+    private String[] locale = new String[]{"Tipo da sua localização", "Residencial", "Trabalho", "Outros"};
 
     private static final int THRESHOLD = 0;
     private String latitude, longitude;
@@ -66,6 +69,17 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
     private ArrayAdapter<String> autoCompleteAdapter;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
+
+    private EditText edtCep;
+    private EditText edtEndereco;
+    private EditText edtNumero;
+    private EditText edtBairro;
+    private EditText edtCidade;
+    private EditText edtEstado;
+
+    private View view;
+
+    private UIDialogsFragments uiDialogs;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -76,8 +90,11 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_location, container, false);
+        view = inflater.inflate(R.layout.fragment_location, container, false);
         getActivity().setDefaultKeyMode(getActivity().DEFAULT_KEYS_SEARCH_LOCAL);
+
+        uiDialogs = new UIDialogsFragments();
+        uiDialogs.uiGetActivity(getActivity());
 
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         map = mMapFragment.getMap();
@@ -89,6 +106,13 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
+
+        edtCep = (EditText) view.findViewById(R.id.edtCep);
+        edtEndereco = (EditText) view.findViewById(R.id.edtEndereco);
+        edtNumero = (EditText) view.findViewById(R.id.edtNumero);
+        edtBairro = (EditText) view.findViewById(R.id.edtBairro);
+        edtCidade = (EditText) view.findViewById(R.id.edtCidade);
+        edtEstado = (EditText) view.findViewById(R.id.edtEstado);
 
         txtTitle = (TextView) view.findViewById(R.id.txtTitle);
         txtTitle.setText(getResources().getString(R.string.txt_escolher_licalizacao));
@@ -121,7 +145,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
         btnConfirmarLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
+                goToRegistration();
             }
         });
 
@@ -140,7 +164,75 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
             }
         });
 
+        spinnerLocale = (Spinner) view.findViewById(R.id.spinnerLocale);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.type_locale, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+
+        spinnerLocale.setLayoutParams(lp);
+        spinnerLocale.setAdapter(adapter);
+        spinnerLocale.setAdapter(new TypeLocaleAdapter(getActivity(), locale));
+
         return view;
+    }
+
+    public String validaDados(){
+        String cep = edtCep.getText().toString();
+        String endereo = edtEndereco.getText().toString();
+        String bairro = edtBairro.getText().toString();
+        String cidade = edtCidade.getText().toString();
+        String estado = edtEstado.getText().toString();
+
+        if(cep.equals("") || cep == null )
+            return "Por favor, preencha o seu cep!";
+
+        if(endereo.equals("") || endereo == null )
+            return "Por favor, preencha o seu endereço!";
+
+        if(bairro.equals("") || bairro == null )
+            return "Por favor, preencha o seu bairro!";
+
+        if(cidade.equals("") || cidade == null )
+            return "Por favor, preencha a sua cidade!";
+
+        if(estado.equals("") || estado == null )
+            return "Por favor, preencha o seu estado!";
+
+        return null;
+    }
+
+    public void goToRegistration(){
+        if(validaDados() == null){
+
+            LocalizacaoRequest localizacaoRequest = new LocalizacaoRequest(
+                    0,
+                    edtBairro.getText().toString(),
+                    edtCep.getText().toString(),
+                    edtEstado.getText().toString(),
+                    Integer.parseInt(edtCep.getText().toString()),
+                    "Brasil",
+                    edtEndereco.getText().toString(),
+                    edtNumero.getText().toString(),
+                    1,
+                    spinnerLocale.getSelectedItem().toString(),
+                    0,
+                    new MensagemRequest(0, "Inserir Localização")
+            );
+
+            Intent intent = new Intent(getActivity(), RegisterActivity.class);
+
+            String localeString = new Gson().toJson(localizacaoRequest, LocalizacaoRequest.class);
+
+            intent.putExtra("localizacao", localeString);
+
+            getActivity().startActivity(intent);
+
+        }else{
+            uiDialogs.showDialog("Campos obrigatórios", validaDados());
+        }
     }
 
     public void showAutoComplete(LinearLayout linearLayout){
@@ -209,7 +301,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
 
             String[] p = {String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude())};
 
-            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getActivity(), map);
+            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getActivity(), map, view);
             googleGeocodingAPITask.execute(p);
 
         }
@@ -277,7 +369,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
 
             String[] p = {latitude, longitude};
 
-            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getActivity(), map);
+            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getActivity(), map, view);
             googleGeocodingAPITask.execute(p);
         }
     }

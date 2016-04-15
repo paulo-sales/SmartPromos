@@ -1,6 +1,8 @@
 package br.com.smartpromos.util;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,6 +19,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import br.com.smartpromos.R;
+import br.com.smartpromos.smartpromosapplication.SmartPromosApp;
+
 /**
  * Created by Paulo on 11/04/2016.
  */
@@ -24,7 +29,7 @@ public class GoogleGeocodingAPI {
 
     public static JSONObject getLocationInfo(double lat, double lng){
 
-        HttpGet httpGet = new HttpGet("http://maps.googleapis.com/maps/api/geocode/json?latlng="+ lat+","+lng +"&sensor=true");
+        HttpGet httpGet = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?key="+SmartPromosApp.context.getResources().getString(R.string.gmaps_id)+"&latlng="+ lat+","+lng +"&sensor=true");
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
 
@@ -64,7 +69,6 @@ public class GoogleGeocodingAPI {
 
         String currentLocation = "testing";
         String street_address = null;
-        String postal_code = null;
 
         try {
 
@@ -85,18 +89,12 @@ public class GoogleGeocodingAPI {
 
                     if(types.equalsIgnoreCase("street_address")){
 
-                        String[] fullAddred = r.getString("formatted_address").split(",");
-                        String[] numberAndNeighborhood = fullAddred[1].split("-");
+                        street_address = r.getString("formatted_address");
 
-                        street_address = fullAddred[0]+", "+numberAndNeighborhood[0].trim();
-                        Log.i("street_address", street_address);
-
-                        postal_code = numberAndNeighborhood[1].trim()+" - "+fullAddred[3].trim();
-                        Log.i("postal_code", postal_code);
                     }
 
-                    if(street_address!=null && postal_code!=null){
-                        currentLocation = street_address + "\n" + postal_code;
+                    if(street_address!=null){
+                        currentLocation = street_address;
                         Log.i("Current Location =>", currentLocation); //Delete this
                         i = results.length();
                     }
