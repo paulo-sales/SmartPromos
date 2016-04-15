@@ -185,6 +185,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
         String bairro = edtBairro.getText().toString();
         String cidade = edtCidade.getText().toString();
         String estado = edtEstado.getText().toString();
+        String tipoEndereco = spinnerLocale.getSelectedItem().toString();
 
         if(cep.equals("") || cep == null )
             return "Por favor, preencha o seu cep!";
@@ -201,6 +202,9 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
         if(estado.equals("") || estado == null )
             return "Por favor, preencha o seu estado!";
 
+        if(tipoEndereco.equals("") || tipoEndereco.equalsIgnoreCase("Tipo da sua localização") || tipoEndereco == null )
+            return "Por favor, escolha o tipo da sua localização!";
+
         return null;
     }
 
@@ -210,7 +214,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
             LocalizacaoRequest localizacaoRequest = new LocalizacaoRequest(
                     0,
                     edtBairro.getText().toString(),
-                    edtCep.getText().toString(),
+                    edtCidade.getText().toString(),
                     edtEstado.getText().toString(),
                     Integer.parseInt(edtCep.getText().toString()),
                     "Brasil",
