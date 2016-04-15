@@ -418,6 +418,12 @@ public class DashBoardActivity extends AppCompatActivity
 
                 break;
 
+            case R.id.nav_tutorial:
+
+                HeaderTitle.setText(getResources().getString(R.string.txt_tutorial));
+
+                break;
+
             case R.id.nav_config:
 
                 startActivity(new Intent(DashBoardActivity.this, SettingsActivity.class));

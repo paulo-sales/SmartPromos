@@ -85,7 +85,7 @@ public interface SmartRepo {
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=updateCustmerSettings")
     void updateCustomerSettings(@Field("cliente") String cliente,
-                           Callback<ClienteResponse> clienteResponseCallback);
+                           Callback<MensagemResponse> mensagemResponse);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=updateLocale")

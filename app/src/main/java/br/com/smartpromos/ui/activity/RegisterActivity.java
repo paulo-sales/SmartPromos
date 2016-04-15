@@ -172,6 +172,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         confSenha = edtConfPass.getText().toString();
         genero = spinnerGender.getSelectedItem().toString();
         idgenero = ( !genero.equalsIgnoreCase("Gênero") && genero.equalsIgnoreCase("Masculino") ) ? 1 : 2;
+
         if(nome.equals("") || nome == null){
             return false;
         }
@@ -221,22 +222,32 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     private void cadastrarCliente(){
 
         if(validarDados()){
+
             if(checarSenha()){
+
                 String[] data = dataNasc.split("/");
                 int dia = Integer.parseInt(data[0]);
                 int mes = Integer.parseInt(data[1]);
                 int ano = Integer.parseInt(data[2]);
+
                 int c = 0;
+
                 try{
                     c = Integer.parseInt(cpf);
                 }catch (NumberFormatException e){
                     e.printStackTrace();
+                    Log.v("ERROR_CPF", cpf);
+                    Log.v("ERROR_CPF", e.getMessage());
                 }
 
                 ClienteRequest cliente = new ClienteRequest(c, nome, sobrenome, idgenero, dia, mes, ano, 5, 0, 1, email, senha, "");
 
                 String clienteJs = new Gson().toJson(cliente,ClienteRequest.class);
                 String localizacaoJs = new Gson().toJson(localizacaoRequest,LocalizacaoRequest.class);
+
+                Log.i("ClienteRequest",clienteJs);
+                Log.i("EnderecoRequest",localizacaoJs);
+
                 smartRepo.criarCadastro(clienteJs,localizacaoJs, new Callback<ClienteResponse>(){
 
 
@@ -260,7 +271,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                     }
                 });
 
-                Log.i("ClienteRequest",clienteJs);
             }else{
                 showDialog("Formulário de cadastro", "Campos de senha devem ser iguais!");
             }

@@ -188,8 +188,11 @@ public class LoginFragment extends Fragment {
                     public void success(ClienteResponse clienteResponse, Response response) {
                         if (clienteResponse.getMensagem().getId() == 3) {
 
-                            Toast.makeText(getContext(), "Seu login foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                            SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
+                            if(clienteResponse.getStay_logged_in() == 1){
+                                SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
+                            }else{
+                                SmartSharedPreferences.logoutCliente(getContext());
+                            }
 
                             getLocale(clienteResponse.getDoc_id());
 
@@ -226,8 +229,6 @@ public class LoginFragment extends Fragment {
             public void success(LocalizacaoResponse localizacaoResponse, Response response) {
 
                 if (localizacaoResponse.getMensagem().getId() == 1) {
-
-                    Toast.makeText(getContext(), "Seu login foi realizado com sucesso!", Toast.LENGTH_SHORT).show();
 
                     SmartSharedPreferences.gravarLocalizacao(getContext(), localizacaoResponse);
 

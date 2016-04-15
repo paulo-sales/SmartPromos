@@ -225,13 +225,10 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
                     0,
                     new MensagemRequest(0, "Inserir Localização")
             );
-
-            Intent intent = new Intent(getActivity(), RegisterActivity.class);
-
             String localeString = new Gson().toJson(localizacaoRequest, LocalizacaoRequest.class);
 
+            Intent intent = new Intent(getActivity(), RegisterActivity.class);
             intent.putExtra("localizacao", localeString);
-
             getActivity().startActivity(intent);
 
         }else{

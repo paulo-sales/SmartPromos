@@ -213,7 +213,4 @@ public class LocaleCustomerActivity extends AppCompatActivity {
                 .addToBackStack(null).commit();
     }
 
-
-
-
 }
