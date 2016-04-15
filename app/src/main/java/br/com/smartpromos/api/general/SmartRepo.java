@@ -5,6 +5,7 @@ import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsSolicitacao;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
+import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.api.general.response.MeusCuponsResponse;
 import br.com.smartpromos.api.general.response.PlaceResponse;
 import retrofit.Callback;
@@ -89,13 +90,13 @@ public interface SmartRepo {
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=updateLocale")
     void updateLocale(@Field("locale") String locale,
-                      Callback<ClienteResponse> clienteResponseCallback);
+                      Callback<LocalizacaoResponse> localizacaoResponseCallback);
 
     //
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=resetPass")
     void resetPass(@Field("email") String email,
-              Callback<ClienteResponse> clienteResponsecuCallback);
+              Callback<MensagemResponse> mensagemResponsecuCallback);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getLocalizacao")

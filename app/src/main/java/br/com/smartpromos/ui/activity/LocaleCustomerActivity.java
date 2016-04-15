@@ -17,13 +17,21 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.TypeLocaleAdapter;
+import br.com.smartpromos.api.general.ServiceGenerator;
+import br.com.smartpromos.api.general.SmartRepo;
+import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 import br.com.smartpromos.api.general.request.MensagemRequest;
+import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.ui.fragment.DialogUI;
 import br.com.smartpromos.util.SmartSharedPreferences;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LocaleCustomerActivity extends AppCompatActivity {
 
@@ -158,9 +166,25 @@ public class LocaleCustomerActivity extends AppCompatActivity {
 
         if(validarDados()){
 
-                LocalizacaoRequest localizacao = new LocalizacaoRequest(localizacaoResponse.getId_locale(), bairro, cidade, estado, Integer.parseInt(cep), localizacaoResponse.getCountry(),  endereco, numero,localizacaoResponse.getType(),tipoEndereco,localizacaoResponse.getCustomer(), new MensagemRequest(0,"Atualizar endereço"));
+                LocalizacaoRequest localizacao = new LocalizacaoRequest(localizacaoResponse.getId_locale(), bairro, cidade, estado, Integer.parseInt(cep), localizacaoResponse.getCountry(),  endereco, numero, localizacaoResponse.getType(), tipoEndereco, localizacaoResponse.getCustomer(), new MensagemRequest(0,"Atualizar endereço"));
 
+                SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
                 String localizacaoJs = new Gson().toJson(localizacao,LocalizacaoRequest.class);
+                smartRepo.updateLocale(localizacaoJs, new Callback<LocalizacaoResponse>() {
+                    @Override
+                    public void success(LocalizacaoResponse localizacaoResponse, Response response) {
+
+                            SmartSharedPreferences.gravarLocalizacao(getApplicationContext(),localizacaoResponse);
+                            showDialog("Atualização de localização", localizacaoResponse.getMensagem().getMensagem());
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+
+                });
 
                 Log.i("LocalizacaoRequest",localizacaoJs);
 
@@ -188,6 +212,8 @@ public class LocaleCustomerActivity extends AppCompatActivity {
         transaction.add(android.R.id.content, newFragment)
                 .addToBackStack(null).commit();
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package br.com.smartpromos.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -15,18 +16,25 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 
+import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.GenderAdapter;
+import br.com.smartpromos.api.general.ServiceGenerator;
+import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.ui.fragment.DialogUI;
 import br.com.smartpromos.util.SmartSharedPreferences;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ProfileActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
 
@@ -44,6 +52,8 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
     private EditText edtPass;
     private EditText edtConfPass;
     private Button btnRegister;
+
+    private
 
     String nome;
     String sobrenome;
@@ -218,7 +228,32 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
                 int ano = Integer.parseInt(data[2]);
                 ClienteRequest cliente = new ClienteRequest(clienteResponse.getDoc_id(), nome,  sobrenome,  idgenero,  dia,  mes, ano,clienteResponse.getSale_radius(), clienteResponse.getGet_offers(),clienteResponse.getStay_logged_in(), email, senha, telefone);
 
+                SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
                 String clienteJs = new Gson().toJson(cliente,ClienteRequest.class);
+                smartRepo.updateCustomer(clienteJs, new Callback<ClienteResponse>() {
+                    @Override
+                    public void success(ClienteResponse clienteResponse, Response response) {
+                        if (clienteResponse.getMensagem().getId() == 3) {
+
+                            showDialog(clienteResponse.getMensagem().getMensagem(), "");
+                            SmartSharedPreferences.gravarUsuarioResponseCompleto(getApplicationContext(),clienteResponse);
+
+
+                        } else if (clienteResponse.getMensagem().getId() == 2) {
+
+                            showDialog("Erro ao atualizar", clienteResponse.getMensagem().getMensagem());
+
+                        } else if (clienteResponse.getMensagem().getId() == 1){
+
+                            showDialog("Erro ao atualizar", clienteResponse.getMensagem().getMensagem());
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
 
                 Log.i("ClienteRequest",clienteJs);
             }else{
@@ -248,5 +283,7 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         transaction.add(android.R.id.content, newFragment)
                 .addToBackStack(null).commit();
     }
+
+
 
 }

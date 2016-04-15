@@ -22,7 +22,7 @@
             android:background="@drawable/rounded_style_white">
 
             <EditText
-                android:id="@+id/edtLogin"
+                android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:inputType="textEmailAddress"
@@ -33,7 +33,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnEnviar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@+id/containerFields"
