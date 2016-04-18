@@ -222,7 +222,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public void getLocale(int doc_id){
+    public void getLocale(long doc_id){
 
         smartRepo.getLocalizacao(doc_id, new Callback<LocalizacaoResponse>() {
             @Override

@@ -73,6 +73,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/ic_directions_walk_black_24dp"
                         />
@@ -89,7 +90,7 @@
                         custom:tickEnd="25"
                         custom:tickInterval="1"
                         custom:barWeight="2dp"
-                        custom:selectorSize="10dp"
+                        custom:selectorSize="15dp"
                         custom:selectorColor="@color/colorGreySettings"
                         custom:connectingLineColor="@color/colorPrimaryDark"
                         custom:connectingLineWeight="3dp"
@@ -101,6 +102,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/ic_shopping_cart_black_24dp"
                         />
@@ -120,6 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="10 km"
+                        android:layout_marginBottom="5dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentLeft="true"
                         style="@style/TextInputPattern"

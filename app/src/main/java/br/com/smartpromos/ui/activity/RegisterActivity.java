@@ -230,10 +230,10 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 int mes = Integer.parseInt(data[1]);
                 int ano = Integer.parseInt(data[2]);
 
-                int c = 0;
+                long c = 0;
 
                 try{
-                    c = Integer.parseInt(cpf);
+                    c = Long.parseLong(cpf);
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                     Log.v("ERROR_CPF", cpf);
@@ -258,6 +258,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                             showDialog(clienteResponse.getMensagem().getMensagem(), "");
                             SmartSharedPreferences.gravarUsuarioResponseCompleto(getApplicationContext(),clienteResponse);
                             getLocale(clienteResponse.getDoc_id());
+
                             startActivity(new Intent(RegisterActivity.this,DashBoardActivity.class));
                         } else {
 
@@ -281,7 +282,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
     }
 
-    public void getLocale(int doc_id){
+    public void getLocale(long doc_id){
 
         smartRepo.getLocalizacao(doc_id, new Callback<LocalizacaoResponse>() {
             @Override

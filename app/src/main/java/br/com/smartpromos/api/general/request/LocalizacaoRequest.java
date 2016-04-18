@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class LocalizacaoRequest {
 
     @SerializedName("id")
-    private int id_locale;
+    private long id_locale;
 
     @SerializedName("bairro")
     private String neighborwood;
@@ -38,12 +38,12 @@ public class LocalizacaoRequest {
     private String addresstype;
 
     @SerializedName("customer")
-    private int customer;
+    private long customer;
 
     @SerializedName("msg")
     private MensagemRequest mensagem;
 
-    public LocalizacaoRequest(int id_locale, String neighborwood, String city, String state, int zip_code, String country, String address, String number_address, int type, String addresstype, int customer, MensagemRequest mensagem) {
+    public LocalizacaoRequest(long id_locale, String neighborwood, String city, String state, int zip_code, String country, String address, String number_address, int type, String addresstype, long customer, MensagemRequest mensagem) {
         this.id_locale = id_locale;
         this.neighborwood = neighborwood;
         this.city = city;
@@ -58,11 +58,11 @@ public class LocalizacaoRequest {
         this.mensagem = mensagem;
     }
 
-    public int getId_locale() {
+    public long getId_locale() {
         return id_locale;
     }
 
-    public void setId_locale(int id_locale) {
+    public void setId_locale(long id_locale) {
         this.id_locale = id_locale;
     }
 
@@ -138,11 +138,11 @@ public class LocalizacaoRequest {
         this.addresstype = addresstype;
     }
 
-    public int getCustomer() {
+    public long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(int customer) {
+    public void setCustomer(long customer) {
         this.customer = customer;
     }
 

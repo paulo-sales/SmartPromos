@@ -49,6 +49,7 @@ public class SmartSharedPreferences {
     public static boolean logoutCliente(Context context){
         final android.content.SharedPreferences prefs = getPreferences(context);
         final android.content.SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(LOCALE, null).commit();
         return editor.putString(USER, null).commit();
 
     }

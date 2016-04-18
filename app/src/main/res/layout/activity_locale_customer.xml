@@ -1,133 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="br.com.smartpromos.ui.activity.LocaleCustomerActivity">
+<FrameLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
-    <ScrollView
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/bg_transparent_white">
-
+        android:layout_marginTop="60dp">
 
         <RelativeLayout
+            android:id="@+id/map_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MarginPattern">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="290dp">
 
 
-            <RelativeLayout
-                android:id="@+id/containerFields"
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/toolbar_upshadow"
+            android:layout_above="@+id/containerFields"/>
+
+        <LinearLayout
+            android:id="@+id/containerFields"
+            android:orientation="vertical"
+            android:layout_above="@+id/containerBtns"
+            android:layout_width="match_parent"
+            android:background="@color/colorGreenBtn"
+            style="@style/MarginPattern"
+            android:layout_height="250dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MarginPattern"
-                android:background="@drawable/rounded_style_white">
-
+                android:layout_height="wrap_content">
 
                 <EditText
-                        android:id="@+id/edtCep"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:paddingLeft="10dp"
-                        android:inputType="number"
-                        style="@style/TextInputPattern"
-                        android:background="@drawable/edt_border"
-                        android:textSize="18sp"/>
-
-                <EditText
-                    android:id="@+id/edtEndereco"
-                    android:layout_width="match_parent"
+                    android:id="@+id/edtCep"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="50dp"
                     android:paddingLeft="10dp"
-                    android:inputType="text"
+                    android:inputType="number"
+                    android:hint="@string/edt_cep"
                     style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:background="@drawable/edt_border"
-                    android:layout_below="@+id/edtCep"
                     android:textSize="18sp"/>
 
                 <EditText
+                    android:id="@+id/edtEndereco"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="text"
+                    android:hint="@string/edt_endereco"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:background="@drawable/edt_border"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
                     android:id="@+id/edtNumero"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="50dp"
                     android:paddingLeft="10dp"
                     android:inputType="text"
+                    android:hint="@string/edt_numero"
                     style="@style/TextInputPattern"
-                    android:layout_below="@+id/edtEndereco"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:background="@drawable/edt_border"
                     android:textSize="18sp"/>
 
                 <EditText
                     android:id="@+id/edtBairro"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="50dp"
                     android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
                     android:inputType="text"
+                    android:hint="@string/edt_bairro"
                     style="@style/TextInputPattern"
-                    android:layout_below="@+id/edtNumero"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:background="@drawable/edt_border"
                     android:textSize="18sp"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/edtCidade"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="50dp"
                     android:paddingLeft="10dp"
                     android:inputType="text"
+                    android:hint="@string/edt_cidade"
                     style="@style/TextInputPattern"
-                    android:layout_below="@+id/edtBairro"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:background="@drawable/edt_border"
                     android:textSize="18sp"/>
 
                 <EditText
                     android:id="@+id/edtEstado"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="50dp"
                     android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
                     android:inputType="text"
+                    android:hint="@string/edt_estado"
                     style="@style/TextInputPattern"
-                    android:layout_below="@+id/edtCidade"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:background="@drawable/edt_border"
                     android:textSize="18sp"/>
 
-                <RelativeLayout
-                    android:id="@+id/containerLocale"
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/containerLocale"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/edt_border">
+
+                <Spinner
+                    android:id="@+id/spinnerLocale"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/edtEstado"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/edt_border">
-
-                    <Spinner
-                        android:id="@+id/spinnerLocale"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true">
-                    </Spinner>
-
-                </RelativeLayout>
+                    android:popupBackground="@color/colorGreenBtn">
+                </Spinner>
 
             </RelativeLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/containerBtns"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true">
+
             <Button
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/containerFields"
-                android:layout_marginTop="20dp"
-                android:text="@string/btn_update_locale"
-                style="@style/TextInputPattern"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"
-                android:background="@drawable/rounded_btn_green_hover"/>
+                android:id="@+id/btnAlterarLocal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_alt_local"
+                android:background="@drawable/btn_green"
+                style="@style/TextBtnPattern"/>
 
-        </RelativeLayout>
+            <Button
+                android:id="@+id/btnConfirmarLocal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/btn_conf_local"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/btn_green"
+                style="@style/TextBtnPattern"/>
 
-    </ScrollView>
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <include layout="@layout/toolbar_app"></include>
 
-</RelativeLayout>
+    <include layout="@layout/find_location"></include>
+
+</FrameLayout>
+
+    <!-- <?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="br.com.smartpromos.ui.activity.LocaleCustomerActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bg_transparent_white">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MarginPattern">
+
+
+                <RelativeLayout
+                    android:id="@+id/containerFields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MarginPattern"
+                    android:background="@drawable/rounded_style_white">
+
+
+                    <EditText
+                            android:id="@+id/edtCep"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:paddingLeft="10dp"
+                            android:inputType="number"
+                            style="@style/TextInputPattern"
+                            android:background="@drawable/edt_border"
+                            android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/edtEndereco"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="10dp"
+                        android:inputType="text"
+                        style="@style/TextInputPattern"
+                        android:background="@drawable/edt_border"
+                        android:layout_below="@+id/edtCep"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/edtNumero"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="10dp"
+                        android:inputType="text"
+                        style="@style/TextInputPattern"
+                        android:layout_below="@+id/edtEndereco"
+                        android:background="@drawable/edt_border"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/edtBairro"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="10dp"
+                        android:inputType="text"
+                        style="@style/TextInputPattern"
+                        android:layout_below="@+id/edtNumero"
+                        android:background="@drawable/edt_border"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/edtCidade"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="10dp"
+                        android:inputType="text"
+                        style="@style/TextInputPattern"
+                        android:layout_below="@+id/edtBairro"
+                        android:background="@drawable/edt_border"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/edtEstado"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:paddingLeft="10dp"
+                        android:inputType="text"
+                        style="@style/TextInputPattern"
+                        android:layout_below="@+id/edtCidade"
+                        android:background="@drawable/edt_border"
+                        android:textSize="18sp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/containerLocale"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/edtEstado"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/edt_border">
+
+                        <Spinner
+                            android:id="@+id/spinnerLocale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true">
+                        </Spinner>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/containerFields"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/btn_update_locale"
+                    style="@style/TextInputPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:background="@drawable/rounded_btn_green_hover"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <include layout="@layout/toolbar_app"></include>
+
+    </RelativeLayout>
+
+    -->

@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class MeusCuponsResponse {
 
     @SerializedName("id")
-    private int id_my_coupons;
+    private long id_my_coupons;
 
     @SerializedName("status")
     private int status;
@@ -23,12 +23,12 @@ public class MeusCuponsResponse {
     private String expiration_date;
 
     @SerializedName("customer")
-    private int customer;
+    private long customer;
 
     @SerializedName("coupon")
-    private int coupon;
+    private long coupon;
 
-    public MeusCuponsResponse(int id_my_coupons, int status, String send_date, String use_date, String expiration_date, int customer, int coupon) {
+    public MeusCuponsResponse(long id_my_coupons, int status, String send_date, String use_date, String expiration_date, long customer, long coupon) {
         this.id_my_coupons = id_my_coupons;
         this.status = status;
         this.send_date = send_date;
@@ -38,11 +38,11 @@ public class MeusCuponsResponse {
         this.coupon = coupon;
     }
 
-    public int getId_my_coupons() {
+    public long getId_my_coupons() {
         return id_my_coupons;
     }
 
-    public void setId_my_coupons(int id_my_coupons) {
+    public void setId_my_coupons(long id_my_coupons) {
         this.id_my_coupons = id_my_coupons;
     }
 
@@ -78,19 +78,19 @@ public class MeusCuponsResponse {
         this.expiration_date = expiration_date;
     }
 
-    public int getCustomer() {
+    public long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(int customer) {
+    public void setCustomer(long customer) {
         this.customer = customer;
     }
 
-    public int getCoupon() {
+    public long getCoupon() {
         return coupon;
     }
 
-    public void setCoupon(int coupon) {
+    public void setCoupon(long coupon) {
         this.coupon = coupon;
     }
 }

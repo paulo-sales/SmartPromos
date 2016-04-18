@@ -235,8 +235,13 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
                     public void success(ClienteResponse clienteResponse, Response response) {
                         if (clienteResponse.getMensagem().getId() == 3) {
 
+                            if(clienteResponse.getStay_logged_in() == 1){
+                                SmartSharedPreferences.gravarUsuarioResponseCompleto(getApplicationContext(),clienteResponse);
+                            }else{
+                                SmartSharedPreferences.logoutCliente(getApplicationContext());
+                            }
                             showDialog(clienteResponse.getMensagem().getMensagem(), "");
-                            SmartSharedPreferences.gravarUsuarioResponseCompleto(getApplicationContext(),clienteResponse);
+
 
 
                         } else if (clienteResponse.getMensagem().getId() == 2) {

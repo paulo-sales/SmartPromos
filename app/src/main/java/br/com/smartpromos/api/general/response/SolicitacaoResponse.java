@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class SolicitacaoResponse {
 
     @SerializedName("id")
-    private int id_request;
+    private long id_request;
 
     @SerializedName("statusEstab")
     private int flag_establishment;
@@ -17,15 +17,15 @@ public class SolicitacaoResponse {
     private int flag_customer;
 
     @SerializedName("place")
-    private int place;
+    private long place;
 
     @SerializedName("customer")
-    private int customer;
+    private long customer;
 
     @SerializedName("establishment")
-    private int establishment;
+    private long establishment;
 
-    public SolicitacaoResponse(int id_request, int flag_establishment, int flag_customer, int place, int customer, int establishment) {
+    public SolicitacaoResponse(long id_request, int flag_establishment, int flag_customer, long place, long customer, long establishment) {
         this.id_request = id_request;
         this.flag_establishment = flag_establishment;
         this.flag_customer = flag_customer;
@@ -34,11 +34,11 @@ public class SolicitacaoResponse {
         this.establishment = establishment;
     }
 
-    public int getId_request() {
+    public long getId_request() {
         return id_request;
     }
 
-    public void setId_request(int id_request) {
+    public void setId_request(long id_request) {
         this.id_request = id_request;
     }
 
@@ -58,27 +58,27 @@ public class SolicitacaoResponse {
         this.flag_customer = flag_customer;
     }
 
-    public int getPlace() {
+    public long getPlace() {
         return place;
     }
 
-    public void setPlace(int place) {
+    public void setPlace(long place) {
         this.place = place;
     }
 
-    public int getCustomer() {
+    public long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(int customer) {
+    public void setCustomer(long customer) {
         this.customer = customer;
     }
 
-    public int getEstablishment() {
+    public long getEstablishment() {
         return establishment;
     }
 
-    public void setEstablishment(int establishment) {
+    public void setEstablishment(long establishment) {
         this.establishment = establishment;
     }
 }

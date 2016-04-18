@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class PlaceResponse {
 
     @SerializedName("id_Place")
-    private int id_place;
+    private long id_place;
 
     @SerializedName("place_id")
     private String place_id;
@@ -31,7 +31,7 @@ public class PlaceResponse {
     @SerializedName("nome")
     private String name;
 
-    public PlaceResponse(int id_place, String place_id, String adr_address, String formatted_address, String formatted_phone_number, String icon, String international_phone_number, String name) {
+    public PlaceResponse(long id_place, String place_id, String adr_address, String formatted_address, String formatted_phone_number, String icon, String international_phone_number, String name) {
         this.id_place = id_place;
         this.place_id = place_id;
         this.adr_address = adr_address;
@@ -42,11 +42,11 @@ public class PlaceResponse {
         this.name = name;
     }
 
-    public int getId_place() {
+    public long getId_place() {
         return id_place;
     }
 
-    public void setId_place(int id_place) {
+    public void setId_place(long id_place) {
         this.id_place = id_place;
     }
 

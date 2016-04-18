@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class ClienteRequest {
 
     @SerializedName("cpf")
-    private int doc_id;
+    private long doc_id;
 
     @SerializedName("nome")
     private String first_name;
@@ -50,7 +50,7 @@ public class ClienteRequest {
     private MensagemRequest mensagem;
 
 
-    public ClienteRequest(int doc_id, String first_name, String last_name, int gender, int birthday, int birthday_month, int birthday_yaer, int sale_radius, int get_offers, int stay_logged_in, String email, String password, String phone) {
+    public ClienteRequest(long doc_id, String first_name, String last_name, int gender, int birthday, int birthday_month, int birthday_yaer, int sale_radius, int get_offers, int stay_logged_in, String email, String password, String phone) {
         this.doc_id = doc_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -76,7 +76,7 @@ public class ClienteRequest {
 
 
 
-    public int getDoc_id() {
+    public long getDoc_id() {
         return doc_id;
     }
 
@@ -128,7 +128,7 @@ public class ClienteRequest {
         return phone;
     }
 
-    public void setDoc_id(int doc_id) {
+    public void setDoc_id(long doc_id) {
         this.doc_id = doc_id;
     }
 

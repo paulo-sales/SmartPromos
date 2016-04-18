@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class CupomResponse {
 
     @SerializedName("id")
-    private int id_coupon;
+    private long id_coupon;
 
     @SerializedName("nome")
     private String name;
@@ -35,12 +35,12 @@ public class CupomResponse {
     private int quantity;
 
     @SerializedName("sale")
-    private int sale;
+    private long sale;
 
     @SerializedName("msg")
     private MensagemResponse mensagem;
 
-    public CupomResponse(int id_coupon, String name, String description, String confirmationmessage, String path_img, int type, int notification, String mensage, int quantity, int sale, MensagemResponse mensagem) {
+    public CupomResponse(long id_coupon, String name, String description, String confirmationmessage, String path_img, int type, int notification, String mensage, int quantity, long sale, MensagemResponse mensagem) {
         this.id_coupon = id_coupon;
         this.name = name;
         this.description = description;
@@ -62,7 +62,7 @@ public class CupomResponse {
         this.mensagem = mensagem;
     }
 
-    public int getId_coupon() {
+    public long getId_coupon() {
         return id_coupon;
     }
 
@@ -98,11 +98,11 @@ public class CupomResponse {
         return quantity;
     }
 
-    public int getSale() {
+    public long getSale() {
         return sale;
     }
 
-    public void setId_coupon(int id_coupon) {
+    public void setId_coupon(long id_coupon) {
         this.id_coupon = id_coupon;
     }
 
@@ -138,7 +138,7 @@ public class CupomResponse {
         this.quantity = quantity;
     }
 
-    public void setSale(int sale) {
+    public void setSale(long sale) {
         this.sale = sale;
     }
 }

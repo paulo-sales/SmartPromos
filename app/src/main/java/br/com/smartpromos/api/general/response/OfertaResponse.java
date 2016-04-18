@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class OfertaResponse {
 
     @SerializedName("id")
-    private int id_sale;
+    private long id_sale;
 
     @SerializedName("status")
     private int status;
@@ -29,9 +29,9 @@ public class OfertaResponse {
     private String creation_date;
 
     @SerializedName("establishment")
-    private int establishment;
+    private long establishment;
 
-    public OfertaResponse(int id_sale, int status, int send, String name, String start_date, String over_date, String creation_date, int establishment) {
+    public OfertaResponse(long id_sale, int status, int send, String name, String start_date, String over_date, String creation_date, long establishment) {
         this.id_sale = id_sale;
         this.status = status;
         this.send = send;
@@ -42,11 +42,11 @@ public class OfertaResponse {
         this.establishment = establishment;
     }
 
-    public int getId_sale() {
+    public long getId_sale() {
         return id_sale;
     }
 
-    public void setId_sale(int id_sale) {
+    public void setId_sale(long id_sale) {
         this.id_sale = id_sale;
     }
 
@@ -98,11 +98,11 @@ public class OfertaResponse {
         this.creation_date = creation_date;
     }
 
-    public int getEstablishment() {
+    public long getEstablishment() {
         return establishment;
     }
 
-    public void setEstablishment(int establishment) {
+    public void setEstablishment(long establishment) {
         this.establishment = establishment;
     }
 }

@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONObject;
 
 import br.com.smartpromos.R;
+import br.com.smartpromos.util.GetLocationGmpas;
 import br.com.smartpromos.util.GoogleGeocodingAPI;
 
 /**
@@ -47,10 +48,27 @@ public class GoogleGeocodingAPITask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        latitude = Double.parseDouble(params[0]);
-        longitude = Double.parseDouble(params[1]);
+
+        double lat = 0;
+        double lng = 0;
+
+        if(params[0] == "getLocation"){
+
+            String result[] = GetLocationGmpas.getCurrentLocationByJSON(params[1]);
+
+            lat = Double.parseDouble(result[0]);
+            lng = Double.parseDouble(result[1]);
+        }else{
+
+            lat = Double.parseDouble(params[1]);
+            lng = Double.parseDouble(params[2]);
+        }
+
+        latitude = Double.parseDouble(params[1]);
+        longitude = Double.parseDouble(params[2]);
 
         return GoogleGeocodingAPI.getCurrentLocationByJSON(latitude, longitude);
+
     }
 
     @Override

@@ -100,7 +100,7 @@ public interface SmartRepo {
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getLocalizacao")
-    void getLocalizacao(@Field("customer") int customer,
+    void getLocalizacao(@Field("customer") long customer,
                    Callback<LocalizacaoResponse> localizacaoResponse);
 
 }

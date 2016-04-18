@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class EstabelecimentoResponse {
 
     @SerializedName("id")
-    private int id_establishment;
+    private long id_establishment;
 
     @SerializedName("bairro")
     private String neighborwood;
@@ -73,7 +73,7 @@ public class EstabelecimentoResponse {
     @SerializedName("dataAdesao")
     private String accession_date;
 
-    public EstabelecimentoResponse(int id_establishment, String neighborwood, String city, String state, String zip_code, String cnae, String register_number, int day_inscription, int month_inscription, int year_inscription, String email, String legal_nature, String fantasy_name, String number_address, String place_id, String company_name, String street, int status, String phone, String cellphone, String complement, String accession_date) {
+    public EstabelecimentoResponse(long id_establishment, String neighborwood, String city, String state, String zip_code, String cnae, String register_number, int day_inscription, int month_inscription, int year_inscription, String email, String legal_nature, String fantasy_name, String number_address, String place_id, String company_name, String street, int status, String phone, String cellphone, String complement, String accession_date) {
         this.id_establishment = id_establishment;
         this.neighborwood = neighborwood;
         this.city = city;
@@ -98,7 +98,7 @@ public class EstabelecimentoResponse {
         this.accession_date = accession_date;
     }
 
-    public int getId_establishment() {
+    public long getId_establishment() {
         return id_establishment;
     }
 
@@ -186,7 +186,7 @@ public class EstabelecimentoResponse {
         return accession_date;
     }
 
-    public void setId_establishment(int id_establishment) {
+    public void setId_establishment(long id_establishment) {
         this.id_establishment = id_establishment;
     }
 
