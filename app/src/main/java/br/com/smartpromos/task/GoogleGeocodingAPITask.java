@@ -14,10 +14,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import br.com.smartpromos.R;
+import br.com.smartpromos.api.general.response.GmapsLocale;
 import br.com.smartpromos.util.GetLocationGmpas;
 import br.com.smartpromos.util.GoogleGeocodingAPI;
 
@@ -60,12 +62,12 @@ public class GoogleGeocodingAPITask extends AsyncTask<String, Void, String> {
             lng = Double.parseDouble(result[1]);
         }else{
 
-            lat = Double.parseDouble(params[1]);
-            lng = Double.parseDouble(params[2]);
+            lat = Double.parseDouble(params[0]);
+            lng = Double.parseDouble(params[1]);
         }
 
-        latitude = Double.parseDouble(params[1]);
-        longitude = Double.parseDouble(params[2]);
+        latitude = lat;
+        longitude = lng;
 
         return GoogleGeocodingAPI.getCurrentLocationByJSON(latitude, longitude);
 
@@ -79,28 +81,22 @@ public class GoogleGeocodingAPITask extends AsyncTask<String, Void, String> {
         if(s != null){
 
             EditText edtCep = (EditText) view.findViewById(R.id.edtCep);
+            EditText edtNumero = (EditText) view.findViewById(R.id.edtNumero);
             EditText edtEndereco = (EditText) view.findViewById(R.id.edtEndereco);
             EditText edtBairro = (EditText) view.findViewById(R.id.edtBairro);
             EditText edtCidade = (EditText) view.findViewById(R.id.edtCidade);
             EditText edtEstado = (EditText) view.findViewById(R.id.edtEstado);
 
-            String[] fullAddred = s.split(",");
-            String[] numberAndNeighborhood = fullAddred[1].split("-");
-            String[] cityAndState = fullAddred[2].split("-");
+            GmapsLocale gmapsLocale = new Gson().fromJson(s, GmapsLocale.class);
 
-            String street_address = fullAddred[0]+", "+numberAndNeighborhood[0].trim();
+            edtCep.setText( ((gmapsLocale.getCep() == 0) ? "" : String.valueOf(gmapsLocale.getCep())) );
+            edtEndereco.setText(gmapsLocale.getEndereco());
+            edtNumero.setText(gmapsLocale.getNumero());
+            edtBairro.setText(gmapsLocale.getBairro());
+            edtCidade.setText(gmapsLocale.getCidade());
+            edtEstado.setText(gmapsLocale.getEstado());
 
-            Log.i("street_address", street_address);
-
-            String postal_code = numberAndNeighborhood[1].trim()+" - "+fullAddred[3].trim();
-            Log.i("postal_code", postal_code);
-
-            edtCep.setText(fullAddred[3].trim().replace("-",""));
-            edtEndereco.setText(fullAddred[0]);
-            edtBairro.setText(numberAndNeighborhood[1].trim());
-            edtCidade.setText(cityAndState[0].trim());
-            edtEstado.setText(cityAndState[1].trim());
-            title = street_address+" "+postal_code;
+            title = gmapsLocale.getEndereco()+", "+gmapsLocale.getNumero()+" - "+gmapsLocale.getBairro();
         }else{
             Toast.makeText(context, "Erro ao carregar localização", Toast.LENGTH_SHORT).show();
         }

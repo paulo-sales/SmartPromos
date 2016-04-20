@@ -33,14 +33,16 @@ android {
 
     productFlavors {
         Desenvolvimento {
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
+            //buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.tutorpro.com.br/SmartPromos\""
             applicationId "br.com.smartpromos"
             versionName '1.0-DEV'
             manifestPlaceholders = [applicationLabel: "SmartPromos-DEV"]
             signingConfig = signingConfigs.dev
         }
         Producao {
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
+            //buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.tutorpro.com.br/SmartPromos\""
             applicationId "br.com.smartpromos"
             versionName '1.0'
             manifestPlaceholders = [applicationLabel: "SmartPromos"]
@@ -59,7 +61,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
@@ -68,4 +70,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
 
     compile 'com.appyvet:materialrangebar:1.3'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
 }

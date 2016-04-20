@@ -17,15 +17,15 @@ public class SolicitacaoResponse {
     private int flag_customer;
 
     @SerializedName("place")
-    private long place;
+    private PlaceResponse place;
 
     @SerializedName("customer")
-    private long customer;
+    private ClienteResponse customer;
 
     @SerializedName("establishment")
-    private long establishment;
+    private EstabelecimentoResponse establishment;
 
-    public SolicitacaoResponse(long id_request, int flag_establishment, int flag_customer, long place, long customer, long establishment) {
+    public SolicitacaoResponse(long id_request, int flag_establishment, int flag_customer, PlaceResponse place, ClienteResponse customer, EstabelecimentoResponse establishment) {
         this.id_request = id_request;
         this.flag_establishment = flag_establishment;
         this.flag_customer = flag_customer;
@@ -58,27 +58,27 @@ public class SolicitacaoResponse {
         this.flag_customer = flag_customer;
     }
 
-    public long getPlace() {
+    public PlaceResponse getPlace() {
         return place;
     }
 
-    public void setPlace(long place) {
+    public void setPlace(PlaceResponse place) {
         this.place = place;
     }
 
-    public long getCustomer() {
+    public ClienteResponse getCustomer() {
         return customer;
     }
 
-    public void setCustomer(long customer) {
+    public void setCustomer(ClienteResponse customer) {
         this.customer = customer;
     }
 
-    public long getEstablishment() {
+    public EstabelecimentoResponse getEstablishment() {
         return establishment;
     }
 
-    public void setEstablishment(long establishment) {
+    public void setEstablishment(EstabelecimentoResponse establishment) {
         this.establishment = establishment;
     }
 }

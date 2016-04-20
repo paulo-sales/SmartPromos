@@ -27,6 +27,8 @@ public class GetLocationGmpas {
 
     public static JSONObject getLocationInfo(String addresss){
 
+        Log.i("LINK_SEARCH", "https://maps.googleapis.com/maps/api/geocode/json?key="+SmartPromosApp.context.getResources().getString(R.string.gmaps_id)+"&address="+addresss+"&sensor=true");
+
         HttpGet httpGet = new HttpGet("https://maps.googleapis.com/maps/api/geocode/json?key="+SmartPromosApp.context.getResources().getString(R.string.gmaps_id)+"&address="+addresss+"&sensor=true");
         HttpClient client = new DefaultHttpClient();
         HttpResponse response;
@@ -86,11 +88,11 @@ public class GetLocationGmpas {
                     JSONArray typesArray = r.getJSONArray("types");
                     String types = typesArray.getString(0);
 
-                    if(types.equalsIgnoreCase("geometry")){
-                        JSONArray geometry = r.getJSONArray("location");
-                        latitude = geometry.getString(0);
-                        longitude = geometry.getString(1);
-                    }
+                    JSONObject geometry = r.getJSONObject("geometry");
+                    JSONObject location = geometry.getJSONObject("location");
+                    latitude = location.getString("lat");
+                    longitude = location.getString("lng");
+
 
                     if(latitude!=null && longitude!=null){
                         currentLocation = "lat "+latitude+ " Lng "+longitude;

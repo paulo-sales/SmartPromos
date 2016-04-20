@@ -52,21 +52,20 @@ import br.com.smartpromos.util.UIDialogsFragments;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LocationFragment extends Fragment implements TextWatcher, AdapterView.OnItemSelectedListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class LocationFragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private TextView txtTitle;
     private ImageButton imgToolbar;
     private Button btnConfirmarLocal;
     private Button btnAlterarLocal;
     private LinearLayout containerSetLocale;
-    private AutoCompleteTextView edtLoadLocale;
+    private EditText edtLoadLocale;
+    private ImageButton btnSearch;
     private Spinner spinnerLocale;
     private String[] locale = new String[]{"Tipo da sua localização", "Residencial", "Trabalho", "Outros"};
 
     private static final int THRESHOLD = 0;
     private String latitude, longitude;
-    private List<Address> autoCompleteSuggestionAddresses;
-    private ArrayAdapter<String> autoCompleteAdapter;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
 
@@ -125,15 +124,25 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
 
         containerSetLocale = (LinearLayout) view.findViewById(R.id.containerSetLocale);
 
-        autoCompleteAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
-        autoCompleteAdapter.setNotifyOnChange(false);
+        btnSearch = (ImageButton) view.findViewById(R.id.btnSearch);
+        edtLoadLocale = (EditText) view.findViewById(R.id.edtLoadLocale);
 
-        edtLoadLocale = (AutoCompleteTextView) view.findViewById(R.id.edtLoadLocale);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String address = edtLoadLocale.getText().toString();
+                if(!"".equalsIgnoreCase(address) || address != null){
 
-        edtLoadLocale.addTextChangedListener(this);
-        //edtLoadLocale.setOnItemSelectedListener();
-        edtLoadLocale.setThreshold(THRESHOLD);
-        edtLoadLocale.setAdapter(autoCompleteAdapter);
+                    String[] p = {"getLocation", address.replace(" ","+")};
+
+                    GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getContext(), map, view);
+                    googleGeocodingAPITask.execute(p);
+
+                }else{
+                    uiDialogs.showDialog("Nova Localização", "Preencha o seu endereço para continuar.");
+                }
+            }
+        });
 
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,14 +162,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
             @Override
             public void onClick(View v) {
 
-                showAutoComplete(containerSetLocale);
-                String btnText = btnAlterarLocal.getText().toString();
-
-                if(btnText.equalsIgnoreCase("alterar")){
-                    btnAlterarLocal.setText("Cancelar");
-                }else{
-                    btnAlterarLocal.setText("Alterar");
-                }
+                triggerAutoComplete(containerSetLocale);
             }
         });
 
@@ -175,6 +177,8 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
         spinnerLocale.setLayoutParams(lp);
         spinnerLocale.setAdapter(adapter);
         spinnerLocale.setAdapter(new TypeLocaleAdapter(getActivity(), locale));
+
+
 
         return view;
     }
@@ -265,6 +269,20 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
 
     }
 
+    public void triggerAutoComplete(LinearLayout linearLayout){
+
+        showAutoComplete(linearLayout);
+        String btnText = btnAlterarLocal.getText().toString();
+
+        if(btnText.equalsIgnoreCase("alterar")){
+            btnAlterarLocal.setText("Cancelar");
+        }else{
+            btnAlterarLocal.setText("Alterar");
+        }
+
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -302,7 +320,7 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
 
             String[] p = {String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude())};
 
-            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getActivity(), map, view);
+            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getContext(), map, view);
             googleGeocodingAPITask.execute(p);
 
         }
@@ -337,94 +355,6 @@ public class LocationFragment extends Fragment implements TextWatcher, AdapterVi
         mGoogleApiClient.disconnect();
         super.onStop();
 
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        String value = s.toString();
-
-        GetSuggestions getSuggestions = new GetSuggestions();
-        String[] p = {value};
-        getSuggestions.execute(p);
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position < autoCompleteSuggestionAddresses.size()) {
-            Address selected = autoCompleteSuggestionAddresses.get(position);
-            latitude = Double.toString(selected.getLatitude());
-            longitude = Double.toString(selected.getLongitude());
-
-            map.clear();
-
-            String[] p = {latitude, longitude};
-
-            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(getActivity(), map, view);
-            googleGeocodingAPITask.execute(p);
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    private class GetSuggestions extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //autoCompleteAdapter.clear();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String value = params[0];
-
-            try {
-                autoCompleteSuggestionAddresses = new Geocoder(getContext()).getFromLocationName(value, 0);
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
-
-
-            return "Ok";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            latitude = longitude = null;
-
-
-            if(autoCompleteSuggestionAddresses.size() > 0){
-                autoCompleteAdapter.clear();
-            }
-
-            for (Address a : autoCompleteSuggestionAddresses) {
-                Log.v("text autocomplete", a.toString());
-                //String temp = ""+ a.getFeatureName()+" "+a.getLocality()+ " "+a.getCountryName();
-                autoCompleteAdapter.add(a.toString());
-            }
-
-            autoCompleteAdapter.notifyDataSetChanged();
-
-            super.onPostExecute(s);
-        }
     }
 
 }

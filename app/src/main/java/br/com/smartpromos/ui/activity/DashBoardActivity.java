@@ -167,7 +167,7 @@ public class DashBoardActivity extends AppCompatActivity
         txtBtnSearch.setTextColor(getResources().getColor(R.color.colorGreenBtn));
 
         icoBtnCoupons.setEnabled(true);
-        txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
+        txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorBlack));
 
         containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
         containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_green));
@@ -406,7 +406,7 @@ public class DashBoardActivity extends AppCompatActivity
 
                 break;
 
-            case R.id.nav_sync:
+            /*case R.id.nav_sync:
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_sync));
 
@@ -416,7 +416,7 @@ public class DashBoardActivity extends AppCompatActivity
                 fragmentTransactionSync.replace(R.id.fragment_container, fragSync);
                 fragmentTransactionSync.commit();
 
-                break;
+                break;*/
 
             case R.id.nav_tutorial:
 

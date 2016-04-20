@@ -56,8 +56,10 @@
         <activity
             android:name=".ui.activity.LocaleCustomerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.SettingsActivity"
-            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.CouponDetailsActivity"></activity>
     </application>
 
 </manifest>

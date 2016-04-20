@@ -260,6 +260,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                             getLocale(clienteResponse.getDoc_id());
 
                             startActivity(new Intent(RegisterActivity.this,DashBoardActivity.class));
+                            finish();
                         } else {
 
                             showDialog("Erro ao cadastrar", clienteResponse.getMensagem().getMensagem());

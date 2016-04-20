@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.smartpromos.ui.activity.CouponDetailsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="45dp"
+        android:background="@drawable/bg_transparent_white">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_radius_white_shadow">
+
+            <RelativeLayout
+                android:id="@+id/containerImgCoupon"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/img_coupons">
+
+                <TextView
+                    android:id="@+id/tituCoupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Desconto no happyhour"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bg_transparent_grey"
+                    style="@style/PaddingCardListPattern"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textAlignment="center"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/PaddingCardListPattern"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Ganhe 10% durante o happy hour"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/border_bottom_grey"/>
+
+                <TextView
+                    android:id="@+id/txtValidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Validade da oferta:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/border_bottom_grey"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/border_bottom_grey">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_date_range_black_36dp"/>
+
+                    <TextView
+                        android:id="@+id/txtInicio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:text="Início 03/03/2016"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_date_range_black_36dp"/>
+
+                    <TextView
+                        android:id="@+id/txtFim"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:text="Fim 30/03/2016"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/toolbar_app"></include>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnDescartar"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_red"
+            android:text="Descartar"
+            style="@style/TextBtnPattern"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnAceitar"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_green"
+            android:text="Aceitar"
+            style="@style/TextBtnPattern"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

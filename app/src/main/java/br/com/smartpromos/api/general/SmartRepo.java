@@ -38,15 +38,16 @@ public interface SmartRepo {
     void listaPlacesbyEmail(@Field("email") String email,
                        Callback<ListaCuponsSolicitacao> listaCuponsSolicitacaoCallback);
 
+
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getCouponsByEmail")
-    void cuponsByEmail(@Field("email") String email,
-                  @Field("status") String status,
-                  Callback<ListaCuponsResponse> listaCuponsResponseCallback);
+    void cuponsByEmailAndStatus(@Field("email") String email,
+                       @Field("status") int status,
+                       Callback<ListaCuponsResponse> listaCuponsResponseCallback);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getCupomByIdMobile")
-    void cuponsByEmail(@Field("cupomId") String cupomId,
+    void cuponsById(@Field("cupomId") String cupomId,
                   Callback<CupomResponse> cupomResponseCallback);
 
     @FormUrlEncoded

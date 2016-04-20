@@ -62,7 +62,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class LocaleCustomerActivity extends AppCompatActivity implements TextWatcher, AdapterView.OnItemSelectedListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class LocaleCustomerActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private TextView txtTitle;
     private ImageButton imgToolbar;
@@ -78,12 +78,11 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
     private Button btnRegister;
     private Button btnAlterarLocal;
     private LinearLayout containerSetLocale;
-    private AutoCompleteTextView edtLoadLocale;
+    private EditText edtLoadLocale;
+    private ImageButton btnSearch;
 
     private static final int THRESHOLD = 0;
     private String latitude, longitude;
-    private List<Address> autoCompleteSuggestionAddresses;
-    private ArrayAdapter<String> autoCompleteAdapter;
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
 
@@ -155,15 +154,23 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
 
         containerSetLocale = (LinearLayout) view.findViewById(R.id.containerSetLocale);
 
-        autoCompleteAdapter = new ArrayAdapter<String>(LocaleCustomerActivity.this, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>());
-        autoCompleteAdapter.setNotifyOnChange(false);
+        btnSearch = (ImageButton) view.findViewById(R.id.btnSearch);
+        edtLoadLocale = (EditText) view.findViewById(R.id.edtLoadLocale);
 
-        edtLoadLocale = (AutoCompleteTextView) view.findViewById(R.id.edtLoadLocale);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String address = edtLoadLocale.getText().toString();
+                if(!"".equalsIgnoreCase(address) || address != null){
 
-        edtLoadLocale.addTextChangedListener(this);
-        edtLoadLocale.setOnItemSelectedListener(this);
-        edtLoadLocale.setThreshold(THRESHOLD);
-        edtLoadLocale.setAdapter(autoCompleteAdapter);
+                    getMapLocation(address.replace(" ","+"));
+
+                }else{
+                    showDialog("Nova Localização", "Preencha o seu endereço para continuar.");
+                }
+            }
+        });
+
 
         btnAlterarLocal = (Button) view.findViewById(R.id.btnAlterarLocal);
         edtCep.setText(String.valueOf(localizacaoResponse.getZip_code()));
@@ -184,14 +191,7 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
             @Override
             public void onClick(View v) {
 
-                showAutoComplete(containerSetLocale);
-                String btnText = btnAlterarLocal.getText().toString();
-
-                if(btnText.equalsIgnoreCase("alterar")){
-                    btnAlterarLocal.setText("Cancelar");
-                }else{
-                    btnAlterarLocal.setText("Alterar");
-                }
+                triggerAutoComplete(containerSetLocale);
             }
         });
 
@@ -224,6 +224,18 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
 
 
 
+    }
+
+    public void triggerAutoComplete(LinearLayout linearLayout){
+
+        showAutoComplete(linearLayout);
+        String btnText = btnAlterarLocal.getText().toString();
+
+        if(btnText.equalsIgnoreCase("alterar")){
+            btnAlterarLocal.setText("Cancelar");
+        }else{
+            btnAlterarLocal.setText("Alterar");
+        }
     }
 
     @Override
@@ -348,8 +360,20 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
             return;
         }
 
-        Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        setMapLocation(l);
+        if(localizacaoResponse == null){
+            Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            setMapLocation(l);
+        }else{
+            String address = localizacaoResponse.getAddress();
+            String number = (localizacaoResponse.getNumber_address() != null) ? "+"+localizacaoResponse.getNumber_address() : "";
+            String bairro =  (!"".equals(localizacaoResponse.getNeighborwood()) || localizacaoResponse.getNeighborwood() != null) ? "+"+localizacaoResponse.getNeighborwood() : "";
+            String cidade =  (!"".equals(localizacaoResponse.getCity()) || localizacaoResponse.getCity() != null) ? "+"+localizacaoResponse.getCity() : "";
+            String estado =  (!"".equals(localizacaoResponse.getState()) || localizacaoResponse.getState() != null) ? "+"+localizacaoResponse.getState() : "";
+            String cep =  (localizacaoResponse.getZip_code() > 0 ) ? "+"+String.valueOf(localizacaoResponse.getZip_code()) : "";
+
+            String addreddComplete = address+number+bairro+cidade+estado+cep;
+            getMapLocation(addreddComplete.replace(" ", "+"));
+        }
 
     }
 
@@ -366,6 +390,13 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
 
         }
 
+    }
+
+    private void getMapLocation(String address){
+        String[] p = {"getLocation", address};
+
+        GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(LocaleCustomerActivity.this, map, view);
+        googleGeocodingAPITask.execute(p);
     }
 
     @Override
@@ -397,91 +428,4 @@ public class LocaleCustomerActivity extends AppCompatActivity implements TextWat
 
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        String value = s.toString();
-
-        GetSuggestions getSuggestions = new GetSuggestions();
-        String[] p = {value};
-        getSuggestions.execute(p);
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position < autoCompleteSuggestionAddresses.size()) {
-            Address selected = autoCompleteSuggestionAddresses.get(position);
-            latitude = Double.toString(selected.getLatitude());
-            longitude = Double.toString(selected.getLongitude());
-
-            map.clear();
-
-            String[] p = {latitude, longitude};
-
-            GoogleGeocodingAPITask googleGeocodingAPITask = new GoogleGeocodingAPITask(LocaleCustomerActivity.this, map, view);
-            googleGeocodingAPITask.execute(p);
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    private class GetSuggestions extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //autoCompleteAdapter.clear();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String value = params[0];
-
-            try {
-                autoCompleteSuggestionAddresses = new Geocoder(getApplicationContext()).getFromLocationName(value, 0);
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
-
-
-            return "Ok";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            latitude = longitude = null;
-
-
-            if(autoCompleteSuggestionAddresses.size() > 0){
-                autoCompleteAdapter.clear();
-            }
-
-            for (Address a : autoCompleteSuggestionAddresses) {
-                Log.v("text autocomplete", a.toString());
-                //String temp = ""+ a.getFeatureName()+" "+a.getLocality()+ " "+a.getCountryName();
-                autoCompleteAdapter.add(a.toString());
-            }
-
-            autoCompleteAdapter.notifyDataSetChanged();
-
-            super.onPostExecute(s);
-        }
-    }
 }

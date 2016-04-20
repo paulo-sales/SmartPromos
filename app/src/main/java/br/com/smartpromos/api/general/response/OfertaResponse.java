@@ -29,9 +29,9 @@ public class OfertaResponse {
     private String creation_date;
 
     @SerializedName("establishment")
-    private long establishment;
+    private EstabelecimentoResponse establishment;
 
-    public OfertaResponse(long id_sale, int status, int send, String name, String start_date, String over_date, String creation_date, long establishment) {
+    public OfertaResponse(long id_sale, int status, int send, String name, String start_date, String over_date, String creation_date, EstabelecimentoResponse establishment) {
         this.id_sale = id_sale;
         this.status = status;
         this.send = send;
@@ -98,11 +98,11 @@ public class OfertaResponse {
         this.creation_date = creation_date;
     }
 
-    public long getEstablishment() {
+    public EstabelecimentoResponse getEstablishment() {
         return establishment;
     }
 
-    public void setEstablishment(long establishment) {
+    public void setEstablishment(EstabelecimentoResponse establishment) {
         this.establishment = establishment;
     }
 }

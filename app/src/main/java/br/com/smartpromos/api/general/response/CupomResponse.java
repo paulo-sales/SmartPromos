@@ -35,12 +35,10 @@ public class CupomResponse {
     private int quantity;
 
     @SerializedName("sale")
-    private long sale;
+    private OfertaResponse sale;
 
-    @SerializedName("msg")
-    private MensagemResponse mensagem;
 
-    public CupomResponse(long id_coupon, String name, String description, String confirmationmessage, String path_img, int type, int notification, String mensage, int quantity, long sale, MensagemResponse mensagem) {
+    public CupomResponse(long id_coupon, String name, String description, String confirmationmessage, String path_img, int type, int notification, String mensage, int quantity, OfertaResponse sale) {
         this.id_coupon = id_coupon;
         this.name = name;
         this.description = description;
@@ -51,16 +49,8 @@ public class CupomResponse {
         this.mensage = mensage;
         this.quantity = quantity;
         this.sale = sale;
-        this.mensagem = mensagem;
     }
 
-    public MensagemResponse getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(MensagemResponse mensagem) {
-        this.mensagem = mensagem;
-    }
 
     public long getId_coupon() {
         return id_coupon;
@@ -98,7 +88,7 @@ public class CupomResponse {
         return quantity;
     }
 
-    public long getSale() {
+    public OfertaResponse getSale() {
         return sale;
     }
 
@@ -138,7 +128,7 @@ public class CupomResponse {
         this.quantity = quantity;
     }
 
-    public void setSale(long sale) {
+    public void setSale(OfertaResponse sale) {
         this.sale = sale;
     }
 }

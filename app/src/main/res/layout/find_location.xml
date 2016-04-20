@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:id="@+id/containerSetLocale"
     android:layout_width="match_parent"
     android:layout_height="60dp"
@@ -13,10 +14,12 @@
     android:visibility="invisible"
     android:layout_alignParentTop="true">
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/edtLoadLocale"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_weight="6"
+        android:layout_marginRight="5dp"
         android:inputType="textAutoComplete"
         style="@style/TextInputPattern"
         android:hint="@string/edt_change_local"
@@ -24,5 +27,13 @@
         android:textColorHint="@color/colorWhite"
         android:textStyle="bold"
         android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/btnSearch"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_search_white_36dp"
+        android:background="@drawable/rounded_btn_green"/>
 
 </LinearLayout>
