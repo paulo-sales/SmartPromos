@@ -442,6 +442,28 @@ public class DashBoardActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.fragment_container, mfrag);
                 fragmentTransaction.commit();
 
+                btnActionOne.setEnabled(true);
+                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                btnActionTwo.setEnabled(true);
+                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                btnActionTree.setEnabled(true);
+                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                icoBtnSales.setEnabled(true);
+                txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                icoBtnSearch.setEnabled(true);
+                txtBtnSearch.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                icoBtnCoupons.setEnabled(true);
+                txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
+                containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
+                containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
+
                 break;
 
             /*case R.id.nav_sync:

@@ -52,6 +52,9 @@
     <string name="txt_receber_todas">Receber ofertas de todas as empresas</string>
     <string name="txt_receber_solicitei">Apenas empresas que já solicitei e recebi ofertas</string>
     <string name="txt_receber_comprei">Apenas empresas que já comprei</string>
+
+    <string name="txt_use_coupon_title">Utilizar Cupom</string>
+    <string name="txt_use_coupon_desc">Por favor, digite o código de confirmação.</string>
     <!-- Fim -->
 
     <!-- Strings EditText -->
@@ -72,6 +75,8 @@
     <string name="edt_bairro">Seu Bairro</string>
     <string name="edt_cidade">Sua Cidade</string>
     <string name="edt_estado">Seu Estado</string>
+
+    <string name="edt_use_coupon">Insira o código</string>
     <!-- Fim -->
 
     <!-- Strings Btns -->

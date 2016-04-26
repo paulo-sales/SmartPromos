@@ -10,12 +10,18 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
+import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.ui.fragment.DialogUI;
+import br.com.smartpromos.ui.fragment.UseCoupon;
+import br.com.smartpromos.util.SmartSharedPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -33,7 +39,7 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
     private Button btnDescartar;
     private Button btnConfirmar;
     private CupomResponse cupom;
-
+    private ClienteResponse cliente;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
     @Override
@@ -41,7 +47,7 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_details_usable);
 
-
+        cliente = SmartSharedPreferences.getUsuarioCompleto(getApplicationContext());
         String cupomid = this.getIntent().getStringExtra("cupomid");
 
         txtTitle = (TextView) findViewById(R.id.txtTitle);
@@ -67,6 +73,19 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
 
         getInfoCoupom(cupomid);
 
+        btnConfirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                useCupom();
+            }
+        });
+
+        btnDescartar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                descartarCupons();
+            }
+        });
     }
 
 
@@ -91,7 +110,7 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
                     containerImgCoupon.setBackground(drawable);
                     */
                 }else{
-                    showDialog("Erro", "Não conseguimos localizar este cupom!");
+                    showDialog("Erro", "Não conseguimos localizar este cupom!", "");
                 }
 
 
@@ -99,19 +118,45 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                showDialog("Erro", "Ocorreu um erro ao tentar conectar com o servidor!");
+                showDialog("Erro", "Ocorreu um erro ao tentar conectar com o servidor!", "");
             }
         });
 
     }
 
-    public void showDialog(String title, String descDialog) {
+    private void descartarCupons(){
+
+        smartRepo.descartarCuponsAceitos(cupom.getId_coupon(), cliente.getDoc_id(), 2, new Callback<MensagemResponse>() {
+            @Override
+            public void success(MensagemResponse mensagemResponse, Response response) {
+
+                if(mensagemResponse.getId() == 1){
+                    showDialog(mensagemResponse.getMensagem(), "", "rejected");
+                }else{
+                    showDialog(mensagemResponse.getMensagem(), "", "");
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
+    }
+
+    public void showDialog(String title, String descDialog, String extra) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         bundle.putString("description", descDialog);
+
+        if(extra != null || !extra.equals("")){
+            bundle.putString("extra", extra);
+        }
 
         DialogUI newFragment = new DialogUI();
         newFragment.setArguments(bundle);
@@ -123,4 +168,28 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
         transaction.add(android.R.id.content, newFragment)
                 .addToBackStack(null).commit();
     }
+
+    public void useCupom() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Bundle bundle = new Bundle();
+
+        String clienteStr = new Gson().toJson(cliente, ClienteResponse.class);
+        String CupomStr = new Gson().toJson(cupom, CupomResponse.class);
+
+        bundle.putString("cliente", clienteStr);
+        bundle.putString("cupom", CupomStr);
+
+        UseCoupon newFragment = new UseCoupon();
+        newFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        transaction.add(android.R.id.content, newFragment)
+                .addToBackStack(null).commit();
+    }
+
 }

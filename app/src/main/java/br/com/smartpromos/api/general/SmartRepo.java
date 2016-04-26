@@ -59,15 +59,17 @@ public interface SmartRepo {
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=descartarCuponsAceitos")
-    void descartarCuponsAceitos(@Field("myCupomId") String myCupomId,
-                           @Field("cpf") String cpf,
-                           @Field("status") String status,
-                           Callback<CupomResponse> cupomResponseCallback);
+    void descartarCuponsAceitos(@Field("myCupomId") long myCupomId,
+                           @Field("cpf") long cpf,
+                           @Field("status") int status,
+                           Callback<MensagemResponse> mensagem);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=utilizarCupon")
-    void utilizarCupon(@Field("cupom") String cupom,
-                  Callback<CupomResponse> cupomResponseCallback);
+    void utilizarCupon(@Field("codigo") String codigo,
+                       @Field("cupom") long cupom,
+                       @Field("usuario") long usuario,
+                  Callback<MensagemResponse> mensagem);
 
     //@GET("/prc/prc.php?ctl=mobile&acao=sincronizar")
     //sincronizarNFP(@Field("cpf") String cpf,

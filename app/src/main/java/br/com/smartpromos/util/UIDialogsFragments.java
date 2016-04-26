@@ -21,6 +21,28 @@ public class UIDialogsFragments extends Fragment {
         this.fragmentActivity = fragmentActivity;
     }
 
+    public void showDialogUseCupom(String title, String descDialog, String extra) {
+
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("description", descDialog);
+
+        if(extra != null || !extra.equals("")){
+            bundle.putString("extra", extra);
+        }
+        DialogUI newFragment = new DialogUI();
+        newFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        transaction.add(android.R.id.content, newFragment)
+                .addToBackStack(null).commit();
+    }
+
     public void showDialog(String title, String descDialog) {
 
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();

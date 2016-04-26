@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import br.com.smartpromos.R;
+import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.ui.activity.LocationActivity;
 import br.com.smartpromos.ui.activity.RememberPasswrodActivity;
 
@@ -44,11 +45,25 @@ public class DialogUI extends DialogFragment {
 
         txtTitleDialog.setText(getArguments().getString("title"));
         descDialog.setText(getArguments().getString("description"));
+        final String extra = getArguments().getString("extra");
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dismiss();
+
+                if(extra == "rejected"){
+                    getContext().startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                    getActivity().finish();
+                }
+
+                if(extra == "used"){
+                    getContext().startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                    getActivity().finish();
+                }
+
+
             }
         });
 
