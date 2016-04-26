@@ -1,6 +1,6 @@
 package br.com.smartpromos.ui.fragment;
 
-import android.app.Activity;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
-import br.com.smartpromos.adapter.ListCouponsAdapter;
+import br.com.smartpromos.adapter.ListCouponsToUseAdapter;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
@@ -26,7 +26,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SalesFragment extends Fragment {
+public class NewSalesFragment extends Fragment {
 
     private ClienteResponse cliente;
     private RecyclerView mRecyclerView;
@@ -37,14 +37,20 @@ public class SalesFragment extends Fragment {
     private List<CupomResponse> cupons;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
-    public SalesFragment() {
+    public NewSalesFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sales, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_new_sales, container, false);
 
         containerNotice = (LinearLayout) view.findViewById(R.id.containerNotice);
 
@@ -57,22 +63,12 @@ public class SalesFragment extends Fragment {
 
         cupons = new ArrayList<>();
 
-        getCupons(0);
+        getCupons(1);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     private void getCupons(int status){
@@ -89,7 +85,7 @@ public class SalesFragment extends Fragment {
                         cupons.add(r);
                     }
 
-                    mAdapter = new ListCouponsAdapter(cupons, getContext());
+                    mAdapter = new ListCouponsToUseAdapter(cupons, getContext(), getActivity());
                     mRecyclerView.setAdapter(mAdapter);
                 }else{
                     containerNotice.setVisibility(View.VISIBLE);

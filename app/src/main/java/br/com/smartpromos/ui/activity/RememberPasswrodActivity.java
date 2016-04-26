@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,12 +43,11 @@ public class RememberPasswrodActivity extends AppCompatActivity {
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
 
-
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtTitle.setText(getResources().getString(R.string.txt_recuperar_senha));
 
         imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
+        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_36dp));
 
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override

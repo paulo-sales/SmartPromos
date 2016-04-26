@@ -197,7 +197,7 @@ public class LoginFragment extends Fragment {
                             getLocale(clienteResponse.getDoc_id());
 
                             getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
-
+                            getActivity().finish();
                         } else if (clienteResponse.getMensagem().getId() == 0) {
 
                             uiDialogs.showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());

@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         txtTitle.setText(getResources().getString(R.string.txt_cadastro));
 
         imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
+        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_36dp));
 
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override

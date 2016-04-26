@@ -37,6 +37,21 @@
             android:background="@drawable/img_coupons">
 
             <TextView
+                android:id="@+id/txtTotal"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorWhite"
+                android:text="100"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/btn_full_rounded_red"/>
+
+            <TextView
                 android:id="@+id/tituCoupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

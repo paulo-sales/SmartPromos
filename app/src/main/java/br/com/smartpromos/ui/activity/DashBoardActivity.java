@@ -2,12 +2,15 @@ package br.com.smartpromos.ui.activity;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +19,13 @@ import android.widget.TextView;
 
 import br.com.smartpromos.R;
 import br.com.smartpromos.ui.fragment.CanceledCouponsFragment;
+import br.com.smartpromos.ui.fragment.DialogUI;
+import br.com.smartpromos.ui.fragment.NewSalesFragment;
 import br.com.smartpromos.ui.fragment.SalesDiscardedFragment;
-import br.com.smartpromos.ui.fragment.SalesFragment;
+import br.com.smartpromos.ui.fragment.SalesExpiredFragment;
+import br.com.smartpromos.ui.fragment.SalesReceivedsFragment;
 import br.com.smartpromos.ui.fragment.SalesRequestFragment;
-import br.com.smartpromos.ui.fragment.SyncFragment;
+import br.com.smartpromos.ui.fragment.SalesUsedFragment;
 import br.com.smartpromos.util.SmartSharedPreferences;
 
 public class DashBoardActivity extends AppCompatActivity
@@ -71,7 +77,7 @@ public class DashBoardActivity extends AppCompatActivity
         icoBtnCoupons = (Button) findViewById(R.id.icoBtnCoupons);
         txtBtnCoupons = (TextView) findViewById(R.id.txtBtnCoupons);
 
-        SalesFragment mfrag = new SalesFragment();
+        SalesReceivedsFragment mfrag = new SalesReceivedsFragment();
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, mfrag);
@@ -118,7 +124,7 @@ public class DashBoardActivity extends AppCompatActivity
 
     public void changeToSales(View view){
 
-        SalesFragment mfragSales = new SalesFragment();
+        SalesReceivedsFragment mfragSales = new SalesReceivedsFragment();
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, mfragSales);
@@ -177,7 +183,7 @@ public class DashBoardActivity extends AppCompatActivity
     }
 
     public void changeToCoupons(View view){
-        SalesDiscardedFragment mCouponfrag = new SalesDiscardedFragment();
+        NewSalesFragment mCouponfrag = new NewSalesFragment();
 
         android.support.v4.app.FragmentTransaction fragCouponTransaction = getSupportFragmentManager().beginTransaction();
         fragCouponTransaction.replace(R.id.fragment_container, mCouponfrag);
@@ -221,7 +227,7 @@ public class DashBoardActivity extends AppCompatActivity
 
                 if(button.getText().toString().equalsIgnoreCase("recebidas")){
 
-                    SalesFragment mfrag = new SalesFragment();
+                    SalesReceivedsFragment mfrag = new SalesReceivedsFragment();
 
                     android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, mfrag);
@@ -230,6 +236,13 @@ public class DashBoardActivity extends AppCompatActivity
                     HeaderTitle.setText(getResources().getString(R.string.txt_sales));
                 }else{
 
+                    NewSalesFragment mfrag = new NewSalesFragment();
+
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
+                    fragmentTransaction.commit();
+
+                    HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
                 }
 
                 btnActionOne.setEnabled(false);
@@ -254,7 +267,13 @@ public class DashBoardActivity extends AppCompatActivity
                     HeaderTitle.setText(getResources().getString(R.string.txt_sales));
 
                 }else{
+                    SalesUsedFragment mfrag = new SalesUsedFragment();
 
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
+                    fragmentTransaction.commit();
+
+                    HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
                 }
 
                 btnActionOne.setEnabled(true);
@@ -280,6 +299,13 @@ public class DashBoardActivity extends AppCompatActivity
 
                 }else{
 
+                    SalesExpiredFragment mfrag = new SalesExpiredFragment();
+
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
+                    fragmentTransaction.commit();
+
+                    HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
                 }
 
                 btnActionOne.setEnabled(true);
@@ -327,6 +353,12 @@ public class DashBoardActivity extends AppCompatActivity
 
             case R.id.nav_sales_received:
 
+                SalesReceivedsFragment mSalesReceived = new SalesReceivedsFragment();
+
+                android.support.v4.app.FragmentTransaction fragSalesReceived = getSupportFragmentManager().beginTransaction();
+                fragSalesReceived.replace(R.id.fragment_container, mSalesReceived);
+                fragSalesReceived.commit();
+
                 HeaderTitle.setText(getResources().getString(R.string.txt_sales));
 
                 icoBtnSales.setEnabled(false);
@@ -364,6 +396,12 @@ public class DashBoardActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_my_coupons:
+
+                NewSalesFragment mCouponfrag = new NewSalesFragment();
+
+                android.support.v4.app.FragmentTransaction fragCouponTransaction = getSupportFragmentManager().beginTransaction();
+                fragCouponTransaction.replace(R.id.fragment_container, mCouponfrag);
+                fragCouponTransaction.commit();
 
                 icoBtnSales.setEnabled(true);
                 txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
@@ -418,11 +456,11 @@ public class DashBoardActivity extends AppCompatActivity
 
                 break;*/
 
-            case R.id.nav_tutorial:
-
-                HeaderTitle.setText(getResources().getString(R.string.txt_tutorial));
-
-                break;
+//            case R.id.nav_tutorial:
+//
+//                HeaderTitle.setText(getResources().getString(R.string.txt_tutorial));
+//
+//                break;
 
             case R.id.nav_config:
 
@@ -446,4 +484,5 @@ public class DashBoardActivity extends AppCompatActivity
 
         return true;
     }
+
 }

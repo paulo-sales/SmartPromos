@@ -132,7 +132,7 @@ public class LocaleCustomerActivity extends AppCompatActivity implements OnMapRe
         txtTitle.setText(getResources().getString(R.string.txt_locale));
 
         imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
+        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_36dp));
 
         spinnerLocale = (Spinner) findViewById(R.id.spinnerLocale);
 

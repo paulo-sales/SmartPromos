@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="45dp"
         android:background="@drawable/bg_transparent_white">
 
         <LinearLayout
@@ -124,7 +123,7 @@
 
     <include layout="@layout/toolbar_app"></include>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:orientation="horizontal"
         android:gravity="bottom"
         android:layout_alignParentBottom="true"
@@ -153,6 +152,6 @@
             style="@style/TextBtnPattern"
             android:textAllCaps="false"/>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>

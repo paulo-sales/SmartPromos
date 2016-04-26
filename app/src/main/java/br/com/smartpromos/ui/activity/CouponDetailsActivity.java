@@ -1,5 +1,6 @@
 package br.com.smartpromos.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,13 +14,20 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Timer;
+
 import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
+import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.fragment.DialogUI;
+import br.com.smartpromos.ui.fragment.NewSalesFragment;
+import br.com.smartpromos.ui.fragment.SalesDiscardedFragment;
+import br.com.smartpromos.util.SmartSharedPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -34,10 +42,7 @@ public class CouponDetailsActivity extends AppCompatActivity {
     private TextView txtInicio;
     private TextView txtFim;
     private RelativeLayout containerImgCoupon;
-    private Button btnDescartar;
-    private Button btnAceitar;
     private CupomResponse cupom;
-
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
     @Override
@@ -45,13 +50,13 @@ public class CouponDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_details);
 
-        String cupomid = this.getIntent().getStringExtra("cupomid");
+        final String cupomid = this.getIntent().getStringExtra("cupomid");
 
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtTitle.setText(getResources().getString(R.string.txt_cadastro));
 
         imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
+        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_36dp));
 
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,10 +70,9 @@ public class CouponDetailsActivity extends AppCompatActivity {
         txtInicio           = (TextView) findViewById(R.id.txtInicio);
         txtFim              = (TextView) findViewById(R.id.txtFim);
         containerImgCoupon  = (RelativeLayout) findViewById(R.id.containerImgCoupon);
-        btnDescartar        = (Button) findViewById(R.id.btnDescartar);
-        btnAceitar          = (Button) findViewById(R.id.btnAceitar);
 
         getInfoCoupom(cupomid);
+
 
     }
 
@@ -111,7 +115,6 @@ public class CouponDetailsActivity extends AppCompatActivity {
         });
 
     }
-
 
     public void showDialog(String title, String descDialog) {
 

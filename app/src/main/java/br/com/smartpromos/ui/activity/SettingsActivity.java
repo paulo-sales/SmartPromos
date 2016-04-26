@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
         txtTitle.setText(getResources().getString(R.string.txt_settings));
 
         imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
+        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_36dp));
 
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override

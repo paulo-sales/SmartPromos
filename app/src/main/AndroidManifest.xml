@@ -40,7 +40,9 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.RememberPasswrodActivity" />
+        <activity
+            android:name=".ui.activity.RememberPasswrodActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait" />
@@ -59,7 +61,14 @@
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.CouponDetailsActivity"></activity>
+        <activity
+            android:name=".ui.activity.CouponDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.DetailsCouponStaticActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.CouponDetailsUsableActivity"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

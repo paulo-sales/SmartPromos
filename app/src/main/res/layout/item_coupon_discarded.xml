@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="3dp"
+    android:id="@+id/container">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/containerEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/PaddingCardListPattern">
+
+            <TextView
+                android:id="@+id/tituEmpresa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Desconto no happyhour"
+                android:textSize="22sp"
+                android:textColor="@color/colorBlack"
+                android:textAlignment="center"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/containerImgCoupon"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/img_coupons">
+
+            <TextView
+                android:id="@+id/txtTotal"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorWhite"
+                android:text="100"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/btn_full_rounded_red"/>
+
+            <TextView
+                android:id="@+id/tituCoupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Desconto no happyhour"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_transparent_grey"
+                style="@style/PaddingCardListPattern"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textAlignment="center"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/PaddingCardListPattern">
+
+            <TextView
+                android:id="@+id/txtShortDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Ganhe 10% durante o happy hour"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/txtValidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Validade da oferta:"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/txtInicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Início 03/03/2016"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/txtFim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fim 30/03/2016"
+                android:textSize="14sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/btnEnviar"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_btn_green_hover"
+                    android:text="Saiba mais"
+                    style="@style/TextBtnPattern"
+                    android:textAllCaps="false"/>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

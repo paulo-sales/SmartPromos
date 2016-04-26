@@ -52,9 +52,10 @@ public interface SmartRepo {
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=setCupomStatus")
-    void cupomStatus(@Field("myCupomId") String cupomId,
-                @Field("cpf") String cpf,
-                Callback<CupomResponse> cupomResponseCallback);
+    void cupomStatus(@Field("myCupomId") long cupomId,
+                @Field("cpf") long cpf,
+                 @Field("status") int status,
+                Callback<MensagemResponse> mensagem);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=descartarCuponsAceitos")
