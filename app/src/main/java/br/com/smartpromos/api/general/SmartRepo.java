@@ -11,7 +11,10 @@ import br.com.smartpromos.api.general.response.PlaceResponse;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by Dany on 12/04/2016.
@@ -105,12 +108,12 @@ public interface SmartRepo {
     void getLocalizacao(@Field("customer") long customer,
                    Callback<LocalizacaoResponse> localizacaoResponse);
 
-    @FormUrlEncoded
-    @POST("/json?")
+
+    @GET("/json?")
     void getPlacesByCustomerLocation(
-            @Field("location") String location,
-            @Field("radius") int radius,
-            @Field("key") String gmapskey, Callback<ListPlacesRespopnse> places);
+            @Query("location") String location,
+            @Query("radius") int radius,
+            @Query("key") String gmapskey, Callback<ListPlacesRespopnse> places);
 
     /*@FormUrlEncoded
     @POST("/json?")

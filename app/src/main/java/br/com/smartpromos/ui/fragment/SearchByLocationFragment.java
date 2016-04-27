@@ -250,7 +250,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
         if(l != null){
             String location = String.valueOf(l.getLatitude())+","+String.valueOf(l.getLongitude());
             String gmapsKey = getContext().getResources().getString(R.string.gmaps_id);
-            smartRepo.getPlacesByCustomerLocation(location, cliente.getSale_radius(), gmapsKey, new Callback<ListPlacesRespopnse>() {
+            smartRepo.getPlacesByCustomerLocation(location, (cliente.getSale_radius() * 1000), gmapsKey, new Callback<ListPlacesRespopnse>() {
                 @Override
                 public void success(ListPlacesRespopnse lista, Response response) {
 

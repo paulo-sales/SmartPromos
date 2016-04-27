@@ -19,9 +19,6 @@ public class ImageGenerate {
 
         RequestQueue rq = Volley.newRequestQueue(SmartPromosApp.context);
 
-        //rq.getCache().remove(url);
-        //rq.getCache().clear();
-
         rq.getCache().invalidate(url, true);
         ImageRequest ir = new ImageRequest(url, new Response.Listener<Bitmap>() {
 
@@ -30,6 +27,9 @@ public class ImageGenerate {
                 generateImageResponse.getBitmap(response);
             }
         }, 0, 0, ImageView.ScaleType.CENTER_CROP, null, null);
+
+        rq.getCache().remove(url);
+        rq.getCache().clear();
 
         rq.add(ir);
 
