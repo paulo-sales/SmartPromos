@@ -64,7 +64,7 @@ public class SalesExpiredFragment extends Fragment {
 
         cupons = new ArrayList<>();
 
-        getCupons(5);
+        getCupons(4);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

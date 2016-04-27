@@ -177,6 +177,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/btn_alt_local"
                 android:background="@drawable/btn_green"
+                android:textAllCaps="false"
                 style="@style/TextBtnPattern"/>
 
             <Button
@@ -189,6 +190,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/btn_green"
+                android:textAllCaps="false"
                 style="@style/TextBtnPattern"/>
 
         </LinearLayout>

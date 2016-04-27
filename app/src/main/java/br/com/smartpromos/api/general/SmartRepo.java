@@ -2,18 +2,16 @@ package br.com.smartpromos.api.general;
 
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.api.general.response.ListPlacesRespopnse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsSolicitacao;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.api.general.response.MensagemResponse;
-import br.com.smartpromos.api.general.response.MeusCuponsResponse;
 import br.com.smartpromos.api.general.response.PlaceResponse;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.Path;
 
 /**
  * Created by Dany on 12/04/2016.
@@ -106,5 +104,18 @@ public interface SmartRepo {
     @POST("/prc/prc.php?ctl=mobile&acao=getLocalizacao")
     void getLocalizacao(@Field("customer") long customer,
                    Callback<LocalizacaoResponse> localizacaoResponse);
+
+    @FormUrlEncoded
+    @POST("/json?")
+    void getPlacesByCustomerLocation(
+            @Field("location") String location,
+            @Field("radius") int radius,
+            @Field("key") String gmapskey, Callback<ListPlacesRespopnse> places);
+
+    /*@FormUrlEncoded
+    @POST("/json?")
+    void getPlaceDetails(
+            @Field("placeid") String placeid,
+            @Field("key") int gmapskey);*/
 
 }

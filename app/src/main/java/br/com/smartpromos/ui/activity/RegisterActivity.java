@@ -253,6 +253,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
                     @Override
                     public void success(ClienteResponse clienteResponse, Response response) {
+
                         if (clienteResponse.getMensagem().getId() == 3) {
 
                             showDialog(clienteResponse.getMensagem().getMensagem(), "");
@@ -261,6 +262,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
                             startActivity(new Intent(RegisterActivity.this,DashBoardActivity.class));
                             finish();
+
                         } else {
 
                             showDialog("Erro ao cadastrar", clienteResponse.getMensagem().getMensagem());

@@ -2,6 +2,9 @@ package br.com.smartpromos.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import java.util.List;
 
 import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.activity.CouponDetailsActivity;
 import br.com.smartpromos.ui.activity.DetailsCouponStaticActivity;
 
@@ -58,11 +62,11 @@ public class ListCouponsDiscardedAdapter extends RecyclerView.Adapter<ListCoupon
             holder.txtShortDescription.setText(cupomResponse.getMensage());
             holder.txtInicio.setText(cupomResponse.getSale().getStart_date());
             holder.txtFim.setText(cupomResponse.getSale().getOver_date());
-            /*
+
             Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
             Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
             holder.containerImgCoupon.setBackground(drawable);
-            */
+
             holder.btnEnviar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

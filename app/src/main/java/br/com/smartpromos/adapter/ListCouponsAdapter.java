@@ -99,11 +99,11 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
             holder.txtShortDescription.setText(cupomResponse.getMensage());
             holder.txtInicio.setText(cupomResponse.getSale().getStart_date());
             holder.txtFim.setText(cupomResponse.getSale().getOver_date());
-            /*
+
             Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
             Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
             holder.containerImgCoupon.setBackground(drawable);
-            */
+
             holder.btnEnviar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

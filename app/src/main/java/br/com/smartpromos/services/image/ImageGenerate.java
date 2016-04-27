@@ -19,8 +19,8 @@ public class ImageGenerate {
 
         RequestQueue rq = Volley.newRequestQueue(SmartPromosApp.context);
 
-        rq.getCache().remove(url);
-        rq.getCache().clear();
+        //rq.getCache().remove(url);
+        //rq.getCache().clear();
 
         rq.getCache().invalidate(url, true);
         ImageRequest ir = new ImageRequest(url, new Response.Listener<Bitmap>() {

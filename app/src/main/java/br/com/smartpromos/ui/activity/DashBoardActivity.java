@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import br.com.smartpromos.ui.fragment.SalesExpiredFragment;
 import br.com.smartpromos.ui.fragment.SalesReceivedsFragment;
 import br.com.smartpromos.ui.fragment.SalesRequestFragment;
 import br.com.smartpromos.ui.fragment.SalesUsedFragment;
+import br.com.smartpromos.ui.fragment.SearchByLocationFragment;
 import br.com.smartpromos.util.SmartSharedPreferences;
 
 public class DashBoardActivity extends AppCompatActivity
@@ -41,6 +43,9 @@ public class DashBoardActivity extends AppCompatActivity
     private RelativeLayout containerSalesBtn;
     private RelativeLayout containerSearchBtn;
     private RelativeLayout containerCouponsBtn;
+
+    private RelativeLayout containerToolbarBottom;
+    private LinearLayout containerButtonsTop;
 
     private Button icoBtnSales;
     private TextView txtBtnSales;
@@ -63,6 +68,9 @@ public class DashBoardActivity extends AppCompatActivity
         btnActionOne = (Button) findViewById(R.id.btnActionOne);
         btnActionTwo = (Button) findViewById(R.id.btnActionTwo);
         btnActionTree = (Button) findViewById(R.id.btnActionTree);
+
+        containerToolbarBottom = (RelativeLayout) findViewById(R.id.containerToolbarBottom);
+        containerButtonsTop = (LinearLayout) findViewById(R.id.containerButtonsTop);
 
         containerSalesBtn = (RelativeLayout) findViewById(R.id.containerSalesBtn);
         containerSearchBtn = (RelativeLayout) findViewById(R.id.containerSearchBtn);
@@ -160,24 +168,12 @@ public class DashBoardActivity extends AppCompatActivity
     }
 
     public void changetToSearch(View view){
-        SalesRequestFragment mfragSearch = new SalesRequestFragment();
 
-        android.support.v4.app.FragmentTransaction fragSearchTransaction = getSupportFragmentManager().beginTransaction();
-        fragSearchTransaction.replace(R.id.fragment_container, mfragSearch);
-        fragSearchTransaction.commit();
+        SearchByLocationFragment searchFrag = new SearchByLocationFragment();
 
-        icoBtnSales.setEnabled(true);
-        txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        icoBtnSearch.setEnabled(false);
-        txtBtnSearch.setTextColor(getResources().getColor(R.color.colorGreenBtn));
-
-        icoBtnCoupons.setEnabled(true);
-        txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-        containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_green));
-        containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
+        android.support.v4.app.FragmentTransaction fragSearch = getSupportFragmentManager().beginTransaction();
+        fragSearch.replace(R.id.fragment_container, searchFrag);
+        fragSearch.commit();
 
         HeaderTitle.setText(getResources().getString(R.string.txt_search_sales));
     }
@@ -339,6 +335,8 @@ public class DashBoardActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        containerToolbarBottom.setVisibility(View.VISIBLE);
+        containerButtonsTop.setVisibility(View.VISIBLE);
         switch (id){
             case R.id.nav_profile:
 
@@ -392,6 +390,12 @@ public class DashBoardActivity extends AppCompatActivity
 
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_search_sales));
+
+                SearchByLocationFragment searchFrag = new SearchByLocationFragment();
+
+                android.support.v4.app.FragmentTransaction fragSearch = getSupportFragmentManager().beginTransaction();
+                fragSearch.replace(R.id.fragment_container, searchFrag);
+                fragSearch.commit();
 
                 break;
 

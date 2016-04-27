@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +127,8 @@ public class LoginFragment extends Fragment {
         @Override
         public void onSuccess(LoginResult loginResult) {
 
+            Log.v("idFacebook", loginResult.getAccessToken().toString());
+
             GraphRequest request = GraphRequest.newMeRequest(
                     loginResult.getAccessToken(),
                     new GraphRequest.GraphJSONObjectCallback() {
@@ -135,7 +138,7 @@ public class LoginFragment extends Fragment {
                                 JSONObject object,
                                 GraphResponse response) {
                             // Application code
-                            //Log.v("LoginActivity", response.toString());
+                            Log.v("LoginActivity", response.toString());
 
                             try {
 
@@ -145,6 +148,7 @@ public class LoginFragment extends Fragment {
                                     String email = object.getString("email");
                                     String pass = object.getString("id");
                                     String picture = "https://graph.facebook.com/" + object.getString("id")+ "/picture?type=large";
+
 
 
                                 }
@@ -196,8 +200,6 @@ public class LoginFragment extends Fragment {
 
                             getLocale(clienteResponse.getDoc_id());
 
-                            getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
-                            getActivity().finish();
                         } else if (clienteResponse.getMensagem().getId() == 0) {
 
                             uiDialogs.showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());
@@ -233,6 +235,9 @@ public class LoginFragment extends Fragment {
                     SmartSharedPreferences.gravarLocalizacao(getContext(), localizacaoResponse);
 
                 }
+
+                getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                getActivity().finish();
 
             }
 

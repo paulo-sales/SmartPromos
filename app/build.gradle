@@ -34,7 +34,9 @@ android {
     productFlavors {
         Desenvolvimento {
             //buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.tutorpro.com.br/SmartPromos\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.vitalles.com/devcetax/smartpromos\""
+            buildConfigField "String", "REST_GMAPS_PLACES", "\"https://maps.googleapis.com/maps/api/place/nearbysearch\""
+            buildConfigField "String", "REST_GMAPS_PLACE_DETAIL", "\"https://maps.googleapis.com/maps/api/place/details\""
             applicationId "br.com.smartpromos"
             versionName '1.0-DEV'
             manifestPlaceholders = [applicationLabel: "SmartPromos-DEV"]
@@ -42,7 +44,9 @@ android {
         }
         Producao {
             //buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.tutorpro.com.br/SmartPromos\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.vitalles.com/devcetax/smartpromos\""
+            buildConfigField "String", "REST_GMAPS_PLACES", "\"https://maps.googleapis.com/maps/api/place/nearbysearch\""
+            buildConfigField "String", "REST_GMAPS_PLACE_DETAIL", "\"https://maps.googleapis.com/maps/api/place/details\""
             applicationId "br.com.smartpromos"
             versionName '1.0'
             manifestPlaceholders = [applicationLabel: "SmartPromos"]
