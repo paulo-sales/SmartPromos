@@ -1,5 +1,8 @@
 package br.com.smartpromos.ui.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.MensagemResponse;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.fragment.DialogUI;
 import br.com.smartpromos.ui.fragment.UseCoupon;
 import br.com.smartpromos.util.SmartSharedPreferences;
@@ -104,11 +108,11 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
                     txtDescription.setText(cupomResponse.getDescription());
                     txtInicio.setText(cupomResponse.getSale().getStart_date());
                     txtFim.setText(cupomResponse.getSale().getOver_date());
-                    /*
+
                     Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
                     Drawable drawable = new BitmapDrawable(getResources(), bitmap);
                     containerImgCoupon.setBackground(drawable);
-                    */
+
                 }else{
                     showDialog("Erro", "Não conseguimos localizar este cupom!", "");
                 }
