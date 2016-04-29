@@ -3,21 +3,21 @@ package br.com.smartpromos.api.general.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LocationResponse {
+public class Northeast {
 
     @SerializedName("lat")
     @Expose
-    private double lat;
+    private Double lat;
     @SerializedName("lng")
     @Expose
-    private double lng;
+    private Double lng;
 
     /**
      *
      * @return
      * The lat
      */
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
@@ -26,7 +26,7 @@ public class LocationResponse {
      * @param lat
      * The lat
      */
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
@@ -35,7 +35,7 @@ public class LocationResponse {
      * @return
      * The lng
      */
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 
@@ -44,7 +44,7 @@ public class LocationResponse {
      * @param lng
      * The lng
      */
-    public void setLng(double lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 

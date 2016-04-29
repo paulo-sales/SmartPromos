@@ -2,18 +2,18 @@ package br.com.smartpromos.api.general;
 
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
-import br.com.smartpromos.api.general.response.ListPlacesRespopnse;
+import br.com.smartpromos.api.general.response.ListPlacesResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsSolicitacao;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.api.general.response.PlaceResponse;
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -108,12 +108,14 @@ public interface SmartRepo {
     void getLocalizacao(@Field("customer") long customer,
                    Callback<LocalizacaoResponse> localizacaoResponse);
 
-
-    @GET("/json?")
+    @GET("/json")
     void getPlacesByCustomerLocation(
             @Query("location") String location,
             @Query("radius") int radius,
-            @Query("key") String gmapskey, Callback<ListPlacesRespopnse> places);
+            @Query("type") String type,
+            @Query("key") String gmapskey,
+            @Query("sensor") boolean sensor,
+            Callback<ListPlacesResponse> places);
 
     /*@FormUrlEncoded
     @POST("/json?")

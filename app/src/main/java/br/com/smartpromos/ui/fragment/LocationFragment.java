@@ -78,6 +78,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
     private View view;
 
+    private Button btnMyLocation;
+
     private UIDialogsFragments uiDialogs;
 
     public LocationFragment() {
@@ -118,6 +120,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
         btnConfirmarLocal = (Button) view.findViewById(R.id.btnConfirmarLocal);
         btnAlterarLocal = (Button) view.findViewById(R.id.btnAlterarLocal);
+
+        btnMyLocation = (Button) view.findViewById(R.id.btnMyLocation);
 
         imgToolbar = (ImageButton) view.findViewById(R.id.imgToolbar);
         imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
@@ -178,7 +182,12 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         spinnerLocale.setAdapter(adapter);
         spinnerLocale.setAdapter(new TypeLocaleAdapter(getActivity(), locale));
 
-
+        btnMyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocation();
+            }
+        });
 
         return view;
     }
@@ -290,6 +299,24 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                 .findFragmentById(R.id.map_container);
         if (f != null)
             getFragmentManager().beginTransaction().remove(f).commit();
+    }
+
+    private void getLocation(){
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        setMapLocation(l);
+
     }
 
     @Override

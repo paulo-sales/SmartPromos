@@ -3,7 +3,11 @@ package br.com.smartpromos.ui.fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -21,34 +25,44 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
-import br.com.smartpromos.api.general.response.ListPlacesRespopnse;
-import br.com.smartpromos.api.general.response.LocalizacaoResponse;
-import br.com.smartpromos.api.general.response.LocationResponse;
-import br.com.smartpromos.api.general.response.PlaceListResponse;
+import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.api.general.response.ListPlacesResponse;
+import br.com.smartpromos.api.general.response.ListaCuponsResponse;
+import br.com.smartpromos.api.general.response.Result;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.task.GoogleGeocodingAPITaskSearch;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedInput;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchByLocationFragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private TextView txtTitle;
-    private ImageButton imgToolbar;
     private Button btnConfirmarLocal;
     private Button btnAlterarLocal;
     private LinearLayout containerSetLocale;
@@ -60,6 +74,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
 
+    private Button btnMyLocation;
 
     private View view;
 
@@ -89,6 +104,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         map = mMapFragment.getMap();
+
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.map_container, mMapFragment).commit();
         mMapFragment.getMapAsync(this);
@@ -98,15 +114,10 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
 
-
-        txtTitle = (TextView) view.findViewById(R.id.txtTitle);
-        txtTitle.setText(getResources().getString(R.string.txt_escolher_licalizacao));
-
         btnConfirmarLocal = (Button) view.findViewById(R.id.btnConfirmarLocal);
         btnAlterarLocal = (Button) view.findViewById(R.id.btnAlterarLocal);
 
-        imgToolbar = (ImageButton) view.findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_48dp));
+        btnMyLocation = (Button) view.findViewById(R.id.btnMyLocation);
 
         containerSetLocale = (LinearLayout) view.findViewById(R.id.containerSetLocale);
 
@@ -121,7 +132,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
                     String[] p = {"getLocation", address.replace(" ","+")};
 
-                    GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view);
+                    GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente);
                     googleGeocodingAPITask.execute(p);
 
                 }else{
@@ -130,18 +141,18 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
             }
         });
 
-        imgToolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-
         btnAlterarLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 triggerAutoComplete(containerSetLocale);
+            }
+        });
+
+        btnMyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocation();
             }
         });
 
@@ -209,6 +220,24 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
             getFragmentManager().beginTransaction().remove(f).commit();
     }
 
+    private void getLocation(){
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        setMapLocation(l);
+
+    }
+
     @Override
     public void onConnected(Bundle bundle) {
 
@@ -225,7 +254,6 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
         Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         setMapLocation(l);
-        getPlaces(l);
 
     }
 
@@ -233,44 +261,14 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
         if(l != null){
 
-            map.clear();
-
             String[] p = {String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude())};
-
-            GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view);
+            GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente);
             googleGeocodingAPITask.execute(p);
 
         }
 
-
     }
 
-    private void getPlaces(Location l){
-
-        if(l != null){
-            String location = String.valueOf(l.getLatitude())+","+String.valueOf(l.getLongitude());
-            String gmapsKey = getContext().getResources().getString(R.string.gmaps_id);
-            smartRepo.getPlacesByCustomerLocation(location, (cliente.getSale_radius() * 1000), gmapsKey, new Callback<ListPlacesRespopnse>() {
-                @Override
-                public void success(ListPlacesRespopnse lista, Response response) {
-
-                    if (lista.getStatus().equalsIgnoreCase("OK")){
-
-                        String gson = new Gson().toJson(lista, ListPlacesRespopnse.class);
-                        Log.e("LIST_PLACES", gson);
-
-                    }
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-
-                }
-            });
-        }
-
-    }
 
     @Override
     public void onConnectionSuspended(int i) {

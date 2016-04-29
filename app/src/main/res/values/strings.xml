@@ -89,6 +89,7 @@
     <string name="btn_conf_local">Confirmar</string>
     <string name="btn_alt_local">Alterar</string>
     <string name="btn_alt_local_search">Alterar Localização</string>
+    <string name="btn_alt_place_search">Localizar Estabelecimento</string>
     <string name="btn_close">Fechar</string>
 
     <string name="btn_received">Recebidas</string>

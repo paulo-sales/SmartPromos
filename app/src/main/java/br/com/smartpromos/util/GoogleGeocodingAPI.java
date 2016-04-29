@@ -127,6 +127,18 @@ public class GoogleGeocodingAPI {
 
                         street_address = new Gson().toJson(gmapsLocale, GmapsLocale.class);
 
+                    }else{
+
+                        JSONObject geometry = r.getJSONObject("geometry");
+                        JSONObject location = geometry.getJSONObject("location");
+
+                        gmapsLocale.setEndereco(r.getString("formatted_address"));
+
+                        gmapsLocale.setLat(Double.parseDouble(location.getString("lat")));
+                        gmapsLocale.setLng(Double.parseDouble(location.getString("lng")));
+
+                        street_address = new Gson().toJson(gmapsLocale, GmapsLocale.class);
+
                     }
 
                     if(street_address!=null){
@@ -151,5 +163,6 @@ public class GoogleGeocodingAPI {
 
         return null;
     }
+
 
 }

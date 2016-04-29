@@ -20,8 +20,17 @@
 
         </RelativeLayout>
 
+        <Button
+            android:id="@+id/btnMyLocation"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_my_location_black_36dp"/>
 
         <View
+            android:id="@+id/containerShadow"
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:background="@drawable/toolbar_upshadow"
