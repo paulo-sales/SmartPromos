@@ -48,6 +48,7 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
 
     private static Context context;
     private List<PlaceResponse> places;
+    private long nextItem = 0;
 
     public ListRequestAdapter(List<PlaceResponse> places, Context context){
 
@@ -76,7 +77,7 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
             holder.endEmpresa.setText(place.getAdr_address());
 
         }
-        setAnimation(holder.container);
+        //setAnimation(holder.container);
     }
 
     @Override
@@ -91,6 +92,11 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
     private void setAnimation(View viewToAnimate)
     {
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.animate_bottom_to_up);
+
+        nextItem = animation.getStartOffset();
+        nextItem = nextItem + 200;
+        animation.setStartOffset(nextItem);
+
         viewToAnimate.startAnimation(animation);
     }
 
