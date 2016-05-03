@@ -213,6 +213,11 @@ public class LoginFragment extends Fragment {
         smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
             @Override
             public void success(ClienteResponse clienteResponse, Response response) {
+
+                Log.e("USER_VEERIFIED", ""+new Gson().toJson(cliente, ClienteRequest.class));
+
+                Log.e("RETORNO_ID", ""+clienteResponse.getMensagem().getId());
+
                 if (clienteResponse.getMensagem().getId() == 1) {
 
                     if(clienteResponse.getStay_logged_in() == 1){
@@ -237,6 +242,10 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
+
+                Log.e("USER_VEERIFIED_ERR", ""+new Gson().toJson(cliente, ClienteRequest.class));
+
+                Log.e("RETORNO_ERR", ""+error.getCause());
 
             }
         });
