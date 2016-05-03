@@ -43,6 +43,7 @@ import java.util.List;
 
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.TypeLocaleAdapter;
+import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 import br.com.smartpromos.api.general.request.MensagemRequest;
 import br.com.smartpromos.task.GoogleGeocodingAPITask;
@@ -82,6 +83,8 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
     private UIDialogsFragments uiDialogs;
 
+    private String clientStr = null;
+
     public LocationFragment() {
         // Required empty public constructor
     }
@@ -96,6 +99,14 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
         uiDialogs = new UIDialogsFragments();
         uiDialogs.uiGetActivity(getActivity());
+
+        clientStr = getActivity().getIntent().getStringExtra("cliente");
+
+        if(clientStr != null && !clientStr.equals("")){
+            Log.v("DATA_RESPONSE", clientStr);
+            ClienteRequest cliente = new Gson().fromJson(clientStr, ClienteRequest.class);
+            uiDialogs.showDialog("Olá, "+cliente.getFirst_name()+"!", "Não encontramos o seu cadastro em nosso sistema. Você poderia nos passar mais algumas informações?");
+        }
 
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         map = mMapFragment.getMap();
@@ -241,6 +252,12 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
             String localeString = new Gson().toJson(localizacaoRequest, LocalizacaoRequest.class);
 
             Intent intent = new Intent(getActivity(), RegisterActivity.class);
+
+            if(clientStr != null && !clientStr.equals("")){
+                Log.v("DATA_SEND_CLIENT", clientStr);
+                intent.putExtra("cliente", clientStr);
+            }
+
             intent.putExtra("localizacao", localeString);
             getActivity().startActivity(intent);
 

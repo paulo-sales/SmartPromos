@@ -84,16 +84,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         edtConfPass = (EditText) findViewById(R.id.edtConfPass);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
-
-        Intent i = getIntent();
-
-        if( i != null) {
-            String locale = i.getStringExtra("localizacao");
-            localizacaoRequest = new Gson().fromJson(locale, LocalizacaoRequest.class);
-            Log.i("Locale_json", locale);
-            Log.i("Check_locale", localizacaoRequest.getAddress());
-        }
-
         edtDataNasc = (Button) findViewById(R.id.edtDataNasc);
 
         txtTitle = (TextView) findViewById(R.id.txtTitle);
@@ -140,6 +130,30 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
         });
 
+        Intent i = getIntent();
+
+        if( i != null) {
+            String locale = i.getStringExtra("localizacao");
+            String clienteStr = i.getStringExtra("cliente");
+
+            localizacaoRequest = new Gson().fromJson(locale, LocalizacaoRequest.class);
+            Log.i("Locale_json", locale);
+            Log.i("Check_locale", localizacaoRequest.getAddress());
+
+            if(clienteStr != null && !clienteStr.equals("")){
+                Log.v("DATA_RESPONSE", clienteStr);
+                ClienteRequest cliente = new Gson().fromJson(clienteStr, ClienteRequest.class);
+
+                edtNome.setText(cliente.getFirst_name());
+                edtSobreNome.setText(cliente.getLast_name());
+                edtDataNasc.setText(cliente.getBirthday()+"/"+cliente.getBirthday_month()+"/"+cliente.getBirthday_yaer());
+                edtEmail.setText(cliente.getEmail());
+
+                spinnerGender.setSelection(cliente.getGender()-1);
+
+            }
+
+        }
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

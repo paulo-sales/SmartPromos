@@ -120,15 +120,15 @@ public class LocaleCustomerActivity extends AppCompatActivity implements OnMapRe
         clienteResponse = SmartSharedPreferences.getUsuarioCompleto(getApplicationContext());
 
 
-        edtCep = (EditText) findViewById(R.id.edtCep);
+        edtCep      = (EditText) findViewById(R.id.edtCep);
         edtEndereco = (EditText) findViewById(R.id.edtEndereco);
-        edtNumero = (EditText) findViewById(R.id.edtNumero);
-        edtBairro = (EditText) findViewById(R.id.edtBairro);
-        edtCidade = (EditText) findViewById(R.id.edtCidade);
-        edtEstado = (EditText) findViewById(R.id.edtEstado);
+        edtNumero   = (EditText) findViewById(R.id.edtNumero);
+        edtBairro   = (EditText) findViewById(R.id.edtBairro);
+        edtCidade   = (EditText) findViewById(R.id.edtCidade);
+        edtEstado   = (EditText) findViewById(R.id.edtEstado);
         btnRegister = (Button) findViewById(R.id.btnConfirmarLocal);
 
-        txtTitle = (TextView) findViewById(R.id.txtTitle);
+        txtTitle    = (TextView) findViewById(R.id.txtTitle);
         txtTitle.setText(getResources().getString(R.string.txt_locale));
 
         imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
@@ -179,6 +179,17 @@ public class LocaleCustomerActivity extends AppCompatActivity implements OnMapRe
         edtBairro.setText(localizacaoResponse.getNeighborwood());
         edtCidade.setText(localizacaoResponse.getCity());
         edtEstado.setText(localizacaoResponse.getCountry());
+
+        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Residencial")){
+            spinnerLocale.setSelection(0);
+        }
+        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Trabalho")){
+            spinnerLocale.setSelection(1);
+        }
+        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Outros")){
+            spinnerLocale.setSelection(2);
+        }
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

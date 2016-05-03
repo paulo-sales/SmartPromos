@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SmartPromos</string>
 
-    <string name="app_id">790398977752690</string>
+    <string name="app_id">203924606624016</string>
     <string name="gmaps_id">AIzaSyAdwTFcIkFBA8rDcg-rvQzagKSBf2PmABE</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -91,6 +91,7 @@
     <string name="btn_alt_local_search">Alterar Localização</string>
     <string name="btn_alt_place_search">Localizar Estabelecimento</string>
     <string name="btn_close">Fechar</string>
+    <string name="btn_solicitar">Solicitar Promoção</string>
 
     <string name="btn_received">Recebidas</string>
     <string name="btn_requested">Solicitadas</string>

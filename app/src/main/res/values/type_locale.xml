@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="type_locale">
-        <item >Residencial</item>
-        <item >Trabalho</item>
-        <item >Outros</item>
+        <item>Residencial</item>
+        <item>Trabalho</item>
+        <item>Outros</item>
     </string-array>
 
 </resources>

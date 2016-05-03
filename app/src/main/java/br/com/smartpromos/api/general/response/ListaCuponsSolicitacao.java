@@ -10,17 +10,17 @@ import java.util.List;
 public class ListaCuponsSolicitacao {
 
     @SerializedName("solicitacoes")
-    private List<SolicitacaoResponse> solicitacoes;
+    private List<PlaceResponse> solicitacoes;
 
-    public ListaCuponsSolicitacao(List<SolicitacaoResponse> solicitacoes) {
+    public ListaCuponsSolicitacao(List<PlaceResponse> solicitacoes) {
         this.solicitacoes = solicitacoes;
     }
 
-    public List<SolicitacaoResponse> getCupons() {
+    public List<PlaceResponse> getSolicitacoes() {
         return solicitacoes;
     }
 
-    public void setCupons(List<SolicitacaoResponse> solicitacoes) {
+    public void setSolicitacoes(List<PlaceResponse> solicitacoes) {
         this.solicitacoes = solicitacoes;
     }
 }

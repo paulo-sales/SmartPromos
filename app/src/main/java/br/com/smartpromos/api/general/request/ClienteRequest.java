@@ -49,6 +49,9 @@ public class ClienteRequest {
     @SerializedName("msg")
     private MensagemRequest mensagem;
 
+    public ClienteRequest(){
+
+    }
 
     public ClienteRequest(long doc_id, String first_name, String last_name, int gender, int birthday, int birthday_month, int birthday_yaer, int sale_radius, int get_offers, int stay_logged_in, String email, String password, String phone) {
         this.doc_id = doc_id;

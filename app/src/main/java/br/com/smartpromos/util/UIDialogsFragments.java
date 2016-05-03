@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import br.com.smartpromos.ui.fragment.DialogHelpLogin;
+import br.com.smartpromos.ui.fragment.DialogMarker;
 import br.com.smartpromos.ui.fragment.DialogUI;
 
 /**
@@ -62,10 +63,28 @@ public class UIDialogsFragments extends Fragment {
                 .addToBackStack(null).commit();
     }
 
-
     public void showHelpDialog() {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         DialogHelpLogin newFragment = new DialogHelpLogin();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        transaction.add(android.R.id.content, newFragment)
+                .addToBackStack(null).commit();
+    }
+
+
+    public void showDialogMarker(String place) {
+
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("place", place);
+
+        DialogMarker newFragment = new DialogMarker();
+        newFragment.setArguments(bundle);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 

@@ -104,16 +104,9 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         spinnerGender.setLayoutParams(lp1);
         spinnerGender.setAdapter(adapter1);
-
-        spinnerGender.getItemAtPosition(((clienteResponse.getGender() == 1) ? 0 : 1));
-
         spinnerGender.setAdapter(new GenderAdapter(this, gender));
 
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_locale, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        spinnerGender.setSelection(clienteResponse.getGender()-1);
 
         edtDataNasc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +134,6 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         edtTelefone.setText(clienteResponse.getPhone());
         edtEmail.setText(clienteResponse.getEmail());
         edtDataNasc.setText(clienteResponse.getBirthday()+"/"+clienteResponse.getBirthday_month()+"/"+ clienteResponse.getBirthday_yaer());
-
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -202,12 +202,8 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
     private void setAnimation(View viewToAnimate, int position)
     {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
-        {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.animate_bottom_to_up);
+        viewToAnimate.startAnimation(animation);
     }
 
     public void goToCoupon(CupomResponse cupomResponse){

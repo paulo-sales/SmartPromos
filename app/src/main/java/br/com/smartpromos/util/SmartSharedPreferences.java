@@ -2,6 +2,7 @@ package br.com.smartpromos.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -42,6 +43,7 @@ public class SmartSharedPreferences {
     public static ClienteResponse getUsuarioCompleto(Context context) {
         final android.content.SharedPreferences prefs = getPreferences(context);
         String user = prefs.getString(USER, "");
+        Log.e("CUSTOMER_DATA", user);
         ClienteResponse clienteResponse = new Gson().fromJson(user, ClienteResponse.class);
         return clienteResponse;
     }

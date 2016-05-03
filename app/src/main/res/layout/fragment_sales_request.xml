@@ -19,11 +19,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                style="@style/MarginPattern">
+                android:layout_margin="5dp">
 
-                <android.support.v7.widget.CardView
+                <LinearLayout
+                    android:id="@+id/containerNotice"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:background="@drawable/border_radius_white_shadow"
+                    android:gravity="center_vertical"
+                    style="@style/PaddingCardListPattern">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -33,7 +39,12 @@
                         android:textSize="18sp"
                         android:padding="20dp"/>
 
-                </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/listRequest" />
 
             </RelativeLayout>
 

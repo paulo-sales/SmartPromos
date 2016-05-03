@@ -18,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+
 import br.com.smartpromos.R;
 import br.com.smartpromos.ui.fragment.CanceledCouponsFragment;
 import br.com.smartpromos.ui.fragment.DialogUI;
@@ -495,6 +498,11 @@ public class DashBoardActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_logout:
+
+                if(checkUser()){
+                    LoginManager.getInstance().logOut();
+                }
+
                 SmartSharedPreferences.logoutCliente(getApplicationContext());
                 startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
                 finish();
@@ -510,5 +518,15 @@ public class DashBoardActivity extends AppCompatActivity
 
         return true;
     }
+
+
+    private boolean checkUser(){
+        Profile profile = Profile.getCurrentProfile();
+        if(profile != null){
+            return true;
+        }
+        return false;
+    }
+
 
 }

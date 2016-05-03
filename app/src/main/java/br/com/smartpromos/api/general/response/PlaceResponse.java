@@ -31,6 +31,10 @@ public class PlaceResponse {
     @SerializedName("nome")
     private String name;
 
+    public PlaceResponse(){
+
+    }
+
     public PlaceResponse(long id_place, String place_id, String adr_address, String formatted_address, String formatted_phone_number, String icon, String international_phone_number, String name) {
         this.id_place = id_place;
         this.place_id = place_id;

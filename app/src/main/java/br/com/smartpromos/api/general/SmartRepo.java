@@ -35,6 +35,11 @@ public interface SmartRepo {
                  Callback<ClienteResponse> clienteResponseCallback);
 
     @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=checkClienteByFacebook")
+    void checkClienteByFacebook(@Field("email") String email,
+                      Callback<ClienteResponse> clienteResponseCallback);
+
+    @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getListaPlacesBySolicitadosClientes")
     void listaPlacesbyEmail(@Field("email") String email,
                        Callback<ListaCuponsSolicitacao> listaCuponsSolicitacaoCallback);
@@ -107,6 +112,22 @@ public interface SmartRepo {
     @POST("/prc/prc.php?ctl=mobile&acao=getLocalizacao")
     void getLocalizacao(@Field("customer") long customer,
                    Callback<LocalizacaoResponse> localizacaoResponse);
+
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getListaPlacesBySolicitadosClientes")
+    void getRequests(@Field("email") String email,
+                            Callback<ListaCuponsSolicitacao> lista);
+
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=insertNearbyPlaces")
+    void insertNearbyPlaces(@Field("place") String place,
+                         Callback<MensagemResponse> mensagem);
+
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=solicitar")
+    void sendRequestSale(@Field("customer") long customer,
+                         @Field("placeid") String placeid,
+                        Callback<MensagemResponse> mensagem);
 
     @GET("/json")
     void getPlacesByCustomerLocation(

@@ -132,7 +132,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
                     String[] p = {"getLocation", address.replace(" ","+")};
 
-                    GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente);
+                    GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente, uiDialogs);
                     googleGeocodingAPITask.execute(p);
 
                 }else{
@@ -262,13 +262,12 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
         if(l != null){
 
             String[] p = {String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude())};
-            GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente);
+            GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente, uiDialogs);
             googleGeocodingAPITask.execute(p);
 
         }
 
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {

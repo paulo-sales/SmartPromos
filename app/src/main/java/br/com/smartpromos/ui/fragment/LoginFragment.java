@@ -23,6 +23,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -32,9 +33,12 @@ import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
+import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
+import br.com.smartpromos.ui.activity.LocaleCustomerActivity;
+import br.com.smartpromos.ui.activity.LocationActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
 import retrofit.Callback;
@@ -55,6 +59,8 @@ public class LoginFragment extends Fragment {
     private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
     private UIDialogsFragments uiDialogs;
+
+    private boolean retorno;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -140,16 +146,42 @@ public class LoginFragment extends Fragment {
                             // Application code
                             Log.v("LoginActivity", response.toString());
 
+
                             try {
 
                                 if(object != null){
+
+                                    Log.v("DATA_RESPONSE", object.toString());
+
                                     String birth = object.getString("birthday");
                                     String name = object.getString("name");
                                     String email = object.getString("email");
-                                    String pass = object.getString("id");
+                                    String gender = object.getString("gender");
                                     String picture = "https://graph.facebook.com/" + object.getString("id")+ "/picture?type=large";
 
+                                    ClienteRequest cliente = new ClienteRequest();
 
+                                    String[] fullName = name.split(" ");
+                                    String[] bDay = birth.split("/");
+
+                                    cliente.setFirst_name(fullName[0]);
+                                    cliente.setLast_name(fullName[1]);
+
+                                    cliente.setBirthday(Integer.parseInt(bDay[1]));
+                                    cliente.setBirthday_month(Integer.parseInt(bDay[0]));
+                                    cliente.setBirthday_yaer(Integer.parseInt(bDay[2]));
+
+                                    int genero = ((gender == "male") ? 1 : 2);
+
+                                    cliente.setGender(genero);
+                                    cliente.setPhone("");
+                                    cliente.setEmail(email);
+
+                                    cliente.setGet_offers(0);
+                                    cliente.setStay_logged_in(1);
+                                    cliente.setSale_radius(5);
+
+                                    checkUser(cliente);
 
                                 }
 
@@ -177,6 +209,45 @@ public class LoginFragment extends Fragment {
 
         }
     };
+
+    private void checkUser(final ClienteRequest cliente){
+
+        smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
+            @Override
+            public void success(ClienteResponse clienteResponse, Response response) {
+                if (clienteResponse.getMensagem().getId() == 1) {
+
+                    if(clienteResponse.getStay_logged_in() == 1){
+                        SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
+                    }else{
+                        SmartSharedPreferences.logoutCliente(getContext());
+                    }
+
+                    getLocale(clienteResponse.getDoc_id());
+
+                } else if (clienteResponse.getMensagem().getId() == 0) {
+
+                    String clienteStr = new Gson().toJson(cliente, ClienteRequest.class);
+
+                    Intent intent = new Intent(getContext(), LocationActivity.class);
+                    intent.putExtra("cliente", clienteStr);
+
+                    getActivity().startActivity(intent);
+
+                    uiDialogs.showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());
+
+                    retorno = false;
+
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
+    }
 
     private void login(){
         String login = edtLogin.getText().toString();

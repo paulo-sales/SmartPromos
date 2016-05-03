@@ -2,12 +2,12 @@ package br.com.smartpromos.task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.location.places.PlaceRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,14 +27,15 @@ import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.GmapsLocale;
 import br.com.smartpromos.api.general.response.ListPlacesResponse;
+import br.com.smartpromos.api.general.response.MensagemResponse;
+import br.com.smartpromos.api.general.response.PlaceResponse;
 import br.com.smartpromos.api.general.response.Result;
 import br.com.smartpromos.util.GetLocationGmpas;
 import br.com.smartpromos.util.GoogleGeocodingAPI;
+import br.com.smartpromos.util.UIDialogsFragments;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import static com.google.android.gms.internal.zzir.runOnUiThread;
 
 /**
  * Created by Paulo on 11/04/2016.
@@ -45,20 +46,25 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
     private View view;
     Context context;
     GoogleMap map;
+    private MarkerOptions mo;
     double latitude;
     double longitude;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_GMAPS_PLACES, 45);
+    private static SmartRepo smartRepoServer = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
     private ClienteResponse cliente;
     private List<Result> resultList;
     private String[] types = {"liquor_store","store","spa","restaurant","pet_store","painter","night_club","meal_delivery","veterinary_care","bakery","bar","beauty_salon","bicycle_store","book_store","cafe","car_dealer","car_rental","car_repair","car_wash","clothing_store","department_store","electronics_store","florist","food","furniture_store","grocery_or_supermarket","gym","hardware_store"};
+    private UIDialogsFragments uiDialogs;
 
-    public GoogleGeocodingAPITaskSearch(Context c, GoogleMap map, View view, ClienteResponse clienteResponse){
+    public GoogleGeocodingAPITaskSearch(Context c, GoogleMap map, View view, ClienteResponse clienteResponse, UIDialogsFragments uiDialogs){
         context = c;
         this.map = map;
         this.view = view;
         this.cliente = clienteResponse;
 
         resultList = new ArrayList<>();
+        mo = new MarkerOptions();
+        this.uiDialogs = uiDialogs;
     }
 
     @Override
@@ -96,7 +102,7 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
     @Override
     protected void onPostExecute(String s) {
 
-        String title = "Minha localização";
+        String title = "";
 
         if(s != null){
 
@@ -111,9 +117,10 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, 16);
         map.animateCamera(update);
 
-        MarkerOptions mo = new MarkerOptions();
         mo.position(latLng);
-        mo.title(title).visible(true);
+        mo.title("Minha localização")
+                .snippet(title)
+                .visible(true);
         mo.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_white_48dp));
 
         map.clear();
@@ -121,29 +128,28 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
 
         progressDialog.dismiss();
 
-
-        for(int i =0; i< types.length; i++){
+        //for(int i =0; i< types.length; i++){
+        for(int i =0; i< 1; i++){
             getPlaces(types[i]);
         }
 
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public boolean onMarkerClick(Marker marker) {
 
-                Log.e("ClickMarker", marker.getTitle()+marker.getTitle());
                 for (Result r: resultList) {
                     LatLng latlng = new LatLng(r.getGeometry().getLocation().getLat(), r.getGeometry().getLocation().getLng());
-                    if(marker.getPosition() == latlng){
 
-                        String location = String.valueOf(r.getGeometry().getLocation().getLat())+","+ String.valueOf(r.getGeometry().getLocation().getLng());
+                    if(marker.getPosition().equals(latlng)){
 
-                        Log.e("ClickMarker", r.getName());
-                        Log.e("ClickMarkerPosittion", location);
+                        String place = new Gson().toJson(r, Result.class);
+                        uiDialogs.showDialogMarker(place);
 
+                        Log.e("ClickMarker", place);
                     }
                 }
 
-
+                return false;
             }
         });
 
@@ -156,37 +162,39 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
         String location = latitude+","+longitude;
         String gmapsKey =context.getResources().getString(R.string.gmaps_id);
 
-
         smartRepo.getPlacesByCustomerLocation(location, (cliente.getSale_radius() * 1000), type, gmapsKey, true, new Callback<ListPlacesResponse>() {
             @Override
             public void success(ListPlacesResponse lista, Response response) {
 
                 if (lista.getStatus().equalsIgnoreCase("OK")){
 
-                    //String json = new Gson().toJson(lista, ListPlacesResponse.class);
-                    //Log.e("LIST_PLACES",json);
-
-                    LatLng latLngList;
-                    MarkerOptions moList;
-                    int i = resultList.size();
-
                     for (Result r : lista.getResults()) {
 
-                        //Log.e("PLACE_"+r.getName(), String.valueOf(r.getGeometry().getLocation().getLat())+","+String.valueOf(r.getGeometry().getLocation().getLng()));
+                        PlaceResponse place = new PlaceResponse();
 
-                        moList = new MarkerOptions();
-                        latLngList = new LatLng(r.getGeometry().getLocation().getLat(), r.getGeometry().getLocation().getLng());
+                        place.setAdr_address(r.getVicinity());
+                        place.setFormatted_address(r.getVicinity());
+                        place.setFormatted_phone_number("");
+                        place.setInternational_phone_number("");
+                        place.setIcon(r.getIcon());
+                        place.setName(r.getName());
+                        place.setPlace_id(r.getPlaceId());
 
-                        moList.position(latLngList)
+                        savePLace(place);
+
+                        mo = new MarkerOptions();
+                        LatLng latLngList = new LatLng(r.getGeometry().getLocation().getLat(), r.getGeometry().getLocation().getLng());
+
+                        mo.position(latLngList)
                                 .title(r.getName())
+                                .snippet(r.getVicinity())
                                 .visible(true);
 
                         //Bitmap bitmap = ImageHandler.loadImagem(r.getIcon());
                         //mo.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-                        moList.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_white_48dp));
+                        mo.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_white_48dp));
 
-                        map.addMarker(moList);
-                        i++;
+                        map.addMarker(mo);
 
                         resultList.add(r);
                     }
@@ -198,6 +206,26 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
+            }
+        });
+
+    }
+
+    private void savePLace(PlaceResponse place){
+
+        String placeStr = new Gson().toJson(place, PlaceResponse.class);
+
+        Log.v("PLACE_JSON", placeStr);
+
+        smartRepoServer.insertNearbyPlaces(placeStr, new Callback<MensagemResponse>() {
+            @Override
+            public void success(MensagemResponse mensagemResponse, Response response) {
+                Log.v("PLACE_INSERIDO", mensagemResponse.getMensagem());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
             }
         });
 
