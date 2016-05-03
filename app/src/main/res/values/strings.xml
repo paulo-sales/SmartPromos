@@ -113,9 +113,13 @@
     <string name="main_locale">Minha localização</string>
 
     <string name="main_sales">Ofertas recebidas</string>
+    <string name="main_request">Ofertas solicitadas</string>
+    <string name="main_discarded">Ofertas descartadas</string>
     <string name="main_sales_search">Buscar ofertas</string>
 
     <string name="main_my_coupons">Meus cupons</string>
+    <string name="main_my_coupons_used">Cupons usados</string>
+    <string name="main_my_coupons_expired">Cupons expirados</string>
     <string name="main_coupons_canceled">Cupons cancelados</string>
 
     <string name="main_sync">Sincronizar notas</string>

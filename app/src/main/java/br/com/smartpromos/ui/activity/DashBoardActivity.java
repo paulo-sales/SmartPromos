@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 
@@ -340,20 +341,24 @@ public class DashBoardActivity extends AppCompatActivity
 
         containerToolbarBottom.setVisibility(View.VISIBLE);
         containerButtonsTop.setVisibility(View.VISIBLE);
+
+        item.setChecked(false);
+
         switch (id){
             case R.id.nav_profile:
 
+                item.setChecked(true);
                 startActivity(new Intent(DashBoardActivity.this, ProfileActivity.class));
 
                 break;
             case R.id.nav_locale:
-
+                item.setChecked(true);
                 startActivity(new Intent(DashBoardActivity.this, LocaleCustomerActivity.class));
 
                 break;
 
             case R.id.nav_sales_received:
-
+                item.setChecked(true);
                 SalesReceivedsFragment mSalesReceived = new SalesReceivedsFragment();
 
                 android.support.v4.app.FragmentTransaction fragSalesReceived = getSupportFragmentManager().beginTransaction();
@@ -390,7 +395,7 @@ public class DashBoardActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_sale_search:
-
+                item.setChecked(true);
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_search_sales));
 
@@ -402,8 +407,45 @@ public class DashBoardActivity extends AppCompatActivity
 
                 break;
 
-            case R.id.nav_my_coupons:
+            case R.id.nav_sales_requested:
+                item.setChecked(true);
+                SalesRequestFragment requesFrag = new SalesRequestFragment();
 
+                android.support.v4.app.FragmentTransaction frafReqTrans = getSupportFragmentManager().beginTransaction();
+                frafReqTrans.replace(R.id.fragment_container, requesFrag);
+                frafReqTrans.commit();
+
+                HeaderTitle.setText(getResources().getString(R.string.txt_sales));
+
+                btnActionOne.setEnabled(true);
+                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
+                btnActionTwo.setEnabled(false);
+                btnActionTwo.setTextColor(getResources().getColor(R.color.colorWhite));
+                btnActionTree.setEnabled(true);
+                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                break;
+
+            case R.id.nav_sales_discarded:
+                item.setChecked(true);
+                SalesDiscardedFragment fragDiscar = new SalesDiscardedFragment();
+
+                android.support.v4.app.FragmentTransaction trasDiscarded = getSupportFragmentManager().beginTransaction();
+                trasDiscarded.replace(R.id.fragment_container, fragDiscar);
+                trasDiscarded.commit();
+
+                HeaderTitle.setText(getResources().getString(R.string.txt_sales));
+                btnActionOne.setEnabled(true);
+                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
+                btnActionTwo.setEnabled(true);
+                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
+                btnActionTree.setEnabled(false);
+                btnActionTree.setTextColor(getResources().getColor(R.color.colorWhite));
+
+                break;
+
+            case R.id.nav_my_coupons:
+                item.setChecked(true);
                 NewSalesFragment mCouponfrag = new NewSalesFragment();
 
                 android.support.v4.app.FragmentTransaction fragCouponTransaction = getSupportFragmentManager().beginTransaction();
@@ -439,15 +481,51 @@ public class DashBoardActivity extends AppCompatActivity
 
                 break;
 
-            case R.id.nav_coupons_canceled:
+            case R.id.nav_my_coupons_used:
+                item.setChecked(true);
+                SalesUsedFragment usedFrag = new SalesUsedFragment();
 
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, usedFrag);
+                fragmentTransaction.commit();
+
+                HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
+                btnActionOne.setEnabled(true);
+                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
+                btnActionTwo.setEnabled(false);
+                btnActionTwo.setTextColor(getResources().getColor(R.color.colorWhite));
+                btnActionTree.setEnabled(true);
+                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                break;
+
+            case R.id.nav_my_coupons_expired:
+                item.setChecked(true);
+                SalesExpiredFragment salesExpiredFragment = new SalesExpiredFragment();
+
+                android.support.v4.app.FragmentTransaction salesExTrasFragment = getSupportFragmentManager().beginTransaction();
+                salesExTrasFragment.replace(R.id.fragment_container, salesExpiredFragment);
+                salesExTrasFragment.commit();
+
+                HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
+                btnActionOne.setEnabled(true);
+                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
+                btnActionTwo.setEnabled(true);
+                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
+                btnActionTree.setEnabled(false);
+                btnActionTree.setTextColor(getResources().getColor(R.color.colorWhite));
+
+                break;
+
+            case R.id.nav_coupons_canceled:
+                item.setChecked(true);
                 HeaderTitle.setText(getResources().getString(R.string.txt_canceled_coupons));
 
                 CanceledCouponsFragment mfrag = new CanceledCouponsFragment();
 
-                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                fragmentTransaction.commit();
+                android.support.v4.app.FragmentTransaction fragCanTrans = getSupportFragmentManager().beginTransaction();
+                fragCanTrans.replace(R.id.fragment_container, mfrag);
+                fragCanTrans.commit();
 
                 btnActionOne.setEnabled(true);
                 btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
@@ -492,16 +570,14 @@ public class DashBoardActivity extends AppCompatActivity
 //                break;
 
             case R.id.nav_config:
-
+                item.setChecked(true);
                 startActivity(new Intent(DashBoardActivity.this, SettingsActivity.class));
 
                 break;
 
             case R.id.nav_logout:
 
-                if(checkUser()){
-                    LoginManager.getInstance().logOut();
-                }
+                logOut();
 
                 SmartSharedPreferences.logoutCliente(getApplicationContext());
                 startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
@@ -520,12 +596,12 @@ public class DashBoardActivity extends AppCompatActivity
     }
 
 
-    private boolean checkUser(){
-        Profile profile = Profile.getCurrentProfile();
-        if(profile != null){
-            return true;
+    private void logOut(){
+
+        if(FacebookSdk.isInitialized()){
+            LoginManager.getInstance().logOut();
         }
-        return false;
+
     }
 
 

@@ -60,8 +60,6 @@ public class LoginFragment extends Fragment {
 
     private UIDialogsFragments uiDialogs;
 
-    private boolean retorno;
-
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -233,10 +231,6 @@ public class LoginFragment extends Fragment {
                     intent.putExtra("cliente", clienteStr);
 
                     getActivity().startActivity(intent);
-
-                    uiDialogs.showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());
-
-                    retorno = false;
 
                 }
             }
