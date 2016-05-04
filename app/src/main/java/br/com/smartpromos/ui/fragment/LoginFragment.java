@@ -21,6 +21,8 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
@@ -59,6 +61,8 @@ public class LoginFragment extends Fragment {
     private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
     private UIDialogsFragments uiDialogs;
+
+    private ClienteRequest cliente;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -106,13 +110,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        cliente = null;
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -157,7 +162,7 @@ public class LoginFragment extends Fragment {
                                     String gender = object.getString("gender");
                                     String picture = "https://graph.facebook.com/" + object.getString("id")+ "/picture?type=large";
 
-                                    ClienteRequest cliente = new ClienteRequest();
+                                    cliente = new ClienteRequest();
 
                                     String[] fullName = name.split(" ");
                                     String[] bDay = birth.split("/");
@@ -179,7 +184,7 @@ public class LoginFragment extends Fragment {
                                     cliente.setStay_logged_in(1);
                                     cliente.setSale_radius(5);
 
-                                    checkUser(cliente);
+                                    loadUser();
 
                                 }
 
@@ -208,13 +213,26 @@ public class LoginFragment extends Fragment {
         }
     };
 
+    private void loadUser(){
+
+        if(FacebookSdk.isInitialized()){
+
+            Profile profile = Profile.getCurrentProfile();
+            if(profile != null){
+                Log.e("USER_LOADED", ""+new Gson().toJson(cliente, ClienteRequest.class));
+                checkUser(cliente);
+            }
+
+        }
+    }
+
     private void checkUser(final ClienteRequest cliente){
 
         smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
             @Override
             public void success(ClienteResponse clienteResponse, Response response) {
 
-                Log.e("USER_VEERIFIED", ""+new Gson().toJson(cliente, ClienteRequest.class));
+                Log.e("USER_VERIFIED", ""+new Gson().toJson(cliente, ClienteRequest.class));
 
                 Log.e("RETORNO_ID", ""+clienteResponse.getMensagem().getId());
 
