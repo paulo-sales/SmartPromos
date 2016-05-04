@@ -44,6 +44,10 @@ public interface SmartRepo {
     void listaPlacesbyEmail(@Field("email") String email,
                        Callback<ListaCuponsSolicitacao> listaCuponsSolicitacaoCallback);
 
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=getAllCouponsByEmail")
+    void cuponsByEmailToLoadImage(@Field("email") String email,
+                                Callback<ListaCuponsResponse> listaCuponsResponseCallback);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getCouponsByEmail")

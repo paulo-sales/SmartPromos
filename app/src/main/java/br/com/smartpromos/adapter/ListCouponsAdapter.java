@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
@@ -100,8 +101,10 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
             holder.txtInicio.setText(cupomResponse.getSale().getStart_date());
             holder.txtFim.setText(cupomResponse.getSale().getOver_date());
 
-            Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
+            //Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
+            Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(cupomResponse.getId_coupon()), cupomResponse.getPath_img());
             Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+
             holder.containerImgCoupon.setBackground(drawable);
 
             holder.btnEnviar.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +129,7 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
             });
 
         }
-        setAnimation(holder.container, position);
+        //setAnimation(holder.container, position);
     }
 
     @Override

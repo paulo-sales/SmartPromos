@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import br.com.smartpromos.ui.fragment.DialogHelpLogin;
+import br.com.smartpromos.ui.fragment.DialogLoading;
 import br.com.smartpromos.ui.fragment.DialogMarker;
 import br.com.smartpromos.ui.fragment.DialogUI;
 
@@ -16,6 +17,7 @@ import br.com.smartpromos.ui.fragment.DialogUI;
 public class UIDialogsFragments extends Fragment {
 
     FragmentActivity fragmentActivity;
+    public DialogLoading loadingDialog;
 
     public void uiGetActivity( FragmentActivity fragmentActivity){
 
@@ -75,6 +77,18 @@ public class UIDialogsFragments extends Fragment {
                 .addToBackStack(null).commit();
     }
 
+    public void showLoading(){
+
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+        loadingDialog = new DialogLoading();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        transaction.add(android.R.id.content, loadingDialog)
+                .addToBackStack(null).commit();
+    }
 
     public void showDialogMarker(String place) {
 

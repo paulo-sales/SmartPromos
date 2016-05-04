@@ -87,8 +87,10 @@ public class CouponDetailsActivity extends AppCompatActivity {
                     txtInicio.setText(cupomResponse.getSale().getStart_date());
                     txtFim.setText(cupomResponse.getSale().getOver_date());
 
-                    Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
+                    //Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
+                    Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(cupomResponse.getId_coupon()), cupomResponse.getPath_img());
                     Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+
                     containerImgCoupon.setBackground(drawable);
 
                 }else{

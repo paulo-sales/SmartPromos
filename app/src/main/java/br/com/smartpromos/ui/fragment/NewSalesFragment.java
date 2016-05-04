@@ -21,7 +21,9 @@ import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.util.SmartSharedPreferences;
+import br.com.smartpromos.util.UIDialogsFragments;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -36,6 +38,8 @@ public class NewSalesFragment extends Fragment {
     private ListaCuponsResponse listaCupons;
     private List<CupomResponse> cupons;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+
+    private UIDialogsFragments uiDialogs;
 
     public NewSalesFragment() {
         // Required empty public constructor
@@ -52,6 +56,9 @@ public class NewSalesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_sales, container, false);
 
+        uiDialogs = new UIDialogsFragments();
+        uiDialogs.uiGetActivity(getActivity());
+
         containerNotice = (LinearLayout) view.findViewById(R.id.containerNotice);
 
         cliente = SmartSharedPreferences.getUsuarioCompleto(getContext());
@@ -62,6 +69,8 @@ public class NewSalesFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         cupons = new ArrayList<>();
+
+        uiDialogs.showLoading();
 
         getCupons(1);
 
@@ -82,6 +91,7 @@ public class NewSalesFragment extends Fragment {
                 if(listaCupons != null && listaCupons.getCupons().size() > 0){
 
                     for (CupomResponse r : listaCupons.getCupons()) {
+                        ImageHandler.generateFeedfileImage(r.getPath_img(), String.valueOf(r.getId_coupon()));
                         cupons.add(r);
                     }
 
@@ -91,10 +101,14 @@ public class NewSalesFragment extends Fragment {
                     containerNotice.setVisibility(View.VISIBLE);
                 }
 
+                uiDialogs.loadingDialog.dismiss();
+
             }
 
             @Override
             public void failure(RetrofitError error) {
+
+                uiDialogs.loadingDialog.dismiss();
 
             }
         });

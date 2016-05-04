@@ -15,11 +15,10 @@ import br.com.smartpromos.smartpromosapplication.SmartPromosApp;
  */
 public class ImageGenerate {
 
-    public static void getImage(String url, final GenerateImageResponse generateImageResponse){
+    public static void getImage(String url, final GenerateFacebookImageResponse generateImageResponse){
 
         RequestQueue rq = Volley.newRequestQueue(SmartPromosApp.context);
 
-        rq.getCache().invalidate(url, true);
         ImageRequest ir = new ImageRequest(url, new Response.Listener<Bitmap>() {
 
             @Override
@@ -28,14 +27,14 @@ public class ImageGenerate {
             }
         }, 0, 0, ImageView.ScaleType.CENTER_CROP, null, null);
 
-        rq.getCache().remove(url);
+        rq.getCache().invalidate(url, true);
         rq.getCache().clear();
 
         rq.add(ir);
 
     }
 
-    public interface GenerateImageResponse {
+    public interface GenerateFacebookImageResponse {
         void getBitmap(Bitmap bm);
     }
 
