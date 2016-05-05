@@ -2,7 +2,6 @@ package br.com.smartpromos.ui.fragment;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -10,12 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.google.gson.Gson;
 
 import br.com.smartpromos.BuildConfig;
@@ -30,9 +24,7 @@ import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.ui.activity.LocationActivity;
-import br.com.smartpromos.ui.activity.RememberPasswrodActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
-import br.com.smartpromos.util.UIDialogsFragments;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
