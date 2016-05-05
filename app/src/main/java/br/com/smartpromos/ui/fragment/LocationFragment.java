@@ -43,21 +43,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.TypeLocaleAdapter;
-import br.com.smartpromos.api.general.ServiceGenerator;
-import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 import br.com.smartpromos.api.general.request.MensagemRequest;
 import br.com.smartpromos.api.general.response.ClienteResponse;
-import br.com.smartpromos.api.general.response.CupomResponse;
-import br.com.smartpromos.api.general.response.ListaCuponsResponse;
-import br.com.smartpromos.api.general.response.LocalizacaoResponse;
-import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.task.GoogleGeocodingAPITask;
-import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.ui.activity.RegisterActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
@@ -100,12 +92,9 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
 
     private String clientStr = null;
 
-    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
-
     public LocationFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,6 +106,13 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         uiDialogs = new UIDialogsFragments();
         uiDialogs.uiGetActivity(getActivity());
 
+        clientStr = getActivity().getIntent().getStringExtra("cliente");
+
+        if(clientStr != null && !clientStr.equals("")){
+            Log.v("DATA_RESPONSE", clientStr);
+            ClienteRequest cliente = new Gson().fromJson(clientStr, ClienteRequest.class);
+            uiDialogs.showDialog("Olá, "+cliente.getFirst_name()+"!", "Não encontramos o seu cadastro em nosso sistema. Você poderia nos passar mais algumas informações?");
+        }
 
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         map = mMapFragment.getMap();
@@ -349,16 +345,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     @Override
     public void onConnected(Bundle bundle) {
 
-
-        clientStr = getActivity().getIntent().getStringExtra("cliente");
-
-        if(clientStr != null && !clientStr.equals("")){
-            Log.v("DATA_RESPONSE", clientStr);
-            ClienteRequest cliente = new Gson().fromJson(clientStr, ClienteRequest.class);
-
-            loadUser(cliente);
-        }
-
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -420,109 +406,5 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         super.onStop();
 
     }
-
-    private void loadUser(ClienteRequest cliente){
-
-        if(FacebookSdk.isInitialized()){
-
-            Profile profile = Profile.getCurrentProfile();
-            if(profile != null){
-                Log.e("USER_LOADED", ""+new Gson().toJson(cliente, ClienteRequest.class));
-                checkUser(cliente);
-            }
-
-        }
-    }
-
-    private void checkUser(final ClienteRequest cliente){
-
-        smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
-            @Override
-            public void success(ClienteResponse clienteResponse, Response response) {
-
-                Log.e("USER_VERIFIED", ""+new Gson().toJson(cliente, ClienteRequest.class));
-
-                Log.e("RETORNO_ID", ""+clienteResponse.getMensagem().getId());
-
-                if (clienteResponse.getMensagem().getId() == 1) {
-
-                    if(clienteResponse.getStay_logged_in() == 1){
-                        SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
-                    }else{
-                        SmartSharedPreferences.logoutCliente(getContext());
-                    }
-
-                    getLocale(clienteResponse);
-
-                }else{
-                    uiDialogs.showDialog("Olá, "+cliente.getFirst_name()+"!", "Não encontramos o seu cadastro em nosso sistema. Você poderia nos passar mais algumas informações?");
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-                Log.e("USER_VEERIFIED_ERR", ""+new Gson().toJson(cliente, ClienteRequest.class));
-
-                Log.e("RETORNO_ERR", ""+error.getCause());
-
-            }
-        });
-
-    }
-
-    public void getLocale(final ClienteResponse clienteLocale){
-
-        smartRepo.getLocalizacao(clienteLocale.getDoc_id(), new Callback<LocalizacaoResponse>() {
-            @Override
-            public void success(LocalizacaoResponse localizacaoResponse, Response response) {
-
-                if (localizacaoResponse.getMensagem().getId() == 1) {
-
-                    SmartSharedPreferences.gravarLocalizacao(getContext(), localizacaoResponse);
-
-                }
-
-                preLoadImages(clienteLocale);
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-
-    }
-
-    private void preLoadImages(ClienteResponse cliente){
-
-        smartRepo.cuponsByEmailToLoadImage(cliente.getEmail(), new Callback<ListaCuponsResponse>() {
-            @Override
-            public void success(ListaCuponsResponse listaCuponsResponse, Response response) {
-
-                if(listaCuponsResponse != null && listaCuponsResponse.getCupons().size() > 0){
-
-                    for (CupomResponse r : listaCuponsResponse.getCupons()) {
-
-                        ImageHandler.generateFeedfileImage(r.getPath_img(), String.valueOf(r.getId_coupon()));
-                    }
-
-                }
-
-                getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
-                getActivity().finish();
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-
-
-    }
-
 
 }

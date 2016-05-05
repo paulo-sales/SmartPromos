@@ -90,6 +90,25 @@ public class UIDialogsFragments extends Fragment {
                 .addToBackStack(null).commit();
     }
 
+
+    public void showLoadingLogin(String cliente){
+
+        FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("cliente", cliente);
+
+        loadingDialog = new DialogLoading();
+        loadingDialog.setArguments(bundle);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        transaction.add(android.R.id.content, loadingDialog)
+                .addToBackStack(null).commit();
+    }
+
     public void showDialogMarker(String place) {
 
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();

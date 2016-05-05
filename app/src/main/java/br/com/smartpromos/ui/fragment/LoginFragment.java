@@ -189,11 +189,13 @@ public class LoginFragment extends Fragment {
 
                                     String clientStr = new Gson().toJson(cliente, ClienteRequest.class);
 
+                                    uiDialogs.showLoadingLogin(clientStr);
+
+                                    /*
                                     Intent intent = new Intent(getActivity(), LocationActivity.class);
-
                                     intent.putExtra("cliente", clientStr);
-
                                     getActivity().startActivity(intent);
+                                    */
 
                                 }
 
