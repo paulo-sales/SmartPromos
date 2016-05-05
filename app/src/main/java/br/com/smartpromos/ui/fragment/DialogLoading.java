@@ -34,8 +34,6 @@ import retrofit.client.Response;
  */
 public class DialogLoading extends DialogFragment {
 
-    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
-
     public DialogLoading(){
 
     }
@@ -73,6 +71,8 @@ public class DialogLoading extends DialogFragment {
     }
 
     private void checkUser(final ClienteRequest cliente){
+
+        SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
         smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
             @Override
@@ -116,6 +116,8 @@ public class DialogLoading extends DialogFragment {
 
     public void getLocale(final ClienteResponse clienteLocale){
 
+        SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+
         smartRepo.getLocalizacao(clienteLocale.getDoc_id(), new Callback<LocalizacaoResponse>() {
             @Override
             public void success(LocalizacaoResponse localizacaoResponse, Response response) {
@@ -139,6 +141,8 @@ public class DialogLoading extends DialogFragment {
     }
 
     private void preLoadImages(ClienteResponse cliente){
+
+        SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
         smartRepo.cuponsByEmailToLoadImage(cliente.getEmail(), new Callback<ListaCuponsResponse>() {
             @Override
