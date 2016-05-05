@@ -37,7 +37,10 @@ import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.response.ClienteResponse;
+import br.com.smartpromos.api.general.response.CupomResponse;
+import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.ui.activity.LocaleCustomerActivity;
 import br.com.smartpromos.ui.activity.LocationActivity;
@@ -58,11 +61,11 @@ public class LoginFragment extends Fragment {
     private EditText edtLogin, edtPass;
     private Button btnLogin;
 
-    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
-
     private UIDialogsFragments uiDialogs;
 
     private ClienteRequest cliente;
+
+    private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
     public LoginFragment() {
         // Required empty public constructor
@@ -184,7 +187,13 @@ public class LoginFragment extends Fragment {
                                     cliente.setStay_logged_in(1);
                                     cliente.setSale_radius(5);
 
-                                    loadUser();
+                                    String clientStr = new Gson().toJson(cliente, ClienteRequest.class);
+
+                                    Intent intent = new Intent(getActivity(), LocationActivity.class);
+
+                                    intent.putExtra("cliente", clientStr);
+
+                                    getActivity().startActivity(intent);
 
                                 }
 
@@ -213,63 +222,6 @@ public class LoginFragment extends Fragment {
         }
     };
 
-    private void loadUser(){
-
-        if(FacebookSdk.isInitialized()){
-
-            Profile profile = Profile.getCurrentProfile();
-            if(profile != null){
-                Log.e("USER_LOADED", ""+new Gson().toJson(cliente, ClienteRequest.class));
-                checkUser(cliente);
-            }
-
-        }
-    }
-
-    private void checkUser(final ClienteRequest cliente){
-
-        smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
-            @Override
-            public void success(ClienteResponse clienteResponse, Response response) {
-
-                Log.e("USER_VERIFIED", ""+new Gson().toJson(cliente, ClienteRequest.class));
-
-                Log.e("RETORNO_ID", ""+clienteResponse.getMensagem().getId());
-
-                if (clienteResponse.getMensagem().getId() == 1) {
-
-                    if(clienteResponse.getStay_logged_in() == 1){
-                        SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
-                    }else{
-                        SmartSharedPreferences.logoutCliente(getContext());
-                    }
-
-                    getLocale(clienteResponse.getDoc_id());
-
-                } else if (clienteResponse.getMensagem().getId() == 0) {
-
-                    String clienteStr = new Gson().toJson(cliente, ClienteRequest.class);
-
-                    Intent intent = new Intent(getContext(), LocationActivity.class);
-                    intent.putExtra("cliente", clienteStr);
-
-                    getActivity().startActivity(intent);
-
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-                Log.e("USER_VEERIFIED_ERR", ""+new Gson().toJson(cliente, ClienteRequest.class));
-
-                Log.e("RETORNO_ERR", ""+error.getCause());
-
-            }
-        });
-
-    }
-
     private void login(){
         String login = edtLogin.getText().toString();
         String password = edtPass.getText().toString();
@@ -290,7 +242,7 @@ public class LoginFragment extends Fragment {
                                 SmartSharedPreferences.logoutCliente(getContext());
                             }
 
-                            getLocale(clienteResponse.getDoc_id());
+                            getLocale(clienteResponse);
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {
 
@@ -316,15 +268,43 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public void getLocale(long doc_id){
+    public void getLocale(final ClienteResponse clienteLocale){
 
-        smartRepo.getLocalizacao(doc_id, new Callback<LocalizacaoResponse>() {
+        smartRepo.getLocalizacao(clienteLocale.getDoc_id(), new Callback<LocalizacaoResponse>() {
             @Override
             public void success(LocalizacaoResponse localizacaoResponse, Response response) {
 
                 if (localizacaoResponse.getMensagem().getId() == 1) {
 
                     SmartSharedPreferences.gravarLocalizacao(getContext(), localizacaoResponse);
+
+                }
+
+                preLoadImages(clienteLocale);
+
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
+    }
+
+    private void preLoadImages(ClienteResponse cliente){
+
+        smartRepo.cuponsByEmailToLoadImage(cliente.getEmail(), new Callback<ListaCuponsResponse>() {
+            @Override
+            public void success(ListaCuponsResponse listaCuponsResponse, Response response) {
+
+                if(listaCuponsResponse != null && listaCuponsResponse.getCupons().size() > 0){
+
+                    for (CupomResponse r : listaCuponsResponse.getCupons()) {
+
+                        ImageHandler.generateFeedfileImage(r.getPath_img(), String.valueOf(r.getId_coupon()));
+                    }
 
                 }
 
@@ -338,6 +318,7 @@ public class LoginFragment extends Fragment {
 
             }
         });
+
 
     }
 

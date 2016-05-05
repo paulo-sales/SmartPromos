@@ -77,6 +77,8 @@ public class ImageHandler {
 
                 fos.flush();
                 fos.close();
+
+                Log.e("IMAGEM_SAVED", pathLive.toString()+"/"+name);
             }
         } catch (Exception e) {
             e.printStackTrace();
