@@ -157,7 +157,7 @@ public class LoginFragment extends Fragment {
 
                                 if(object != null){
 
-                                    Log.v("DATA_RESPONSE", object.toString());
+                                    Log.v("DATA_RESPONS", object.toString());
 
                                     String birth = object.getString("birthday");
                                     String name = object.getString("name");

@@ -44,6 +44,15 @@ public class DialogLoading extends DialogFragment {
         final View view = inflater.inflate(R.layout.loading_dialog, container, false);
         // Inflate the layout to use as dialog or embedded fragment
 
+        return view;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         Bundle arguments = getArguments();
 
         if(arguments != null){
@@ -59,14 +68,6 @@ public class DialogLoading extends DialogFragment {
 
         }
 
-        return view;
-    }
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return dialog;
     }
 
