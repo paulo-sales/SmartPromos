@@ -75,7 +75,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+        FacebookSdk.sdkInitialize(getContext());
         mCallBackMananger = CallbackManager.Factory.create();
 
     }
@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment {
         uiDialogs.uiGetActivity(getActivity());
 
         LoginButton loginButton = (LoginButton) view.findViewById(R.id.loginFacebook);
-        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday, user_friends"));
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday"));
         loginButton.setFragment(this);
         loginButton.registerCallback(mCallBackMananger, mCallback);
 
@@ -140,8 +140,6 @@ public class LoginFragment extends Fragment {
         @Override
         public void onSuccess(LoginResult loginResult) {
 
-            Log.v("idFacebook", loginResult.getAccessToken().toString());
-
             GraphRequest request = GraphRequest.newMeRequest(
                     loginResult.getAccessToken(),
                     new GraphRequest.GraphJSONObjectCallback() {
@@ -151,7 +149,7 @@ public class LoginFragment extends Fragment {
                                 JSONObject object,
                                 GraphResponse response) {
                             // Application code
-                            Log.v("LoginActivity", response.toString());
+                            //Log.v("LoginActivity", response.toString());
 
 
                             try {
@@ -200,7 +198,7 @@ public class LoginFragment extends Fragment {
                         }
                     });
             Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender, birthday");
+            parameters.putString("fields", "id,name,email,gender,birthday");
             request.setParameters(parameters);
             request.executeAsync();
             System.out.println(parameters);
