@@ -41,6 +41,7 @@ import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.services.handler.ImageHandler;
+import br.com.smartpromos.task.LoginTask;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.ui.activity.LocaleCustomerActivity;
 import br.com.smartpromos.ui.activity.LocationActivity;
@@ -163,7 +164,6 @@ public class LoginFragment extends Fragment {
                                     String name = object.getString("name");
                                     String email = object.getString("email");
                                     String gender = object.getString("gender");
-                                    String picture = "https://graph.facebook.com/" + object.getString("id")+ "/picture?type=large";
 
                                     cliente = new ClienteRequest();
 
@@ -187,16 +187,10 @@ public class LoginFragment extends Fragment {
                                     cliente.setStay_logged_in(1);
                                     cliente.setSale_radius(5);
 
-                                    String clientStr = new Gson().toJson(cliente, ClienteRequest.class);
+                                    uiDialogs.showLoading();
 
-                                    uiDialogs.showLoadingLogin(clientStr);
-
-                                    /*
-                                    Intent intent = new Intent(getActivity(), LocationActivity.class);
-                                    intent.putExtra("cliente", clientStr);
-                                    getActivity().startActivity(intent);
-                                    */
-
+                                    LoginTask loginTask = new LoginTask(uiDialogs, getContext(), cliente);
+                                    loginTask.execute();
                                 }
 
                             }catch (Exception e){
