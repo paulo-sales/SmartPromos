@@ -1,7 +1,6 @@
 package br.com.smartpromos.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -123,7 +121,8 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 dpd.setThemeDark(false);
                 dpd.vibrate(true);
                 dpd.dismissOnPause(true);
-                dpd.setAccentColor(Color.parseColor("#303F9F"));
+                int color = getResources().getColor(R.color.colorPrimaryDark);
+                dpd.setAccentColor(color);
                 dpd.show(getFragmentManager(), "Datepickerdialog");
 
             }
@@ -146,10 +145,14 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
                 edtNome.setText(cliente.getFirst_name());
                 edtSobreNome.setText(cliente.getLast_name());
-                edtDataNasc.setText(cliente.getBirthday()+"/"+cliente.getBirthday_month()+"/"+cliente.getBirthday_yaer());
+
+                if(cliente.getBirthday() > 0 && cliente.getBirthday_yaer() > 0 && cliente.getBirthday_month() > 0){
+                    edtDataNasc.setText(cliente.getBirthday()+"/"+cliente.getBirthday_month()+"/"+cliente.getBirthday_yaer());
+                }
+
                 edtEmail.setText(cliente.getEmail());
 
-                spinnerGender.setSelection(cliente.getGender()-1);
+                spinnerGender.setSelection(cliente.getGender());
 
             }
 

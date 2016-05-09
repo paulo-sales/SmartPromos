@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         spinnerGender.setAdapter(adapter1);
         spinnerGender.setAdapter(new GenderAdapter(this, gender));
 
-        spinnerGender.setSelection(clienteResponse.getGender()-1);
+        spinnerGender.setSelection(clienteResponse.getGender());
 
         edtDataNasc.setOnClickListener(new View.OnClickListener() {
             @Override

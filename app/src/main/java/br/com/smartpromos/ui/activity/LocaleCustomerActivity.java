@@ -1,30 +1,18 @@
 package br.com.smartpromos.ui.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.CycleInterpolator;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -41,16 +29,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.smartpromos.BuildConfig;
 import br.com.smartpromos.R;
 import br.com.smartpromos.adapter.TypeLocaleAdapter;
 import br.com.smartpromos.api.general.ServiceGenerator;
 import br.com.smartpromos.api.general.SmartRepo;
-import br.com.smartpromos.api.general.request.ClienteRequest;
 import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 import br.com.smartpromos.api.general.request.MensagemRequest;
 import br.com.smartpromos.api.general.response.ClienteResponse;
@@ -181,13 +164,13 @@ public class LocaleCustomerActivity extends AppCompatActivity implements OnMapRe
         edtEstado.setText(localizacaoResponse.getCountry());
 
         if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Residencial")){
-            spinnerLocale.setSelection(0);
-        }
-        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Trabalho")){
             spinnerLocale.setSelection(1);
         }
-        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Outros")){
+        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Trabalho")){
             spinnerLocale.setSelection(2);
+        }
+        if(localizacaoResponse.getAddresstype().equalsIgnoreCase("Outros")){
+            spinnerLocale.setSelection(3);
         }
 
 

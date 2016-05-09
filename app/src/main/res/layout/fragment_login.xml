@@ -81,8 +81,7 @@
                     android:paddingBottom="10dp"
                     android:gravity="center_horizontal"
                     android:layout_centerInParent="true"
-                    android:text="@string/btn_login_facebook"
-                    android:background="@drawable/rounded_btn_facebook"/>
+                    android:text="@string/btn_login_facebook"/>
 
             </RelativeLayout>
 

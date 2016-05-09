@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,8 +20,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
@@ -41,9 +38,7 @@ import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.LocalizacaoResponse;
 import br.com.smartpromos.services.handler.ImageHandler;
-import br.com.smartpromos.task.LoginTask;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
-import br.com.smartpromos.ui.activity.LocaleCustomerActivity;
 import br.com.smartpromos.ui.activity.LocationActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
@@ -67,6 +62,94 @@ public class LoginFragment extends Fragment {
     private ClienteRequest cliente;
 
     private SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+
+    private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+
+            GraphRequest request = GraphRequest.newMeRequest(
+                    loginResult.getAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @TargetApi(Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+                            // Application code
+                            //Log.v("LoginActivity", response.toString());
+
+                            try {
+
+                                if(object != null){
+
+                                    uiDialogs.showLoading();
+
+                                    Log.v("DATA_RESPONS", object.toString());
+
+                                    String name = object.getString("name");
+                                    String email = object.getString("email");
+                                    String gender = object.getString("gender");
+
+                                    ClienteRequest cliente = new ClienteRequest();
+
+                                    String[] fullName = name.split(" ");
+
+                                    cliente.setFirst_name(fullName[0]);
+                                    cliente.setLast_name(fullName[1]);
+
+                                    if( object.has("birthday") &&  !object.getString("birthday").equals("")){
+
+                                        String birth = object.getString("birthday");
+
+                                        String[] bDay = birth.split("/");
+
+                                        cliente.setBirthday(Integer.parseInt(bDay[1]));
+                                        cliente.setBirthday_month(Integer.parseInt(bDay[0]));
+                                        cliente.setBirthday_yaer(Integer.parseInt(bDay[2]));
+
+                                    }
+
+                                    int genero = ((gender.equalsIgnoreCase("male")) ? 1 : 2);
+
+                                    cliente.setGender(genero);
+                                    cliente.setPhone("");
+                                    cliente.setEmail(email);
+
+                                    cliente.setGet_offers(0);
+                                    cliente.setStay_logged_in(1);
+                                    cliente.setSale_radius(5);
+
+                                    Log.v("DATA_CLIENT", new Gson().toJson(cliente, ClienteRequest.class));
+
+                                    checkUser(cliente);
+
+                                }
+
+                            }catch (Exception e){
+                                Log.e("ERRO_LOGIN_FB", e.getMessage());
+                            }
+
+                        }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email,gender,birthday");
+            request.setParameters(parameters);
+            request.executeAsync();
+            System.out.println(parameters);
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+
+            Log.e("ERRO_FACEBOOK", e.getMessage()+" "+e.getCause());
+        }
+    };
 
     public LoginFragment() {
         // Required empty public constructor
@@ -103,6 +186,9 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                uiDialogs.showLoading();
+
                 login();
             }
         });
@@ -136,85 +222,48 @@ public class LoginFragment extends Fragment {
         mCallBackMananger.onActivityResult(requestCode, resultCode, data);
     }
 
-    private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
+    private void checkUser(final ClienteRequest cliente){
 
-            GraphRequest request = GraphRequest.newMeRequest(
-                    loginResult.getAccessToken(),
-                    new GraphRequest.GraphJSONObjectCallback() {
-                        @TargetApi(Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onCompleted(
-                                JSONObject object,
-                                GraphResponse response) {
-                            // Application code
-                            //Log.v("LoginActivity", response.toString());
+        smartRepo.checkClienteByFacebook(cliente.getEmail(), new Callback<ClienteResponse>() {
+            @Override
+            public void success(ClienteResponse clienteResponse, Response response) {
 
+                Log.e("USER_VERIFIED", ""+new Gson().toJson(cliente, ClienteRequest.class));
 
-                            try {
+                Log.e("RETORNO_ID", ""+clienteResponse.getMensagem().getId());
 
-                                if(object != null){
+                if (clienteResponse.getMensagem().getId() == 1) {
 
-                                    Log.v("DATA_RESPONS", object.toString());
+                    if(clienteResponse.getStay_logged_in() == 1){
+                        SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
+                    }else{
+                        SmartSharedPreferences.logoutCliente(getContext());
+                    }
 
-                                    String birth = object.getString("birthday");
-                                    String name = object.getString("name");
-                                    String email = object.getString("email");
-                                    String gender = object.getString("gender");
+                    getLocale(clienteResponse);
 
-                                    cliente = new ClienteRequest();
+                }else{
 
-                                    String[] fullName = name.split(" ");
-                                    String[] bDay = birth.split("/");
+                    Intent intent = new Intent(getContext(), LocationActivity.class);
+                    intent.putExtra("cliente", new Gson().toJson(cliente, ClienteRequest.class));
 
-                                    cliente.setFirst_name(fullName[0]);
-                                    cliente.setLast_name(fullName[1]);
+                    getContext().startActivity(intent);
 
-                                    cliente.setBirthday(Integer.parseInt(bDay[1]));
-                                    cliente.setBirthday_month(Integer.parseInt(bDay[0]));
-                                    cliente.setBirthday_yaer(Integer.parseInt(bDay[2]));
+                    uiDialogs.loadingDialog.dismiss();
+                }
+            }
 
-                                    int genero = ((gender == "male") ? 1 : 2);
+            @Override
+            public void failure(RetrofitError error) {
 
-                                    cliente.setGender(genero);
-                                    cliente.setPhone("");
-                                    cliente.setEmail(email);
+                Log.e("USER_VEERIFIED_ERR", ""+new Gson().toJson(cliente, ClienteRequest.class));
 
-                                    cliente.setGet_offers(0);
-                                    cliente.setStay_logged_in(1);
-                                    cliente.setSale_radius(5);
+                Log.e("RETORNO_ERR", ""+error.getCause());
 
-                                    uiDialogs.showLoading();
+            }
+        });
 
-                                    LoginTask loginTask = new LoginTask(uiDialogs, getContext(), cliente);
-                                    loginTask.execute();
-                                }
-
-                            }catch (Exception e){
-
-                            }
-
-                        }
-                    });
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender,birthday");
-            request.setParameters(parameters);
-            request.executeAsync();
-            System.out.println(parameters);
-
-        }
-
-        @Override
-        public void onCancel() {
-
-        }
-
-        @Override
-        public void onError(FacebookException e) {
-
-        }
-    };
+    }
 
     private void login(){
         String login = edtLogin.getText().toString();
@@ -239,7 +288,7 @@ public class LoginFragment extends Fragment {
                             getLocale(clienteResponse);
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {
-
+                            uiDialogs.loadingDialog.dismiss();
                             uiDialogs.showDialog("Erro ao acessar", clienteResponse.getMensagem().getMensagem());
                         }
 
@@ -248,15 +297,18 @@ public class LoginFragment extends Fragment {
 
                     @Override
                     public void failure(RetrofitError error) {
+                        uiDialogs.loadingDialog.dismiss();
                         uiDialogs.showDialog("Erro do servidor", "Nosso servidor esta off-line no momento.");
                     }
                 });
 
             }else{
+                uiDialogs.loadingDialog.dismiss();
                 uiDialogs.showDialog("Erro ao acessar", "Preencha a sua senha!");
             }
 
         }else{
+            uiDialogs.loadingDialog.dismiss();
             uiDialogs.showDialog("Erro ao acessar", "Preencha o seu e-mail!");
         }
 
@@ -301,6 +353,7 @@ public class LoginFragment extends Fragment {
                     }
 
                 }
+                uiDialogs.loadingDialog.dismiss();
 
                 getActivity().startActivity(new Intent(getActivity(), DashBoardActivity.class));
                 getActivity().finish();
