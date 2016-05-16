@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class SalesReceivedsFragment extends Fragment {
 
     private ClienteResponse cliente;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ListCouponsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private LinearLayout containerNotice;
     private ListaCuponsResponse listaCupons;
@@ -66,7 +67,7 @@ public class SalesReceivedsFragment extends Fragment {
 
         uiDialogs.showLoading();
 
-        getCupons(0);
+        getCupons();
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -84,15 +85,16 @@ public class SalesReceivedsFragment extends Fragment {
         super.onDetach();
     }
 
-    private void getCupons(int status){
+    private void getCupons(){
 
-        smartRepo.cuponsByEmailAndStatus(cliente.getEmail(), status, new Callback<ListaCuponsResponse>() {
+        smartRepo.cuponsByEmailListAll(cliente.getEmail(), new Callback<ListaCuponsResponse>() {
             @Override
             public void success(ListaCuponsResponse listaCuponsResponse, Response response) {
 
                 listaCupons = listaCuponsResponse;
 
                 if(listaCupons != null && listaCupons.getCupons().size() > 0){
+
 
                     for (CupomResponse r : listaCupons.getCupons()) {
                         ImageHandler.generateFeedfileImage(r.getPath_img(), String.valueOf(r.getId_coupon()));
@@ -101,7 +103,9 @@ public class SalesReceivedsFragment extends Fragment {
 
                     mAdapter = new ListCouponsAdapter(cupons, getContext(), getActivity(), cliente);
                     mRecyclerView.setAdapter(mAdapter);
+
                 }else{
+
                     containerNotice.setVisibility(View.VISIBLE);
                 }
 
@@ -118,6 +122,14 @@ public class SalesReceivedsFragment extends Fragment {
         });
 
 
+    }
+
+    private void addItem(CupomResponse cupom){
+
+        cupons.add(cupom);
+        //Update adapter.
+        mAdapter.insert(cupons.size()-1, cupom);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 }

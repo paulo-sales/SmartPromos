@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import br.com.smartpromos.R;
 import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.activity.CouponDetailsActivity;
+import br.com.smartpromos.ui.activity.CouponDetailsUsableActivity;
 import br.com.smartpromos.ui.activity.DetailsCouponStaticActivity;
 
 /**
@@ -30,7 +32,7 @@ import br.com.smartpromos.ui.activity.DetailsCouponStaticActivity;
  */
 public class ListCouponsDiscardedAdapter extends RecyclerView.Adapter<ListCouponsDiscardedAdapter.ViewHolder>   {
     private static Context context;
-    private List<CupomResponse> cupons;
+    private static List<CupomResponse> cupons;
     private int lastPosition = -1;
 
     public ListCouponsDiscardedAdapter(List<CupomResponse> cupons, Context context){
@@ -56,25 +58,23 @@ public class ListCouponsDiscardedAdapter extends RecyclerView.Adapter<ListCoupon
 
         if( cupomResponse != null){
 
-            holder.tituEmpresa.setText(cupomResponse.getSale().getEstablishment().getFantasy_name());
+            String localizacao = cupomResponse.getSale().getEstablishment().getNeighborwood() +" - "+ cupomResponse.getSale().getEstablishment().getState()+". 9km";
+
             holder.tituCoupon.setText(cupomResponse.getName());
             holder.txtTotal.setText(String.valueOf(cupomResponse.getQuantity()));
             holder.txtShortDescription.setText(cupomResponse.getMensage());
-            holder.txtInicio.setText(cupomResponse.getSale().getStart_date());
-            holder.txtFim.setText(cupomResponse.getSale().getOver_date());
+            holder.txtDate.setText("Válida até "+cupomResponse.getSale().getOver_date());
+            holder.txtLocal.setText(localizacao);
+            holder.txtUtilizados.setText("10 utilizados");
 
-            //Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
-            Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(cupomResponse.getId_coupon()), cupomResponse.getPath_img());
-            Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+            if( !cupomResponse.getPath_img().equalsIgnoreCase("") && cupomResponse.getPath_img() != null ){
 
-            holder.containerImgCoupon.setBackground(drawable);
+                Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(cupomResponse.getId_coupon()), cupomResponse.getPath_img());
+                Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
 
-            holder.btnEnviar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToCoupon(cupomResponse);
-                }
-            });
+                holder.imageCupom.setBackground(drawable);
+            }
+
 
         }
         //setAnimation(holder.container, position);
@@ -96,36 +96,47 @@ public class ListCouponsDiscardedAdapter extends RecyclerView.Adapter<ListCoupon
         viewToAnimate.startAnimation(animation);
     }
 
-    public void goToCoupon(CupomResponse cupomResponse){
-        Intent intent = new Intent(context, DetailsCouponStaticActivity.class);
-        intent.putExtra("cupomid", String.valueOf(cupomResponse.getId_coupon()));
-        context.startActivity(intent);
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private CardView container;
-        private TextView tituEmpresa;
-        private RelativeLayout containerImgCoupon;
+        private ImageView imageCupom;
         private TextView tituCoupon;
         private TextView txtTotal;
         private TextView txtShortDescription;
-        private TextView txtInicio;
-        private TextView txtFim;
-        private Button btnEnviar;
+        private TextView txtLocal;
+        private TextView txtUtilizados;
+        private TextView txtDate;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             container           = (CardView) itemView.findViewById(R.id.container);
-            tituEmpresa         = (TextView) itemView.findViewById(R.id.tituEmpresa);
-            containerImgCoupon  = (RelativeLayout) itemView.findViewById(R.id.containerImgCoupon);
+            imageCupom          = (ImageView) itemView.findViewById(R.id.imageCupom);
+            tituCoupon          = (TextView) itemView.findViewById(R.id.tituCoupon);
             tituCoupon          = (TextView) itemView.findViewById(R.id.tituCoupon);
             txtTotal            = (TextView) itemView.findViewById(R.id.txtTotal);
             txtShortDescription = (TextView) itemView.findViewById(R.id.txtShortDescription);
-            txtInicio           = (TextView) itemView.findViewById(R.id.txtInicio);
-            txtFim              = (TextView) itemView.findViewById(R.id.txtFim);
-            btnEnviar           = (Button) itemView.findViewById(R.id.btnEnviar);
+            txtLocal            = (TextView) itemView.findViewById(R.id.txtLocal);
+            txtUtilizados       = (TextView) itemView.findViewById(R.id.txtUtilizados);
+            txtDate             = (TextView) itemView.findViewById(R.id.txtDate);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            final CupomResponse cupomResponse = cupons.get(getPosition());
+            goToCoupon(cupomResponse);
+        }
+
+        public void goToCoupon(CupomResponse cupomResponse){
+            Intent intent = new Intent(context, DetailsCouponStaticActivity.class);
+            intent.putExtra("cupomid", String.valueOf(cupomResponse.getId_coupon()));
+            context.startActivity(intent);
         }
     }
+
 }

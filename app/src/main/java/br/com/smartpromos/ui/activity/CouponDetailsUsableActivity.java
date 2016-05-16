@@ -1,18 +1,33 @@
 package br.com.smartpromos.ui.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.Gson;
 
 import br.com.smartpromos.BuildConfig;
@@ -23,6 +38,9 @@ import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.services.handler.ImageHandler;
+import br.com.smartpromos.services.scroll.EndlessScrollListener;
+import br.com.smartpromos.services.scroll.EndlessScrollView;
+import br.com.smartpromos.task.GoogleGeocodingStabTask;
 import br.com.smartpromos.ui.fragment.DialogUI;
 import br.com.smartpromos.ui.fragment.UseCoupon;
 import br.com.smartpromos.util.SmartSharedPreferences;
@@ -30,29 +48,49 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class CouponDetailsUsableActivity extends AppCompatActivity {
+public class CouponDetailsUsableActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, EndlessScrollListener {
 
     private TextView txtTitle;
     private ImageButton imgToolbar;
+    private Toolbar detalhesToolbar;
+
+    private float initialAlphaToolbar;
 
     private TextView tituCoupon;
     private TextView txtDescription;
-    private TextView txtInicio;
     private TextView txtFim;
     private RelativeLayout containerImgCoupon;
-    private Button btnDescartar;
     private Button btnConfirmar;
     private CupomResponse cupom;
     private ClienteResponse cliente;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+
+    private GoogleMap map;
+    private GoogleApiClient mGoogleApiClient;
+
+    private EndlessScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_details_usable);
 
+        SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
+        map = mMapFragment.getMap();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.mapa, mMapFragment).commit();
+        mMapFragment.getMapAsync(this);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(CouponDetailsUsableActivity.this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+
         cliente = SmartSharedPreferences.getUsuarioCompleto(getApplicationContext());
         String cupomid = this.getIntent().getStringExtra("cupomid");
+
+        detalhesToolbar = (Toolbar) findViewById(R.id.detalhesToolbar);
+        initialAlphaToolbar = detalhesToolbar.getAlpha();
 
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtTitle.setText(getResources().getString(R.string.txt_cadastro));
@@ -63,17 +101,18 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
         tituCoupon          = (TextView) findViewById(R.id.tituCoupon);
         txtDescription      = (TextView) findViewById(R.id.txtDescription);
-        txtInicio           = (TextView) findViewById(R.id.txtInicio);
         txtFim              = (TextView) findViewById(R.id.txtFim);
         containerImgCoupon  = (RelativeLayout) findViewById(R.id.containerImgCoupon);
-        btnDescartar        = (Button) findViewById(R.id.btnDescartar);
         btnConfirmar        = (Button) findViewById(R.id.btnConfirmar);
+
+        scrollView          = (EndlessScrollView) findViewById(R.id.scrollView);
+        scrollView.setScrollViewListener(this);
 
         getInfoCoupom(cupomid);
 
@@ -84,14 +123,7 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
             }
         });
 
-        btnDescartar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                descartarCupons();
-            }
-        });
     }
-
 
     private void getInfoCoupom(String id){
 
@@ -106,10 +138,9 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
                     txtTitle.setText(cupomResponse.getSale().getEstablishment().getFantasy_name());
                     tituCoupon.setText(cupomResponse.getName());
                     txtDescription.setText(cupomResponse.getDescription());
-                    txtInicio.setText(cupomResponse.getSale().getStart_date());
+                    //txtInicio.setText("Início "+cupomResponse.getSale().getStart_date());
                     txtFim.setText(cupomResponse.getSale().getOver_date());
 
-                    //Bitmap bitmap = ImageHandler.loadImagem(cupomResponse.getPath_img());
                     Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(cupomResponse.getId_coupon()), cupomResponse.getPath_img());
                     Drawable drawable = new BitmapDrawable(getResources(), bitmap);
 
@@ -198,4 +229,102 @@ public class CouponDetailsUsableActivity extends AppCompatActivity {
                 .addToBackStack(null).commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        if(cupom != null){
+
+            String address = cupom.getSale().getEstablishment().getStreet();
+            String number = (cupom.getSale().getEstablishment().getNumber_address() != null) ? "+"+cupom.getSale().getEstablishment().getNumber_address() : "";
+            String bairro =  (!"".equals(cupom.getSale().getEstablishment().getNeighborwood()) || cupom.getSale().getEstablishment().getNeighborwood() != null) ? "+"+cupom.getSale().getEstablishment().getNeighborwood() : "";
+            String cidade =  (!"".equals(cupom.getSale().getEstablishment().getCity()) || cupom.getSale().getEstablishment().getCity() != null) ? "+"+cupom.getSale().getEstablishment().getCity() : "";
+            String estado =  (!"".equals(cupom.getSale().getEstablishment().getState()) || cupom.getSale().getEstablishment().getState() != null) ? "+"+cupom.getSale().getEstablishment().getState() : "";
+            String cep =  (!"".equals(cupom.getSale().getEstablishment().getZip_code()) || cupom.getSale().getEstablishment().getZip_code() != null ) ? "+"+String.valueOf(cupom.getSale().getEstablishment().getZip_code()) : "";
+
+            String addreddComplete = address+number+bairro+cidade+estado+cep;
+            getMapLocation(addreddComplete.replace(" ", "+"));
+        }
+
+    }
+
+    private void getMapLocation(String address){
+        String[] p = {"getLocation", address};
+
+        GoogleGeocodingStabTask googleGeocodingAPITask = new GoogleGeocodingStabTask(CouponDetailsUsableActivity.this, map);
+        googleGeocodingAPITask.execute(p);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.map = googleMap;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+
+        onMapReady(map);
+        onConnected(new Bundle());
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onScrollChanged(EndlessScrollView scrollView, int x, int y, int oldx, int oldy) {
+        View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
+
+        Log.v("INITIAL_ALPHA", initialAlphaToolbar+"");
+
+        if(y<oldy){
+            Log.v("SCROLL_DOWN", y+" - "+oldy+"");
+            initialAlphaToolbar = initialAlphaToolbar - 0.1f;
+            if( initialAlphaToolbar >= 0f ){
+                detalhesToolbar.setAlpha(initialAlphaToolbar);
+            }
+            //vertical scrolling down
+        }else{
+            Log.v("SCROLL_UP", oldy+" - "+y+"");
+            initialAlphaToolbar = initialAlphaToolbar + 0.1f;
+            if( initialAlphaToolbar <= 1f ){
+                detalhesToolbar.setAlpha(initialAlphaToolbar);
+            }
+            //vertical scrolling up
+        }
+
+        Log.v("FINAL_ALPHA", initialAlphaToolbar+"");
+    }
 }

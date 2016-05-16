@@ -16,7 +16,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="52dp"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:background="@color/colorPrimary">
 
@@ -26,11 +26,17 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/colorWhite"
-                android:textSize="25sp"
-                />
+                android:textSize="20sp"/>
 
         </android.support.v7.widget.Toolbar>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/toolbar_dropshadow"
+            android:layout_below="@+id/toolbar"/>
+
+        <!--
         <LinearLayout
             android:id="@+id/containerButtonsTop"
             android:layout_width="match_parent"
@@ -77,14 +83,11 @@
                 android:enabled="true"/>
 
         </LinearLayout>
+        -->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/toolbar_dropshadow"
-            android:layout_below="@+id/containerButtonsTop"/>
-
+        <!--
         <include layout="@layout/toolbar_bottom"></include>
+        -->
 
     </RelativeLayout>
 

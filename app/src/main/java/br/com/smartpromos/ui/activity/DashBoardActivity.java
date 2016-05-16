@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,26 +41,6 @@ public class DashBoardActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TextView HeaderTitle;
 
-    private Button btnActionOne;
-    private Button btnActionTwo;
-    private Button btnActionTree;
-
-    private RelativeLayout containerSalesBtn;
-    private RelativeLayout containerSearchBtn;
-    private RelativeLayout containerCouponsBtn;
-
-    private RelativeLayout containerToolbarBottom;
-    private LinearLayout containerButtonsTop;
-
-    private Button icoBtnSales;
-    private TextView txtBtnSales;
-
-    private Button icoBtnSearch;
-    private TextView txtBtnSearch;
-
-    private Button icoBtnCoupons;
-    private TextView txtBtnCoupons;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,26 +49,6 @@ public class DashBoardActivity extends AppCompatActivity
 
         HeaderTitle = (TextView) findViewById(R.id.HeaderTitle);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        btnActionOne = (Button) findViewById(R.id.btnActionOne);
-        btnActionTwo = (Button) findViewById(R.id.btnActionTwo);
-        btnActionTree = (Button) findViewById(R.id.btnActionTree);
-
-        containerToolbarBottom = (RelativeLayout) findViewById(R.id.containerToolbarBottom);
-        containerButtonsTop = (LinearLayout) findViewById(R.id.containerButtonsTop);
-
-        containerSalesBtn = (RelativeLayout) findViewById(R.id.containerSalesBtn);
-        containerSearchBtn = (RelativeLayout) findViewById(R.id.containerSearchBtn);
-        containerCouponsBtn = (RelativeLayout) findViewById(R.id.containerCouponsBtn);
-
-        icoBtnSales = (Button) findViewById(R.id.icoBtnSales);
-        txtBtnSales = (TextView) findViewById(R.id.txtBtnSales);
-
-        icoBtnSearch = (Button) findViewById(R.id.icoBtnSearch);
-        txtBtnSearch = (TextView) findViewById(R.id.txtBtnSearch);
-
-        icoBtnCoupons = (Button) findViewById(R.id.icoBtnCoupons);
-        txtBtnCoupons = (TextView) findViewById(R.id.txtBtnCoupons);
 
         SalesReceivedsFragment mfrag = new SalesReceivedsFragment();
 
@@ -111,26 +72,6 @@ public class DashBoardActivity extends AppCompatActivity
 
         navigationView.findViewById(R.id.nav_view);
 
-        btnActionOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeActivity(btnActionOne);
-            }
-        });
-
-        btnActionTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeActivity(btnActionTwo);
-            }
-        });
-
-        btnActionTree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeActivity(btnActionTree);
-            }
-        });
 
     }
 
@@ -142,32 +83,8 @@ public class DashBoardActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.fragment_container, mfragSales);
         fragmentTransaction.commit();
 
-        icoBtnSales.setEnabled(false);
-        txtBtnSales.setTextColor(getResources().getColor(R.color.colorGreenBtn));
-
-        icoBtnSearch.setEnabled(true);
-        txtBtnSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        icoBtnCoupons.setEnabled(true);
-        txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_green));
-        containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-        containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-
         HeaderTitle.setText(getResources().getString(R.string.txt_sales));
 
-        btnActionOne.setEnabled(false);
-        btnActionOne.setTextColor(getResources().getColor(R.color.colorWhite));
-        btnActionOne.setText("Recebidas");
-
-        btnActionTwo.setEnabled(true);
-        btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-        btnActionTwo.setText("Solicitadas");
-
-        btnActionTree.setEnabled(true);
-        btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-        btnActionTree.setText("Descartadas");
 
     }
 
@@ -189,137 +106,7 @@ public class DashBoardActivity extends AppCompatActivity
         fragCouponTransaction.replace(R.id.fragment_container, mCouponfrag);
         fragCouponTransaction.commit();
 
-        icoBtnSales.setEnabled(true);
-        txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        icoBtnSearch.setEnabled(true);
-        txtBtnSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-
-        icoBtnCoupons.setEnabled(false);
-        txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorGreenBtn));
-
-        containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-        containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-        containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_green));
-
         HeaderTitle.setText(getResources().getString(R.string.txt_sales));
-
-        btnActionOne.setEnabled(false);
-        btnActionOne.setTextColor(getResources().getColor(R.color.colorWhite));
-        btnActionOne.setText("Novos");
-
-        btnActionTwo.setEnabled(true);
-        btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-        btnActionTwo.setText("Usados");
-
-        btnActionTree.setEnabled(true);
-        btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-        btnActionTree.setText("Expirados");
-    }
-
-    public void changeActivity(Button button){
-
-        int btnId = button.getId();
-
-        switch (btnId){
-
-            case R.id.btnActionOne:
-
-                if(button.getText().toString().equalsIgnoreCase("recebidas")){
-
-                    SalesReceivedsFragment mfrag = new SalesReceivedsFragment();
-
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                    fragmentTransaction.commit();
-
-                    HeaderTitle.setText(getResources().getString(R.string.txt_sales));
-                }else{
-
-                    NewSalesFragment mfrag = new NewSalesFragment();
-
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                    fragmentTransaction.commit();
-
-                    HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
-                }
-
-                btnActionOne.setEnabled(false);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorWhite));
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                break;
-
-            case R.id.btnActionTwo:
-
-                if(button.getText().toString().equalsIgnoreCase("solicitadas")){
-
-                    SalesRequestFragment mfrag = new SalesRequestFragment();
-
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                    fragmentTransaction.commit();
-
-                    HeaderTitle.setText(getResources().getString(R.string.txt_sales));
-
-                }else{
-                    SalesUsedFragment mfrag = new SalesUsedFragment();
-
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                    fragmentTransaction.commit();
-
-                    HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
-                }
-
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setEnabled(false);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorWhite));
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                break;
-
-            case R.id.btnActionTree:
-
-                if(button.getText().toString().equalsIgnoreCase("descartadas")){
-
-                    SalesDiscardedFragment mfrag = new SalesDiscardedFragment();
-
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                    fragmentTransaction.commit();
-
-                    HeaderTitle.setText(getResources().getString(R.string.txt_sales));
-
-                }else{
-
-                    SalesExpiredFragment mfrag = new SalesExpiredFragment();
-
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, mfrag);
-                    fragmentTransaction.commit();
-
-                    HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
-                }
-
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTree.setEnabled(false);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorWhite));
-
-                break;
-
-            default:
-                break;
-        }
 
     }
 
@@ -338,9 +125,6 @@ public class DashBoardActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        containerToolbarBottom.setVisibility(View.VISIBLE);
-        containerButtonsTop.setVisibility(View.VISIBLE);
 
         item.setChecked(false);
 
@@ -367,31 +151,6 @@ public class DashBoardActivity extends AppCompatActivity
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_sales));
 
-                icoBtnSales.setEnabled(false);
-                txtBtnSales.setTextColor(getResources().getColor(R.color.colorGreenBtn));
-
-                icoBtnSearch.setEnabled(true);
-                txtBtnSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                icoBtnCoupons.setEnabled(true);
-                txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_green));
-                containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-                containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-
-                btnActionOne.setEnabled(false);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorWhite));
-                btnActionOne.setText("Recebidas");
-
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setText("Solicitadas");
-
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTree.setText("Descartadas");
-
                 break;
 
             case R.id.nav_sale_search:
@@ -417,15 +176,8 @@ public class DashBoardActivity extends AppCompatActivity
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_sales));
 
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setEnabled(false);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorWhite));
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-
                 break;
-
+            /*
             case R.id.nav_sales_discarded:
                 item.setChecked(true);
                 SalesDiscardedFragment fragDiscar = new SalesDiscardedFragment();
@@ -435,12 +187,6 @@ public class DashBoardActivity extends AppCompatActivity
                 trasDiscarded.commit();
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_sales));
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTree.setEnabled(false);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorWhite));
 
                 break;
 
@@ -452,35 +198,10 @@ public class DashBoardActivity extends AppCompatActivity
                 fragCouponTransaction.replace(R.id.fragment_container, mCouponfrag);
                 fragCouponTransaction.commit();
 
-                icoBtnSales.setEnabled(true);
-                txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                icoBtnSearch.setEnabled(true);
-                txtBtnSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                icoBtnCoupons.setEnabled(false);
-                txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorGreenBtn));
-
-                containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-                containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-                containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_green));
-
-                btnActionOne.setEnabled(false);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorWhite));
-                btnActionOne.setText("Novos");
-
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setText("Usados");
-
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTree.setText("Expirados");
-
                 HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
 
                 break;
-
+            */
             case R.id.nav_my_coupons_used:
                 item.setChecked(true);
                 SalesUsedFragment usedFrag = new SalesUsedFragment();
@@ -490,12 +211,6 @@ public class DashBoardActivity extends AppCompatActivity
                 fragmentTransaction.commit();
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setEnabled(false);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorWhite));
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
 
                 break;
 
@@ -508,15 +223,9 @@ public class DashBoardActivity extends AppCompatActivity
                 salesExTrasFragment.commit();
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_coupons));
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-                btnActionTree.setEnabled(false);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorWhite));
 
                 break;
-
+            /*
             case R.id.nav_coupons_canceled:
                 item.setChecked(true);
                 HeaderTitle.setText(getResources().getString(R.string.txt_canceled_coupons));
@@ -527,30 +236,8 @@ public class DashBoardActivity extends AppCompatActivity
                 fragCanTrans.replace(R.id.fragment_container, mfrag);
                 fragCanTrans.commit();
 
-                btnActionOne.setEnabled(true);
-                btnActionOne.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                btnActionTwo.setEnabled(true);
-                btnActionTwo.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                btnActionTree.setEnabled(true);
-                btnActionTree.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                icoBtnSales.setEnabled(true);
-                txtBtnSales.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                icoBtnSearch.setEnabled(true);
-                txtBtnSearch.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                icoBtnCoupons.setEnabled(true);
-                txtBtnCoupons.setTextColor(getResources().getColor(R.color.colorBlack));
-
-                containerSalesBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-                containerSearchBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-                containerCouponsBtn.setBackground(getResources().getDrawable(R.drawable.border_top_white));
-
                 break;
-
+            */
             /*case R.id.nav_sync:
 
                 HeaderTitle.setText(getResources().getString(R.string.txt_sync));
@@ -595,6 +282,48 @@ public class DashBoardActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_home) {
+
+            item.setChecked(true);
+            SalesReceivedsFragment mSalesReceived = new SalesReceivedsFragment();
+
+            android.support.v4.app.FragmentTransaction fragSalesReceived = getSupportFragmentManager().beginTransaction();
+            fragSalesReceived.replace(R.id.fragment_container, mSalesReceived);
+            fragSalesReceived.commit();
+
+            HeaderTitle.setText(getResources().getString(R.string.txt_sales));
+
+            return true;
+        }
+
+        if (id == R.id.action_search) {
+
+            item.setChecked(true);
+
+            HeaderTitle.setText(getResources().getString(R.string.txt_search_sales));
+
+            SearchByLocationFragment searchFrag = new SearchByLocationFragment();
+
+            android.support.v4.app.FragmentTransaction fragSearch = getSupportFragmentManager().beginTransaction();
+            fragSearch.replace(R.id.fragment_container, searchFrag);
+            fragSearch.commit();
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void logOut(){
 

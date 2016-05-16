@@ -4,52 +4,43 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="0dp"
+    card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp"
+    card_view:contentPadding="0dp"
     android:id="@+id/container">
 
     <LinearLayout
+        android:id="@+id/containerDesc"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="2">
 
         <RelativeLayout
-            android:id="@+id/containerEmpresa"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/PaddingCardListPattern">
+            android:layout_height="230dp">
 
-            <TextView
-                android:id="@+id/tituEmpresa"
+            <ImageView
+                android:id="@+id/imageCupom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Desconto no happyhour"
-                android:textSize="22sp"
-                android:textColor="@color/colorBlack"
-                android:textAlignment="center"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/containerImgCoupon"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="@drawable/img_coupons">
+                android:layout_height="match_parent"
+                android:background="@drawable/imagem_capa_cupom"/>
 
             <TextView
                 android:id="@+id/txtTotal"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:padding="5dp"
                 android:textAlignment="center"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorWhite"
                 android:text="100"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                android:background="@drawable/btn_full_rounded_red"/>
+                android:background="@drawable/btn_full_rounded_green"/>
 
             <TextView
                 android:id="@+id/tituCoupon"
@@ -57,90 +48,71 @@
                 android:layout_height="wrap_content"
                 android:text="Desconto no happyhour"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/bg_transparent_grey"
-                style="@style/PaddingCardListPattern"
                 android:textColor="@color/colorWhite"
-                android:textStyle="bold"
                 android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:background="@drawable/bg_transparent_grey"
+                style="@style/PaddingCardListPattern"/>
 
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/PaddingCardListPattern">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/txtShortDescription"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Ganhe 10% durante o happy hour"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"/>
+                style="@style/PaddingCardListPattern">
 
-            <TextView
-                android:id="@+id/txtValidade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Validade da oferta:"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/txtShortDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Ganhe 10% durante o happy hour"
+                    android:textColor="@color/colorHint"
+                    android:textSize="18sp"/>
 
-            <TextView
-                android:id="@+id/txtInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Início 03/03/2016"
-                android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/txtLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Bela Vista - São Paulo. 9km"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorHint"/>
 
-            <TextView
-                android:id="@+id/txtFim"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fim 30/03/2016"
-                android:textSize="14sp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/txtUtilizados"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="9 utilizados"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorHint"/>
 
-                <Button
-                    android:id="@+id/btnEnviar"
-                    android:layout_width="150dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/rounded_btn_green_hover"
-                    android:text="Saiba mais"
-                    style="@style/TextBtnPattern"
-                    android:textAllCaps="false"/>
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Válida até 30/03/2016"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorHint"/>
 
-                <ImageButton
-                    android:id="@+id/btnAceitar"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="55dp"
-                    android:src="@drawable/ic_check_white_36dp"
-                    android:background="@drawable/btn_full_rounded_green"/>
+                </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/btnRecusar"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_close_white_36dp"
-                    android:background="@drawable/btn_full_rounded_red"/>
+            </LinearLayout>
 
-            </RelativeLayout>
-
-
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -4,7 +4,7 @@
     android:id="@+id/containerToolbar"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="60dp">
 
     <RelativeLayout
         android:id="@+id/containerHeader"
@@ -15,22 +15,24 @@
             android:id="@+id/detalhesToolbar"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:background="@color/colorPrimary">
-
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:text=""
-                android:gravity="left"
-                style="@style/TextTitlePattern"/>
+            android:background="@color/colorPrimary"
+            android:alpha="0.3">
 
         </android.support.v7.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="60dp"
+            android:text=""
+            android:gravity="left"
+            style="@style/TextTitlePattern"/>
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="2dp"
             android:background="@drawable/toolbar_dropshadow"
             android:layout_below="@+id/detalhesToolbar"/>
 
@@ -38,10 +40,10 @@
             android:id="@+id/imgToolbar"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginTop="7dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="12dp"
-            android:background="@color/colorPrimary"
-            />
+            android:src="@drawable/ic_arrow_back_white_36dp"
+            android:background="@android:color/transparent"/>
 
 
     </RelativeLayout>

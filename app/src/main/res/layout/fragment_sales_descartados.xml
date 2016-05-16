@@ -7,7 +7,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="110dp"
         android:background="@drawable/bg_transparent_white">
 
         <RelativeLayout
@@ -32,7 +31,5 @@
         </RelativeLayout>
 
     </ScrollView>
-
-    <include layout="@layout/sales_toolbar_app"></include>
 
 </FrameLayout>

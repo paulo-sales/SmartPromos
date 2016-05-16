@@ -2,9 +2,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
-    <item android:id="@+id/list_spending" android:title="@string/action_list_spending"
-        android:orderInCategory="2" app:showAsAction="never" />
-    <item android:id="@+id/action_setings" android:title="@string/action_settings"
-        android:orderInCategory="3" app:showAsAction="never" />
+    <item
+        android:id="@+id/action_home"
+        android:title="@string/action_home"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_home_white_24dp"/>
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_filter"
+        android:title="@string/action_filter"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        android:orderInCategory="3"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/order_by_expired_desc"
+                android:title="@string/action_oder_by_expired_desc"/>
+
+            <item
+                android:id="@+id/order_by_expired_asc"
+                android:title="@string/action_oder_by_expired_asc"/>
+
+            <item
+                android:id="@+id/order_by_name_asc"
+                android:title="@string/action_oder_by_nome_asc"/>
+
+
+            <item
+                android:id="@+id/order_by_name_desc"
+                android:title="@string/action_oder_by_nome_desc"/>
+
+        </menu>
+
+    </item>
 
 </menu>

@@ -98,12 +98,13 @@ public class SalesExpiredFragment extends Fragment {
 
                     mAdapter = new ListCouponsStaticAdapter(cupons, getContext());
                     mRecyclerView.setAdapter(mAdapter);
+
                 }else{
+
                     containerNotice.setVisibility(View.VISIBLE);
                 }
 
                 uiDialogs.loadingDialog.dismiss();
-
             }
 
             @Override

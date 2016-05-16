@@ -34,7 +34,7 @@ android {
     productFlavors {
         Desenvolvimento {
             //buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.vitalles.com/devcetax/smartpromos\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.cetax.com.br/smartpromos_rest\""
             buildConfigField "String", "REST_GMAPS_PLACES", "\"https://maps.googleapis.com/maps/api/place/nearbysearch\""
             buildConfigField "String", "REST_GMAPS_PLACE_DETAIL", "\"https://maps.googleapis.com/maps/api/place/details\""
             applicationId "br.com.smartpromos"
@@ -44,7 +44,7 @@ android {
         }
         Producao {
             //buildConfigField "String", "REST_SERVICE_URL", "\"http://54.207.83.196\""
-            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.vitalles.com/devcetax/smartpromos\""
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://www.cetax.com.br/smartpromos_rest\""
             buildConfigField "String", "REST_GMAPS_PLACES", "\"https://maps.googleapis.com/maps/api/place/nearbysearch\""
             buildConfigField "String", "REST_GMAPS_PLACE_DETAIL", "\"https://maps.googleapis.com/maps/api/place/details\""
             applicationId "br.com.smartpromos"

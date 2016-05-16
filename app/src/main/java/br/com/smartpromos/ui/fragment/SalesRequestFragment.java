@@ -26,6 +26,7 @@ import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsSolicitacao;
 import br.com.smartpromos.api.general.response.PlaceResponse;
 import br.com.smartpromos.api.general.response.SolicitacaoResponse;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -76,6 +77,7 @@ public class SalesRequestFragment extends Fragment {
                 if(listaSolicitacoes != null && listaSolicitacoes.getSolicitacoes().size() > 0){
 
                     for (PlaceResponse p : listaSolicitacoes.getSolicitacoes()) {
+                        ImageHandler.generateFeedfileImage(p.getIcon(), String.valueOf(p.getPlace_id()));
                         solitacoes.add(p);
                     }
 

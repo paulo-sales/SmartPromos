@@ -110,6 +110,15 @@
     <string name="action_list_spending">Listar Gastos</string>
     <string name="action_settings">Configurações</string>
 
+    <string name="action_filter">Filtrar Cupons</string>
+    <string name="action_search">Buscar Empresas</string>
+    <string name="action_home">Voltar aos cupons</string>
+
+    <string name="action_oder_by_expired_desc">Expiram primeiro</string>
+    <string name="action_oder_by_expired_asc">Expiram por último</string>
+    <string name="action_oder_by_nome_asc">Alfabética A-Z</string>
+    <string name="action_oder_by_nome_desc">Alfabética Z-A</string>
+
     <string name="main_profile">Meus dados</string>
     <string name="main_locale">Minha localização</string>
 

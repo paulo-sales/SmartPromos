@@ -82,20 +82,33 @@ public class LoginFragment extends Fragment {
 
                                 if(object != null){
 
-                                    uiDialogs.showLoading();
-
                                     Log.v("DATA_RESPONS", object.toString());
 
-                                    String name = object.getString("name");
-                                    String email = object.getString("email");
-                                    String gender = object.getString("gender");
+                                    uiDialogs.showLoading();
 
                                     ClienteRequest cliente = new ClienteRequest();
 
-                                    String[] fullName = name.split(" ");
+                                    if( object.has("name") &&  !object.getString("name").equals("")){
 
-                                    cliente.setFirst_name(fullName[0]);
-                                    cliente.setLast_name(fullName[1]);
+                                        String name = object.getString("name");
+                                        String[] fullName = name.split(" ");
+
+                                        cliente.setFirst_name(fullName[0]);
+                                        cliente.setLast_name(fullName[1]);
+                                    }
+
+                                    if( object.has("email") &&  !object.getString("email").equals("")){
+
+                                        String email = object.getString("email");
+                                        cliente.setEmail(email);
+                                    }
+
+                                    if( object.has("gender") &&  !object.getString("gender").equals("")){
+
+                                        String gender = object.getString("gender");
+                                        int genero = ((gender.equalsIgnoreCase("male")) ? 1 : 2);
+                                        cliente.setGender(genero);
+                                    }
 
                                     if( object.has("birthday") &&  !object.getString("birthday").equals("")){
 
@@ -109,11 +122,7 @@ public class LoginFragment extends Fragment {
 
                                     }
 
-                                    int genero = ((gender.equalsIgnoreCase("male")) ? 1 : 2);
-
-                                    cliente.setGender(genero);
                                     cliente.setPhone("");
-                                    cliente.setEmail(email);
 
                                     cliente.setGet_offers(0);
                                     cliente.setStay_logged_in(1);

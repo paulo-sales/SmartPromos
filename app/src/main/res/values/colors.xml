@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#1D7838</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#4CAF50</color>
 
     <!-- Cores -->
     <color name="colorGreenBtn">#28A54C</color>
@@ -11,6 +11,7 @@
     <color name="colorWhite">#fff</color>
     <color name="colorBlueFace">#3B5998</color>
     <color name="colorHint">#444</color>
+    <color name="colorGrey2">#ccc</color>
     <color name="colorGrey">#F5F5F5</color>
     <color name="colorGreySettings">#e5e5e5</color>
     <color name="colorRed">#F44336</color>

@@ -15,7 +15,7 @@
 
     </group>
 
-    <item android:title="Novas ofertas">
+    <item android:title="Ofertas">
 
         <menu>
 
@@ -34,25 +34,17 @@
                 android:title="@string/main_request"
                 android:icon="@drawable/ic_shop_two_white_24dp"/>
 
-
+            <!--
             <item
                 android:id="@+id/nav_sales_discarded"
                 android:title="@string/main_discarded"
                 android:icon="@drawable/ic_shop_two_white_24dp"/>
 
-        </menu>
-
-    </item>
-
-    <item android:title="Minhas ofertas">
-
-        <menu>
-
             <item
                 android:id="@+id/nav_my_coupons"
                 android:title="@string/main_my_coupons"
                 android:icon="@drawable/ic_shop_white_24dp"/>
-
+            -->
             <item
                 android:id="@+id/nav_my_coupons_used"
                 android:title="@string/main_my_coupons_used"
@@ -62,12 +54,12 @@
                 android:id="@+id/nav_my_coupons_expired"
                 android:title="@string/main_my_coupons_expired"
                 android:icon="@drawable/ic_shop_white_24dp"/>
-
+            <!--
             <item
                 android:id="@+id/nav_coupons_canceled"
                 android:title="@string/main_coupons_canceled"
                 android:icon="@drawable/ic_shop_white_24dp"/>
-
+            -->
         </menu>
 
     </item>

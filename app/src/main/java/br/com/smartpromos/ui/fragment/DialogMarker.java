@@ -21,6 +21,7 @@ import br.com.smartpromos.api.general.SmartRepo;
 import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.api.general.response.Result;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
@@ -88,7 +89,7 @@ public class DialogMarker extends DialogFragment {
         return dialog;
     }
 
-    private void sendSolicitacao(Result place){
+    private void sendSolicitacao(final Result place){
 
         ClienteResponse cliente = SmartSharedPreferences.getUsuarioCompleto(getContext());
 
@@ -96,6 +97,7 @@ public class DialogMarker extends DialogFragment {
             @Override
             public void success(MensagemResponse mensagem, Response response) {
 
+                ImageHandler.generateFeedfileImage(place.getIcon(), String.valueOf(place.getPlaceId()));
                 dismiss();
                 uiDialogs.showDialog(mensagem.getMensagem(),"");
 

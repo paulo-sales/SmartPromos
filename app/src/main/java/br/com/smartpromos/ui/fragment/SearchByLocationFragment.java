@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -74,7 +77,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
 
-    private Button btnMyLocation;
+    private FloatingActionButton btnMyLocation;
 
     private View view;
 
@@ -93,9 +96,6 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_search_by_location, container, false);
         getActivity().setDefaultKeyMode(getActivity().DEFAULT_KEYS_SEARCH_LOCAL);
-
-        getActivity().findViewById(R.id.containerToolbarBottom).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.containerButtonsTop).setVisibility(View.GONE);
 
         cliente = SmartSharedPreferences.getUsuarioCompleto(getContext());
 
@@ -117,7 +117,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
         btnConfirmarLocal = (Button) view.findViewById(R.id.btnConfirmarLocal);
         btnAlterarLocal = (Button) view.findViewById(R.id.btnAlterarLocal);
 
-        btnMyLocation = (Button) view.findViewById(R.id.btnMyLocation);
+        btnMyLocation = (FloatingActionButton) view.findViewById(R.id.btnMyLocation);
 
         containerSetLocale = (LinearLayout) view.findViewById(R.id.containerSetLocale);
 
@@ -162,49 +162,59 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
     @Override
     public void onResume() {
         super.onResume();
-
-        getActivity().findViewById(R.id.containerToolbarBottom).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.containerButtonsTop).setVisibility(View.GONE);
-
     }
 
-    public void showAutoComplete(LinearLayout linearLayout){
 
-        int visibility = linearLayout.getVisibility();
-
-        if(visibility == View.INVISIBLE){
-
-            linearLayout.setVisibility(View.VISIBLE);
-            linearLayout.requestLayout();
-            linearLayout.setAlpha(0.0f);
-
-            linearLayout.animate()
-                    .translationY(linearLayout.getHeight())
-                    .alpha(1.0f);
-
-        }else if(visibility == View.VISIBLE){
-
-            linearLayout.setVisibility(View.INVISIBLE);
-            linearLayout.requestLayout();
-
-            linearLayout.animate()
-                    .translationY(0)
-                    .alpha(0.0f);
-
-        }
+    public void triggerAutoComplete(final LinearLayout linearLayout){
 
 
-
-    }
-
-    public void triggerAutoComplete(LinearLayout linearLayout){
-
-        showAutoComplete(linearLayout);
         String btnText = btnAlterarLocal.getText().toString();
 
         if(btnText.equalsIgnoreCase(getContext().getResources().getString(R.string.btn_alt_local_search))){
+
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animate_up_to_bottom);
+
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            linearLayout.startAnimation(animation);
+
             btnAlterarLocal.setText("Cancelar");
         }else{
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animate_slide_up_out);
+
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    linearLayout.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            linearLayout.startAnimation(animation);
+
             btnAlterarLocal.setText(getContext().getResources().getString(R.string.btn_alt_local_search));
         }
 
@@ -214,8 +224,10 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         SearchByLocationFragment f = (SearchByLocationFragment) getFragmentManager()
                 .findFragmentById(R.id.map_container);
+
         if (f != null)
             getFragmentManager().beginTransaction().remove(f).commit();
     }

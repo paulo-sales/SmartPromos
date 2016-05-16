@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -76,6 +78,12 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
             holder.tituEmpresa.setText(place.getName());
             holder.endEmpresa.setText(place.getAdr_address());
 
+            if(!place.getIcon().equals("") && place.getIcon() != null){
+                holder.containerIcon.setVisibility(View.VISIBLE);
+                Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(place.getPlace_id()), place.getIcon());
+                holder.iconPlace.setImageBitmap(bitmap);
+            }
+
         }
         //setAnimation(holder.container);
     }
@@ -89,8 +97,8 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
     /**
      * Here is the key method to apply the animation
      */
-    private void setAnimation(View viewToAnimate)
-    {
+    private void setAnimation(View viewToAnimate){
+
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.animate_bottom_to_up);
 
         nextItem = animation.getStartOffset();
@@ -102,17 +110,20 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        private CardView container;
+        private LinearLayout container;
         private TextView tituEmpresa;
         private TextView endEmpresa;
-
+        private LinearLayout containerIcon;
+        private ImageView iconPlace;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            container           = (CardView) itemView.findViewById(R.id.container);
+            container           = (LinearLayout) itemView.findViewById(R.id.container);
             tituEmpresa         = (TextView) itemView.findViewById(R.id.tituEmpresa);
             endEmpresa          = (TextView) itemView.findViewById(R.id.endEmpresa);
+            containerIcon       = (LinearLayout) itemView.findViewById(R.id.containerIcon);
+            iconPlace           = (ImageView) itemView.findViewById(R.id.iconPlace);
 
         }
     }
