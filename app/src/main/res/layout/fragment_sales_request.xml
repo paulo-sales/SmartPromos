@@ -1,54 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.smartpromos.ui.fragment.SalesRequestFragment">
+    tools:context=".ui.fragment.SalesReceivedsFragment"
+    android:background="@drawable/bg_transparent_white">
 
-    <RelativeLayout
-        android:id="@+id/container"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listRequest"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_transparent_white">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/containerNotice"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:visibility="invisible"
-                    android:background="@drawable/border_radius_white_shadow"
-                    android:gravity="center_vertical"
-                    style="@style/PaddingCardListPattern">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/txt_no_sales_requested"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="18sp"
-                        android:padding="20dp"/>
-
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/listRequest" />
-
-            </RelativeLayout>
-
-        </ScrollView>
-
-
-    </RelativeLayout>
-
-</FrameLayout>
+</LinearLayout>

@@ -29,7 +29,12 @@ public class ImageHandler {
                 @Override
                 public void getBitmap(Bitmap bm) {
                     //deleteImage(name);
-                    saveImage(bm, photo);
+                    if(!isLoaded(photo)){
+                        Log.d("IMAGE_NOT_EXIST", "Imagem não existe no cache.");
+                        saveImage(bm, photo);
+                    }else{
+                        Log.d("IMAGE_EXIST", "Imagem já existe no cache.");
+                    }
                 }
             });
 
@@ -38,6 +43,22 @@ public class ImageHandler {
         }
 
         return name;
+    }
+
+    public static boolean isLoaded(String name){
+
+        File file = new File(pathLive+File.separator+name);
+        Bitmap b = null;
+        try
+        {
+            b = BitmapFactory.decodeFile(file.getAbsolutePath());
+            return true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     public static Bitmap getImageBitmap(String name, String url)

@@ -5,6 +5,9 @@
 
     <string name="gmaps_id">AIzaSyAdwTFcIkFBA8rDcg-rvQzagKSBf2PmABE</string>
 
+    <string name="snack_alert_no_connection">Sem conexao com a internet. Por favor, verifique se seu wi-fi ou seu 3g.</string>
+    <string name="snack_alert_no_location">Por favor, ative o seu GPS ou a sua localização!</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

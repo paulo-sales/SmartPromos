@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.smartpromos.R;
+import br.com.smartpromos.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +20,7 @@ import br.com.smartpromos.R;
 public class SyncFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-
+    private View view;
     public SyncFragment() {
         // Required empty public constructor
     }
@@ -27,9 +28,18 @@ public class SyncFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sync, container, false);
+        view = inflater.inflate(R.layout.fragment_sync, container, false);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(!Util.isNetworkAvailable()){
+            Util.showNetworkInfo(view, getContext());
+        }
     }
 
     @Override

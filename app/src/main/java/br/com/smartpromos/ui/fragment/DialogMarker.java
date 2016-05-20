@@ -93,7 +93,7 @@ public class DialogMarker extends DialogFragment {
 
         ClienteResponse cliente = SmartSharedPreferences.getUsuarioCompleto(getContext());
 
-        smartRepo.sendRequestSale(cliente.getDoc_id(), place.getPlaceId(), new Callback<MensagemResponse>() {
+        smartRepo.sendRequestSale(cliente.getEmail(), place.getPlaceId(), new Callback<MensagemResponse>() {
             @Override
             public void success(MensagemResponse mensagem, Response response) {
 

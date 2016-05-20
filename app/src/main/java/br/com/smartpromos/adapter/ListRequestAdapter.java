@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,12 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
         animation.setStartOffset(nextItem);
 
         viewToAnimate.startAnimation(animation);
+    }
+
+    public void addListItem(PlaceResponse place, int position) {
+
+        places.add(place);
+        notifyItemInserted(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

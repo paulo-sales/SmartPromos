@@ -109,7 +109,7 @@ public class UseCoupon extends DialogFragment {
 
     private void useCoupom(){
 
-        smartRepo.utilizarCupon(code, cupom.getId_coupon(), cliente.getDoc_id(), new Callback<MensagemResponse>() {
+        smartRepo.utilizarCupon(code, cupom.getId_coupon(), cliente.getEmail(), new Callback<MensagemResponse>() {
             @Override
             public void success(MensagemResponse mensagemResponse, Response response) {
                 if(mensagemResponse.getId() == 4){

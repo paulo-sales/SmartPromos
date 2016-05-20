@@ -25,9 +25,15 @@ public interface SmartRepo {
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=insertCustmer")
     void criarCadastro(@Field("cliente") String cliente,
-                       @Field("localizacao") String localizacao,
                         Callback<ClienteResponse> clienteResponseCallback);
 
+    /*
+    @FormUrlEncoded
+    @POST("/prc/prc.php?ctl=mobile&acao=insertCustmer")
+    void criarCadastro(@Field("cliente") String cliente,
+                       @Field("localizacao") String localizacao,
+                       Callback<ClienteResponse> clienteResponseCallback);
+    */
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=loginCustmerUser")
     void loginCliente(@Field("username") String user,
@@ -58,6 +64,7 @@ public interface SmartRepo {
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getCouponsByEmailMix")
     void cuponsByEmailListAll(@Field("email") String email,
+                              @Field("pageAtual") int pageAtual,
                                 Callback<ListaCuponsResponse> listaCuponsResponseCallback);
 
     @FormUrlEncoded
@@ -68,14 +75,14 @@ public interface SmartRepo {
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=setCupomStatus")
     void cupomStatus(@Field("myCupomId") long cupomId,
-                @Field("cpf") long cpf,
+                @Field("email") String email,
                  @Field("status") int status,
                 Callback<MensagemResponse> mensagem);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=descartarCuponsAceitos")
     void descartarCuponsAceitos(@Field("myCupomId") long myCupomId,
-                           @Field("cpf") long cpf,
+                           @Field("email") String email,
                            @Field("status") int status,
                            Callback<MensagemResponse> mensagem);
 
@@ -83,7 +90,7 @@ public interface SmartRepo {
     @POST("/prc/prc.php?ctl=mobile&acao=utilizarCupon")
     void utilizarCupon(@Field("codigo") String codigo,
                        @Field("cupom") long cupom,
-                       @Field("usuario") long usuario,
+                       @Field("email") String email,
                   Callback<MensagemResponse> mensagem);
 
     //@GET("/prc/prc.php?ctl=mobile&acao=sincronizar")
@@ -119,12 +126,13 @@ public interface SmartRepo {
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getLocalizacao")
-    void getLocalizacao(@Field("customer") long customer,
+    void getLocalizacao(@Field("customer") String customer,
                    Callback<LocalizacaoResponse> localizacaoResponse);
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=getListaPlacesBySolicitadosClientes")
     void getRequests(@Field("email") String email,
+                     @Field("offset") int offset,
                             Callback<ListaCuponsSolicitacao> lista);
 
     @FormUrlEncoded
@@ -134,7 +142,7 @@ public interface SmartRepo {
 
     @FormUrlEncoded
     @POST("/prc/prc.php?ctl=mobile&acao=solicitar")
-    void sendRequestSale(@Field("customer") long customer,
+    void sendRequestSale(@Field("email") String email,
                          @Field("placeid") String placeid,
                         Callback<MensagemResponse> mensagem);
 

@@ -6,9 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -21,6 +25,7 @@ import br.com.smartpromos.api.general.request.LocalizacaoRequest;
 import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.ui.fragment.DialogUI;
 import br.com.smartpromos.util.SmartSharedPreferences;
+import br.com.smartpromos.util.Util;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -33,12 +38,20 @@ public class RememberPasswrodActivity extends AppCompatActivity {
     private EditText edtEmail;
     private Button btnEnviar;
 
-
+    private RelativeLayout containerView;
+    private LinearLayout contentPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remember_passwrod);
+
+        containerView = (RelativeLayout) findViewById(R.id.containerView);
+
+        if(!Util.isNetworkAvailable()){
+
+            Util.showNetworkInfo(containerView, getApplicationContext());
+        }
 
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
@@ -52,23 +65,64 @@ public class RememberPasswrodActivity extends AppCompatActivity {
         imgToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                backButton();
             }
         });
-
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recuperarSenha();
+                if(!Util.isNetworkAvailable()){
+
+                    Util.showNetworkInfo(containerView, getApplicationContext());
+                }else{
+                    recuperarSenha();
+                }
             }
         });
+
+        contentPanel = (LinearLayout) findViewById(R.id.containerFields);
+
+        Animation showContainer  = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animate_bottom_to_up);
+        contentPanel.startAnimation(showContainer);
 
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    protected void onResume() {
+        super.onResume();
+
+        if(!Util.isNetworkAvailable()){
+
+            Util.showNetworkInfo(containerView, getApplicationContext());
+        }
+    }
+
+    private void backButton() {
+
+        Animation hideContainer  = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animate_slide_up_out);
+
+        hideContainer.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                contentPanel.setVisibility(View.GONE);
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+        });
+        contentPanel.startAnimation(hideContainer);
+
     }
 
     private boolean validarDados(){

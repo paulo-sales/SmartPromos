@@ -1,22 +1,35 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.smartpromos.ui.activity.RememberPasswrodActivity">
+    android:background="@drawable/bg_cadastro"
+    tools:context="br.com.smartpromos.ui.activity.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_transparent_white"
-        android:layout_marginTop="60dp"
-        style="@style/MarginPattern">
+        android:background="@drawable/bg_transparent_grey">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/containerFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             style="@style/MarginPattern"
-            android:background="@drawable/rounded_style_white">
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Entre com seu e-mail para recuperar o seu acesso."
+                android:textAlignment="center"
+                style="@style/TextAppearance.AppCompat.Headline"/>
 
             <EditText
                 android:id="@+id/edtEmail"
@@ -27,22 +40,25 @@
                 style="@style/TextInputPattern"
                 android:background="@drawable/edt_border"
                 android:textSize="20sp"/>
-        </RelativeLayout>
 
-        <Button
-            android:id="@+id/btnEnviar"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/containerFields"
-            android:layout_marginTop="20dp"
-            android:text="@string/btn_reset_pass"
-            style="@style/TextInputPattern"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:background="@drawable/rounded_btn_green"/>
+            <Button
+                android:id="@+id/btnEnviar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/containerFields"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_reset_pass"
+                style="@style/TextInputPattern"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_btn_green"/>
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 
-    <include layout="@layout/toolbar_app"></include>
+    <include layout="@layout/toolbar_app_register"></include>
 
-</FrameLayout>
+</RelativeLayout>
+

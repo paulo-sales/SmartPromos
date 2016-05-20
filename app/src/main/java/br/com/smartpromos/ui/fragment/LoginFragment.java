@@ -5,6 +5,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +44,7 @@ import br.com.smartpromos.ui.activity.DashBoardActivity;
 import br.com.smartpromos.ui.activity.LocationActivity;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
+import br.com.smartpromos.util.Util;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -151,14 +154,25 @@ public class LoginFragment extends Fragment {
         @Override
         public void onCancel() {
 
+            if(!Util.isNetworkAvailable()){
+
+                Util.showNetworkInfo(view, getContext());
+            }
         }
 
         @Override
         public void onError(FacebookException e) {
 
+            if(!Util.isNetworkAvailable()){
+
+                Util.showNetworkInfo(view, getContext());
+            }
+
             Log.e("ERRO_FACEBOOK", e.getMessage()+" "+e.getCause());
         }
     };
+
+    private View view = null;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -169,14 +183,18 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getContext());
         mCallBackMananger = CallbackManager.Factory.create();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        if(!Util.isNetworkAvailable()){
+
+            Util.showNetworkInfo(view, getContext());
+        }
 
         uiDialogs = new UIDialogsFragments();
         uiDialogs.uiGetActivity(getActivity());
@@ -196,9 +214,15 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                uiDialogs.showLoading();
+                if(!Util.isNetworkAvailable()){
 
-                login();
+                    Util.showNetworkInfo(view, getContext());
+                }else{
+
+                    uiDialogs.showLoading();
+                    login();
+                }
+
             }
         });
 
@@ -217,6 +241,12 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        if(!Util.isNetworkAvailable()){
+
+            Util.showNetworkInfo(view, getContext());
+        }
+
     }
 
     @Override
@@ -249,16 +279,19 @@ public class LoginFragment extends Fragment {
                         SmartSharedPreferences.logoutCliente(getContext());
                     }
 
-                    getLocale(clienteResponse);
+                    //getLocale(clienteResponse);
+                    preLoadImages(clienteResponse);
 
                 }else{
 
+                    /*
                     Intent intent = new Intent(getContext(), LocationActivity.class);
                     intent.putExtra("cliente", new Gson().toJson(cliente, ClienteRequest.class));
 
                     getContext().startActivity(intent);
+                    */
 
-                    uiDialogs.loadingDialog.dismiss();
+                    cadastrarClienteByFacebook(cliente);
                 }
             }
 
@@ -267,7 +300,7 @@ public class LoginFragment extends Fragment {
 
                 Log.e("USER_VEERIFIED_ERR", ""+new Gson().toJson(cliente, ClienteRequest.class));
 
-                Log.e("RETORNO_ERR", ""+error.getCause());
+                Log.e("RETORNO_ERR", ""+error.getCause()+" - "+error.getMessage());
 
             }
         });
@@ -294,7 +327,8 @@ public class LoginFragment extends Fragment {
                                 SmartSharedPreferences.logoutCliente(getContext());
                             }
 
-                            getLocale(clienteResponse);
+                            //getLocale(clienteResponse);
+                            preLoadImages(clienteResponse);
 
                         } else if (clienteResponse.getMensagem().getId() == 0) {
                             uiDialogs.loadingDialog.dismiss();
@@ -325,7 +359,7 @@ public class LoginFragment extends Fragment {
 
     public void getLocale(final ClienteResponse clienteLocale){
 
-        smartRepo.getLocalizacao(clienteLocale.getDoc_id(), new Callback<LocalizacaoResponse>() {
+        smartRepo.getLocalizacao(clienteLocale.getEmail(), new Callback<LocalizacaoResponse>() {
             @Override
             public void success(LocalizacaoResponse localizacaoResponse, Response response) {
 
@@ -375,6 +409,39 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
+    }
+
+    private void cadastrarClienteByFacebook(ClienteRequest clienteFb){
+
+        String clienteJs = new Gson().toJson(clienteFb,ClienteRequest.class);
+
+        Log.i("ClienteRequest",clienteJs);
+
+        smartRepo.criarCadastro(clienteJs, new Callback<ClienteResponse>(){
+
+            @Override
+            public void success(ClienteResponse clienteResponse, Response response) {
+
+                if (clienteResponse.getMensagem().getId() == 3) {
+
+                    uiDialogs.showDialog(clienteResponse.getMensagem().getMensagem(), "");
+                    SmartSharedPreferences.gravarUsuarioResponseCompleto(getContext(),clienteResponse);
+
+                    //getLocale(clienteResponse.getEmail());
+                    preLoadImages(clienteResponse);
+
+                } else {
+                    uiDialogs.loadingDialog.dismiss();
+                    uiDialogs.showDialog("Erro ao cadastrar", clienteResponse.getMensagem().getMensagem());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                uiDialogs.loadingDialog.dismiss();
+            }
+        });
 
     }
 

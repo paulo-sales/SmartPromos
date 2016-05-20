@@ -56,6 +56,7 @@ import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.task.GoogleGeocodingAPITaskSearch;
 import br.com.smartpromos.util.SmartSharedPreferences;
 import br.com.smartpromos.util.UIDialogsFragments;
+import br.com.smartpromos.util.Util;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -128,7 +129,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 String address = edtLoadLocale.getText().toString();
-                if(!"".equalsIgnoreCase(address) || address != null){
+                if(!address.equals("") && address != null){
 
                     String[] p = {"getLocation", address.replace(" ","+")};
 
@@ -136,7 +137,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
                     googleGeocodingAPITask.execute(p);
 
                 }else{
-                    uiDialogs.showDialog("Nova Localização", "Preencha o seu endereço para continuar.");
+                    uiDialogs.showDialog("Buscar Local", "Preencha o endereço que deseja localizar.");
                 }
             }
         });
@@ -144,26 +145,37 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
         btnAlterarLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!Util.isNetworkAvailable()){
+                    Util.showNetworkInfo(view, getContext());
+                }else {
 
-                triggerAutoComplete(containerSetLocale);
+                    triggerAutoComplete(containerSetLocale);
+                }
+
             }
         });
 
         btnMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLocation();
+
+                if(!Util.isNetworkAvailable()){
+                    Util.showNetworkInfo(view, getContext());
+                }else {
+
+                    getLocation();
+                }
             }
         });
 
         return view;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
     }
-
 
     public void triggerAutoComplete(final LinearLayout linearLayout){
 
@@ -194,7 +206,7 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
             btnAlterarLocal.setText("Cancelar");
         }else{
-            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animate_slide_up_out);
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animate_slide_bottom_up_out);
 
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -273,9 +285,19 @@ public class SearchByLocationFragment extends Fragment implements OnMapReadyCall
 
         if(l != null){
 
-            String[] p = {String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude())};
-            GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente, uiDialogs);
-            googleGeocodingAPITask.execute(p);
+            if(Util.isLocationEnabled()){
+
+                if(!Util.isNetworkAvailable()){
+                    Util.showNetworkInfo(view, getContext());
+                }else {
+                    String[] p = {String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude())};
+                    GoogleGeocodingAPITaskSearch googleGeocodingAPITask = new GoogleGeocodingAPITaskSearch(getContext(), map, view, cliente, uiDialogs);
+                    googleGeocodingAPITask.execute(p);
+                }
+            }else{
+
+                Util.showLocationInfo(view, getContext());
+            }
 
         }
 

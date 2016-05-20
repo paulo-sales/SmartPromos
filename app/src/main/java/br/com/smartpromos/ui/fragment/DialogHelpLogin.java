@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import br.com.smartpromos.R;
 import br.com.smartpromos.ui.activity.LocationActivity;
+import br.com.smartpromos.ui.activity.RegisterActivity;
 import br.com.smartpromos.ui.activity.RememberPasswrodActivity;
 
 /**
@@ -116,7 +117,7 @@ public class DialogHelpLogin extends DialogFragment {
 
 
     public void registerActivity(){
-        getActivity().startActivity(new Intent(getContext(), LocationActivity.class));
+        getActivity().startActivity(new Intent(getContext(), RegisterActivity.class));
     }
 
 

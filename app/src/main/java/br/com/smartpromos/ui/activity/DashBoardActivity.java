@@ -135,11 +135,13 @@ public class DashBoardActivity extends AppCompatActivity
                 startActivity(new Intent(DashBoardActivity.this, ProfileActivity.class));
 
                 break;
+            /*
             case R.id.nav_locale:
                 item.setChecked(true);
                 startActivity(new Intent(DashBoardActivity.this, LocaleCustomerActivity.class));
 
                 break;
+                */
 
             case R.id.nav_sales_received:
                 item.setChecked(true);

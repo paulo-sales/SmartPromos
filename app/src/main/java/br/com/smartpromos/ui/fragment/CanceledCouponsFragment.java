@@ -22,6 +22,7 @@ import br.com.smartpromos.api.general.response.ClienteResponse;
 import br.com.smartpromos.api.general.response.CupomResponse;
 import br.com.smartpromos.api.general.response.ListaCuponsResponse;
 import br.com.smartpromos.util.SmartSharedPreferences;
+import br.com.smartpromos.util.Util;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -36,6 +37,7 @@ public class CanceledCouponsFragment extends Fragment {
     private ListaCuponsResponse listaCupons;
     private List<CupomResponse> cupons;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
+    private View view;
 
     public CanceledCouponsFragment() {
         // Required empty public constructor
@@ -44,7 +46,7 @@ public class CanceledCouponsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_canceled_coupons, container, false);
+        view = inflater.inflate(R.layout.fragment_canceled_coupons, container, false);
 
         containerNotice = (LinearLayout) view.findViewById(R.id.containerNotice);
 
@@ -63,6 +65,15 @@ public class CanceledCouponsFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(!Util.isNetworkAvailable()){
+            Util.showNetworkInfo(view, getContext());
+        }
     }
 
     @Override

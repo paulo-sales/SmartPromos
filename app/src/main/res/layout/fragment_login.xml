@@ -8,6 +8,7 @@
     tools:context="br.com.smartpromos.ui.fragment.LoginFragment">
 
     <RelativeLayout
+        android:id="@+id/containerView"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

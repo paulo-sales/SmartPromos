@@ -4,20 +4,26 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -48,18 +54,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class CouponDetailsUsableActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, EndlessScrollListener {
-
-    private TextView txtTitle;
-    private ImageButton imgToolbar;
-    private Toolbar detalhesToolbar;
-
-    private float initialAlphaToolbar;
+public class CouponDetailsUsableActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private TextView tituCoupon;
     private TextView txtDescription;
     private TextView txtFim;
-    private RelativeLayout containerImgCoupon;
+    private ImageView containerImgCoupon;
     private Button btnConfirmar;
     private CupomResponse cupom;
     private ClienteResponse cliente;
@@ -68,12 +68,21 @@ public class CouponDetailsUsableActivity extends AppCompatActivity implements On
     private GoogleMap map;
     private GoogleApiClient mGoogleApiClient;
 
-    private EndlessScrollView scrollView;
+    private CollapsingToolbarLayout collapsingToolbarLayout = null;
+    private Toolbar toolbar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_details_usable);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolBar);
 
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         map = mMapFragment.getMap();
@@ -89,30 +98,11 @@ public class CouponDetailsUsableActivity extends AppCompatActivity implements On
         cliente = SmartSharedPreferences.getUsuarioCompleto(getApplicationContext());
         String cupomid = this.getIntent().getStringExtra("cupomid");
 
-        detalhesToolbar = (Toolbar) findViewById(R.id.detalhesToolbar);
-        initialAlphaToolbar = detalhesToolbar.getAlpha();
-
-        txtTitle = (TextView) findViewById(R.id.txtTitle);
-        txtTitle.setText(getResources().getString(R.string.txt_cadastro));
-
-        imgToolbar = (ImageButton) findViewById(R.id.imgToolbar);
-        imgToolbar.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_back_white_36dp));
-
-        imgToolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         tituCoupon          = (TextView) findViewById(R.id.tituCoupon);
         txtDescription      = (TextView) findViewById(R.id.txtDescription);
         txtFim              = (TextView) findViewById(R.id.txtFim);
-        containerImgCoupon  = (RelativeLayout) findViewById(R.id.containerImgCoupon);
+        containerImgCoupon  = (ImageView) findViewById(R.id.containerImgCoupon);
         btnConfirmar        = (Button) findViewById(R.id.btnConfirmar);
-
-        scrollView          = (EndlessScrollView) findViewById(R.id.scrollView);
-        scrollView.setScrollViewListener(this);
 
         getInfoCoupom(cupomid);
 
@@ -122,6 +112,14 @@ public class CouponDetailsUsableActivity extends AppCompatActivity implements On
                 useCupom();
             }
         });
+
+        toolbarTextAppearence();
+    }
+
+    private void toolbarTextAppearence() {
+
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
 
     }
 
@@ -135,7 +133,10 @@ public class CouponDetailsUsableActivity extends AppCompatActivity implements On
                 if(cupomResponse != null){
                     cupom = cupomResponse;
 
-                    txtTitle.setText(cupomResponse.getSale().getEstablishment().getFantasy_name());
+                    //txtTitle.setText(cupomResponse.getSale().getEstablishment().getFantasy_name());
+
+                    collapsingToolbarLayout.setTitle(cupomResponse.getSale().getEstablishment().getFantasy_name());
+
                     tituCoupon.setText(cupomResponse.getName());
                     txtDescription.setText(cupomResponse.getDescription());
                     //txtInicio.setText("Início "+cupomResponse.getSale().getStart_date());
@@ -163,7 +164,7 @@ public class CouponDetailsUsableActivity extends AppCompatActivity implements On
 
     private void descartarCupons(){
 
-        smartRepo.descartarCuponsAceitos(cupom.getId_coupon(), cliente.getDoc_id(), 2, new Callback<MensagemResponse>() {
+        smartRepo.descartarCuponsAceitos(cupom.getId_coupon(), cliente.getEmail(), 2, new Callback<MensagemResponse>() {
             @Override
             public void success(MensagemResponse mensagemResponse, Response response) {
 
@@ -302,29 +303,19 @@ public class CouponDetailsUsableActivity extends AppCompatActivity implements On
 
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
-    public void onScrollChanged(EndlessScrollView scrollView, int x, int y, int oldx, int oldy) {
-        View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                break;
 
-        Log.v("INITIAL_ALPHA", initialAlphaToolbar+"");
+            default:
+                break;
 
-        if(y<oldy){
-            Log.v("SCROLL_DOWN", y+" - "+oldy+"");
-            initialAlphaToolbar = initialAlphaToolbar - 0.1f;
-            if( initialAlphaToolbar >= 0f ){
-                detalhesToolbar.setAlpha(initialAlphaToolbar);
-            }
-            //vertical scrolling down
-        }else{
-            Log.v("SCROLL_UP", oldy+" - "+y+"");
-            initialAlphaToolbar = initialAlphaToolbar + 0.1f;
-            if( initialAlphaToolbar <= 1f ){
-                detalhesToolbar.setAlpha(initialAlphaToolbar);
-            }
-            //vertical scrolling up
         }
-
-        Log.v("FINAL_ALPHA", initialAlphaToolbar+"");
+        return super.onOptionsItemSelected(item);
     }
+
 }

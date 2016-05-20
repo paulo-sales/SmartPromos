@@ -39,7 +39,6 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
     private static List<CupomResponse> cupons;
     private int lastPosition = -1;
     private static ClienteResponse cliente;
-    private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
     private static FragmentActivity fragmentActivity;
     private static UIDialogsFragments uiDialogs;
 
@@ -65,7 +64,6 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
 
     @Override
     public int getItemCount() {
-
         return cupons.size();
     }
 
@@ -79,13 +77,12 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
         notifyDataSetChanged();
     }
 
-    public void insert(int position, CupomResponse cupom) {
+    public void addListItem(CupomResponse cupom, int position) {
 
         Log.v("Insert "+cupom.getName(), "All positions: "+(cupons.size()-1)+". New Position: "+position);
 
-        cupons.add(position, cupom);
-        //notifyItemInserted(position);
-        updateList(cupons);
+        cupons.add(cupom);
+        notifyItemInserted(position);
     }
 
     // Remove a RecyclerView item containing a specified Data object
@@ -102,7 +99,7 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ListCouponsAdapter.ViewHolder holder, int position) {
 
         final CupomResponse cupomResponse = cupons.get(position);
 
@@ -127,12 +124,12 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
 
 
         }
-        //setAnimation(holder.container, position);
+        //setAnimation(holder, position);
+        holder.itemView.setTag(cupons.get(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private CardView container;
         private ImageView imageCupom;
         private TextView tituCoupon;
         private TextView txtTotal;
@@ -144,7 +141,6 @@ public class ListCouponsAdapter extends RecyclerView.Adapter<ListCouponsAdapter.
         public ViewHolder(View itemView) {
             super(itemView);
 
-            container           = (CardView) itemView.findViewById(R.id.container);
             imageCupom          = (ImageView) itemView.findViewById(R.id.imageCupom);
             tituCoupon          = (TextView) itemView.findViewById(R.id.tituCoupon);
             tituCoupon          = (TextView) itemView.findViewById(R.id.tituCoupon);
