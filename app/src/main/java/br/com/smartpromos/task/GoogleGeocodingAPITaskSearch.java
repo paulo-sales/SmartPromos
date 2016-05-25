@@ -30,6 +30,7 @@ import br.com.smartpromos.api.general.response.ListPlacesResponse;
 import br.com.smartpromos.api.general.response.MensagemResponse;
 import br.com.smartpromos.api.general.response.PlaceResponse;
 import br.com.smartpromos.api.general.response.Result;
+import br.com.smartpromos.services.handler.ImageHandler;
 import br.com.smartpromos.util.GetLocationGmpas;
 import br.com.smartpromos.util.GoogleGeocodingAPI;
 import br.com.smartpromos.util.UIDialogsFragments;
@@ -176,11 +177,12 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
                         place.setFormatted_address(r.getVicinity());
                         place.setFormatted_phone_number("");
                         place.setInternational_phone_number("");
-                        place.setIcon(r.getIcon());
+                        place.setIcon(r.getTypes().get(0));
                         place.setName(r.getName());
                         place.setPlace_id(r.getPlaceId());
 
-                        savePLace(place);
+                        savePLace(place, r.getTypes().get(0));
+                        Log.e("ICON_MARKER", r.getTypes().get(0));
 
                         mo = new MarkerOptions();
                         LatLng latLngList = new LatLng(r.getGeometry().getLocation().getLat(), r.getGeometry().getLocation().getLng());
@@ -211,7 +213,7 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
 
     }
 
-    private void savePLace(PlaceResponse place){
+    private void savePLace(final PlaceResponse place, final String type){
 
         String placeStr = new Gson().toJson(place, PlaceResponse.class);
 
@@ -220,6 +222,8 @@ public class GoogleGeocodingAPITaskSearch extends AsyncTask<String, Void, String
         smartRepoServer.insertNearbyPlaces(placeStr, new Callback<MensagemResponse>() {
             @Override
             public void success(MensagemResponse mensagemResponse, Response response) {
+
+                ImageHandler.generateFeedfileIcon(place.getIcon(), type);
                 Log.v("PLACE_INSERIDO", mensagemResponse.getMensagem());
             }
 

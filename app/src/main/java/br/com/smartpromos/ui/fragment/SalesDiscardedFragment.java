@@ -39,8 +39,6 @@ public class SalesDiscardedFragment extends Fragment {
     private List<CupomResponse> cupons;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
-    private UIDialogsFragments uiDialogs;
-
     private View view;
 
     public SalesDiscardedFragment() {
@@ -52,9 +50,6 @@ public class SalesDiscardedFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sales_discarded, container, false);
 
-        uiDialogs = new UIDialogsFragments();
-        uiDialogs.uiGetActivity(getActivity());
-
         cliente = SmartSharedPreferences.getUsuarioCompleto(getContext());
 
         if(Util.isNetworkAvailable()){
@@ -63,8 +58,6 @@ public class SalesDiscardedFragment extends Fragment {
             mRecyclerView.setHasFixedSize(true);
 
             cupons = new ArrayList<>();
-
-            uiDialogs.showLoading();
 
             getCupons(2);
 
@@ -96,6 +89,10 @@ public class SalesDiscardedFragment extends Fragment {
     }
 
     private void getCupons(int status){
+
+        final UIDialogsFragments uiDialogs = new UIDialogsFragments();
+        uiDialogs.uiGetActivity(getActivity());
+        uiDialogs.showLoading();
 
         smartRepo.cuponsByEmailAndStatus(cliente.getEmail(), status, new Callback<ListaCuponsResponse>() {
             @Override

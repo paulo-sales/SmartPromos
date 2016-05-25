@@ -41,8 +41,6 @@ public class SalesReceivedsFragment extends Fragment {
     private List<CupomResponse> cupons;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
-    private UIDialogsFragments uiDialogs;
-
     private View view;
 
     private SwipeRefreshLayout swipeRefresh;
@@ -109,12 +107,16 @@ public class SalesReceivedsFragment extends Fragment {
 
                 if(Util.isNetworkAvailable()){
 
+                    PageLoaded = 0;
+
+                    cupons = new ArrayList<>();
+
                     getCupons();
 
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            SystemClock.sleep(2000);
+                            SystemClock.sleep(1000);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -157,9 +159,9 @@ public class SalesReceivedsFragment extends Fragment {
 
     private void getCupons(){
 
-        uiDialogs = new UIDialogsFragments();
-        uiDialogs.uiGetActivity(getActivity());
-        uiDialogs.showLoading();
+        final UIDialogsFragments uiLoading = new UIDialogsFragments();
+        uiLoading.uiGetActivity(getActivity());
+        uiLoading.showLoading();
 
         smartRepo.cuponsByEmailListAll(cliente.getEmail(), PageLoaded, new Callback<ListaCuponsResponse>() {
             @Override
@@ -183,14 +185,14 @@ public class SalesReceivedsFragment extends Fragment {
                     Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_sales_received), Toast.LENGTH_LONG).show();
                 }
 
-                uiDialogs.loadingDialog.dismiss();
+                uiLoading.loadingDialog.dismiss();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                uiDialogs.loadingDialog.dismiss();
+                uiLoading.loadingDialog.dismiss();
 
             }
         });
@@ -199,9 +201,9 @@ public class SalesReceivedsFragment extends Fragment {
 
     private void getMoreCupons(final ListCouponsAdapter mAdapter){
 
-        uiDialogs = new UIDialogsFragments();
-        uiDialogs.uiGetActivity(getActivity());
-        uiDialogs.showLoading();
+        final UIDialogsFragments uiLoading = new UIDialogsFragments();
+        uiLoading.uiGetActivity(getActivity());
+        uiLoading.showLoading();
 
         smartRepo.cuponsByEmailListAll(cliente.getEmail(), PageLoaded, new Callback<ListaCuponsResponse>() {
             @Override
@@ -217,17 +219,17 @@ public class SalesReceivedsFragment extends Fragment {
                     }
 
                 }else{
-                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_sales_received), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_more_coupons_found), Toast.LENGTH_LONG).show();
                 }
 
-                uiDialogs.loadingDialog.dismiss();
+                uiLoading.loadingDialog.dismiss();
                 PageLoaded = PageLoaded+3;
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                uiDialogs.loadingDialog.dismiss();
+                uiLoading.loadingDialog.dismiss();
 
             }
         });

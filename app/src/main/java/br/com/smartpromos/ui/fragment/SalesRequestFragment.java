@@ -48,8 +48,6 @@ public class SalesRequestFragment extends Fragment {
 
     private int PageLoaded = 0;
 
-    private UIDialogsFragments uiDialogs;
-
     public SalesRequestFragment() {
         // Required empty public constructor
     }
@@ -118,7 +116,7 @@ public class SalesRequestFragment extends Fragment {
 
     private void getRequests(final ListRequestAdapter mAdapter){
 
-        uiDialogs = new UIDialogsFragments();
+        final UIDialogsFragments uiDialogs = new UIDialogsFragments();
         uiDialogs.uiGetActivity(getActivity());
         uiDialogs.showLoading();
 
@@ -129,14 +127,14 @@ public class SalesRequestFragment extends Fragment {
                 if(listaSolicitacoes != null && listaSolicitacoes.getSolicitacoes().size() > 0){
 
                     for (PlaceResponse p : listaSolicitacoes.getSolicitacoes()) {
-                        ImageHandler.generateFeedfileImage(p.getIcon(), String.valueOf(p.getPlace_id()));
+
                         mAdapter.addListItem(p, solitacoes.size());
                     }
 
                     PageLoaded = PageLoaded+12;
                 }else{
 
-                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_sales_requested), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_more_sales_requested), Toast.LENGTH_LONG).show();
                 }
 
                 uiDialogs.loadingDialog.dismiss();

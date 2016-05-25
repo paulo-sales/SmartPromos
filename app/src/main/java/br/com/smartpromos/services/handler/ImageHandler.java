@@ -1,5 +1,6 @@
 package br.com.smartpromos.services.handler;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -8,7 +9,9 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import br.com.smartpromos.R;
 import br.com.smartpromos.services.image.ImageGenerate;
+import br.com.smartpromos.smartpromosapplication.SmartPromosApp;
 
 /**
  * Created by Paulo on 20/04/2016.
@@ -21,7 +24,7 @@ public class ImageHandler {
     public synchronized static String generateFeedfileImage(String url, String name)
     {
 
-        final String photo = "promo-"+name+".png";
+        final String photo = "promo_"+name+".png";
         try {
 
 
@@ -45,17 +48,40 @@ public class ImageHandler {
         return name;
     }
 
+    public synchronized static String generateFeedfileIcon(String url, String name)
+    {
+
+        final String photo = "place_"+name+".png";
+        try {
+
+
+            ImageGenerate.getImage(url, new ImageGenerate.GenerateFacebookImageResponse() {
+                @Override
+                public void getBitmap(Bitmap bm) {
+                    //deleteImage(name);
+                    if(!isLoaded(photo)){
+
+                        Log.d("IMAGE_NOT_EXIST", "Imagem não existe no cache.");
+                        saveImage(bm, photo);
+                    }else{
+
+                        Log.d("IMAGE_EXIST", "Imagem já existe no cache.");
+                    }
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
     public static boolean isLoaded(String name){
 
         File file = new File(pathLive+File.separator+name);
-        Bitmap b = null;
-        try
-        {
-            b = BitmapFactory.decodeFile(file.getAbsolutePath());
+        if(file.exists()){
             return true;
-        }
-        catch(Exception e){
-            e.printStackTrace();
         }
 
         return false;
@@ -64,22 +90,54 @@ public class ImageHandler {
     public static Bitmap getImageBitmap(String name, String url)
     {
 
-        final String namePhoto = "promo-"+name+".png";
+        final String namePhoto = "promo_"+name+".png";
 
-        File file = new File(pathLive+File.separator+namePhoto);
-        Bitmap b = null;
-        try
-        {
-            b = BitmapFactory.decodeFile(file.getAbsolutePath());
+        if(isLoaded(namePhoto)){
+
+            File file = new File(pathLive+File.separator+namePhoto);
+            Bitmap b = null;
+            try
+            {
+                b = BitmapFactory.decodeFile(file.getAbsolutePath());
+                return b;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+
+            }
+
+            if(b == null){
+                generateFeedfileImage(name, url);
+                getImageBitmap(name, url);
+            }
+
+
+        }else{
+            Bitmap b = BitmapFactory.decodeResource(SmartPromosApp.context.getResources(), R.drawable.imagem_capa_cupom);
             return b;
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
 
-        if(b == null){
-            generateFeedfileImage(name, url);
-            getImageBitmap(name, url);
+        return null;
+    }
+
+    public static Bitmap getIcon(String name)
+    {
+
+        final String namePhoto = "place_"+name+".png";
+
+        if(isLoaded(namePhoto)){
+
+            File file = new File(pathLive+File.separator+namePhoto);
+            Bitmap b = null;
+            try
+            {
+                b = BitmapFactory.decodeFile(file.getAbsolutePath());
+                return b;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+
         }
 
         return null;
@@ -99,7 +157,7 @@ public class ImageHandler {
                 fos.flush();
                 fos.close();
 
-                Log.e("IMAGEM_SAVED", pathLive.toString()+"/"+name);
+                Log.e("IMAGE_SAVED", pathLive.toString()+"/"+name);
             }
         } catch (Exception e) {
             e.printStackTrace();

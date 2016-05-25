@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -72,7 +73,7 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        PlaceResponse place = places.get(position);
+        final PlaceResponse place = places.get(position);
 
         if( place != null){
 
@@ -81,12 +82,13 @@ public class ListRequestAdapter extends RecyclerView.Adapter<ListRequestAdapter.
 
             if(!place.getIcon().equals("") && place.getIcon() != null){
                 holder.containerIcon.setVisibility(View.VISIBLE);
-                Bitmap bitmap = ImageHandler.getImageBitmap(String.valueOf(place.getPlace_id()), place.getIcon());
+
+                Bitmap bitmap = ImageHandler.getIcon(place.getIcon());
                 holder.iconPlace.setImageBitmap(bitmap);
             }
 
         }
-        //setAnimation(holder.container);
+        setAnimation(holder.container);
     }
 
     @Override

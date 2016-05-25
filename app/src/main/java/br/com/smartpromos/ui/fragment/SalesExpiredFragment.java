@@ -39,8 +39,6 @@ public class SalesExpiredFragment extends Fragment {
     private List<CupomResponse> cupons;
     private static SmartRepo smartRepo = ServiceGenerator.createService(SmartRepo.class, BuildConfig.REST_SERVICE_URL, 45);
 
-    private UIDialogsFragments uiDialogs;
-
     private View view;
 
     public SalesExpiredFragment() {
@@ -59,9 +57,6 @@ public class SalesExpiredFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_sales_expired, container, false);
 
-        uiDialogs = new UIDialogsFragments();
-        uiDialogs.uiGetActivity(getActivity());
-
         cliente = SmartSharedPreferences.getUsuarioCompleto(getContext());
 
         if(Util.isNetworkAvailable()){
@@ -70,8 +65,6 @@ public class SalesExpiredFragment extends Fragment {
             mRecyclerView.setHasFixedSize(true);
 
             cupons = new ArrayList<>();
-
-            uiDialogs.showLoading();
 
             getCupons(4);
 
@@ -94,6 +87,10 @@ public class SalesExpiredFragment extends Fragment {
 
     private void getCupons(int status){
 
+        final UIDialogsFragments uiLoading = new UIDialogsFragments();
+        uiLoading.uiGetActivity(getActivity());
+        uiLoading.showLoading();
+
         smartRepo.cuponsByEmailAndStatus(cliente.getEmail(), status, new Callback<ListaCuponsResponse>() {
             @Override
             public void success(ListaCuponsResponse listaCuponsResponse, Response response) {
@@ -112,16 +109,16 @@ public class SalesExpiredFragment extends Fragment {
 
                 }else{
 
-                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_coupons_found), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.txt_no_more_coupons_found), Toast.LENGTH_LONG).show();
                 }
 
-                uiDialogs.loadingDialog.dismiss();
+                uiLoading.loadingDialog.dismiss();
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                uiDialogs.loadingDialog.dismiss();
+                uiLoading.loadingDialog.dismiss();
 
             }
         });

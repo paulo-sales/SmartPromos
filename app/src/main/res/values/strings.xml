@@ -43,8 +43,10 @@
 
     <string name="txt_no_sales_received">Não encontramos nenhuma nova oferta.</string>
     <string name="txt_no_sales_requested">Você ainda não solicitou nenhuma oferta.</string>
+    <string name="txt_no_more_sales_requested">Carregamos todas as solicitações.</string>
     <string name="txt_no_sales_discarded">Não encontramos nenhum cupon com essa opção.</string>
     <string name="txt_no_coupons_found">Não encontramos nenhum cupon com essa opção.</string>
+    <string name="txt_no_more_coupons_found">Carregamos todo os cupons disponíveis.</string>
 
     <string name="txt_sync_note">Digite seu cpf e senha do portal Nota Fiscal Paulista</string>
     <string name="txt_sync_note_plus">* Seus dados não serão gravados em nosso sistema</string>
